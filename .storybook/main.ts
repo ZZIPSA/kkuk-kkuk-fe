@@ -13,11 +13,9 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: "@storybook/nextjs",
-    options: {},
+    options: { useSWC: true },
   },
-  docs: {
-    autodocs: "tag",
-  },
+  docs: { autodocs: "tag" },
   staticDirs: ["../public"],
 };
 export default config;
