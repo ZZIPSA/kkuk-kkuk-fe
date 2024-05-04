@@ -30,7 +30,7 @@ export interface BadgeProps
 export interface LinkBadgeProps
   extends React.HTMLAttributes<HTMLAnchorElement>,
     VariantProps<typeof badgeVariants> {
-  href: `/${string}`;
+  href: `/${string}` | "#";
 }
 
 function Badge({ className, variant, ...props }: BadgeProps) {
