@@ -1,52 +1,41 @@
-import React from 'react';
-import './button.css';
+import { MouseEventHandler } from "react";
+import {
+  BasicButton,
+  BasicButtonProps,
+  ButtonVariant,
+  ButtonSize,
+} from "@/components/ui/button";
 
-interface ButtonProps {
+interface ButtonProps extends BasicButtonProps {
   /**
-   * Is this the principal call to action on the page?
+   * What variant to use
    */
-  primary?: boolean;
-  /**
-   * What background color to use
-   */
-  backgroundColor?: string;
+  variant?: ButtonVariant;
   /**
    * How large should the button be?
    */
-  size?: 'small' | 'medium' | 'large';
+  size?: ButtonSize;
   /**
    * Button contents
    */
   label: string;
   /**
+   * Optional flag to render as a child
+   */
+  asChild?: boolean;
+  /**
    * Optional click handler
    */
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
-  label,
-  ...props
-}: ButtonProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+export const Button = ({ label, ...props }: ButtonProps) => {
   return (
-    <button
-      type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      {...props}
-    >
+    <BasicButton type="button" {...props}>
       {label}
-      <style jsx>{`
-        button {
-          background-color: ${backgroundColor};
-        }
-      `}</style>
-    </button>
+    </BasicButton>
   );
 };
