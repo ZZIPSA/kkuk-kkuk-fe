@@ -1,4 +1,4 @@
-import { BadgeVariant, LinkBadgeProps, LinkBadge } from "@/components/ui/badge";
+import { LinkBadgeProps, LinkBadge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 interface TagProps extends LinkBadgeProps {
