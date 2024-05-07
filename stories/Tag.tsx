@@ -1,32 +1,51 @@
-import { LinkBadgeProps, LinkBadge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { MouseEventHandler } from "react";
+import {
+  ButtonBadgeProps,
+  ButtonBadge,
+  BadgeVariant,
+} from "@/components/ui/badge";
 
-interface TagProps extends LinkBadgeProps {
+export enum Uses {
+  default = "default",
+  selected = "selected",
+}
+
+const variants: Record<Uses, BadgeVariant> = {
+  [Uses.default]: "default",
+  [Uses.selected]: "secondary",
+} as const;
+
+const classNames = {
+  [Uses.default]:
+    "bg-primary/40 text-primary font-extralight hover:text-white focus:ring-primary",
+  [Uses.selected]:
+    "bg-lime-500/50 text-lime-800 font-extralight hover:text-white hover:bg-lime-500/80 focus:ring-lime-500",
+} as const;
+
+interface TagProps extends ButtonBadgeProps {
+  /**
+   * Variants for the Tag
+   */
+  use?: Uses;
   /**
    * Link contents
+   * @default "default"
    */
   label: string;
   /**
-   * Where the button should link to
+   * Click handler
    */
-  href: `/${string}` | "#";
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
-
 /**
  * Primary UI component for user interaction
  */
-export const Tag = ({ label, href, className, ...props }: TagProps) => {
+export const Tag = ({ use = Uses.default, label, ...props }: TagProps) => {
   return (
-    <LinkBadge
-      className={cn(
-        "px-2 py-1 text-xs text-primary hover:text-white font-extralight bg-primary/50 hover:bg-primary/80 focus:ring-primary",
-        className
-      )}
-      href={href ? href : "#"}
-      {...props}
-    >
+    <ButtonBadge className={classNames[use]} variant={variants[use]} {...props}>
       {"#"}
+      {variants[use]}
       {label}
-    </LinkBadge>
+    </ButtonBadge>
   );
 };
