@@ -44,7 +44,6 @@ export const Tag = ({ use = Uses.default, label, ...props }: TagProps) => {
   return (
     <ButtonBadge className={classNames[use]} variant={variants[use]} {...props}>
       {"#"}
-      {variants[use]}
       {label}
     </ButtonBadge>
   );

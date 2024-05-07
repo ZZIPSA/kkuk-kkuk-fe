@@ -40,7 +40,6 @@ export function ButtonBadge({
   variant,
   ...props
 }: ButtonBadgeProps) {
-  console.log(variant, props.children);
   return (
     <button className={cn(badgeVariants({ variant }), className)} {...props} />
   );
