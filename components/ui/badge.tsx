@@ -2,8 +2,6 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
-import Link from "next/link";
-
 const variant = {
   default:
     "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
@@ -16,7 +14,7 @@ const variant = {
 export type BadgeVariant = keyof typeof variant;
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center rounded-full border px-2 py-1 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
   {
     variants: { variant },
     defaultVariants: { variant: "default" },
@@ -27,11 +25,9 @@ export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof badgeVariants> {}
 
-export interface LinkBadgeProps
-  extends React.HTMLAttributes<HTMLAnchorElement>,
-    VariantProps<typeof badgeVariants> {
-  href: `/${string}` | "#";
-}
+export interface ButtonBadgeProps
+  extends React.HTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof badgeVariants> {}
 
 function Badge({ className, variant, ...props }: BadgeProps) {
   return (
@@ -39,18 +35,14 @@ function Badge({ className, variant, ...props }: BadgeProps) {
   );
 }
 
-export function LinkBadge({
-  href,
+export function ButtonBadge({
   className,
   variant,
   ...props
-}: LinkBadgeProps) {
+}: ButtonBadgeProps) {
+  console.log(variant, props.children);
   return (
-    <Link
-      href={href}
-      className={cn(badgeVariants({ variant }), className)}
-      {...props}
-    />
+    <button className={cn(badgeVariants({ variant }), className)} {...props} />
   );
 }
 
