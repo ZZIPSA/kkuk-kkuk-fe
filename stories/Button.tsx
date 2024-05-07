@@ -20,9 +20,9 @@ interface ButtonProps extends BasicButtonProps {
    */
   label: string;
   /**
-   * Optional flag to render as a child
+   * What type of the button
    */
-  asChild?: boolean;
+  type: "button" | "submit" | "reset";
   /**
    * Optional click handler
    */
@@ -32,9 +32,9 @@ interface ButtonProps extends BasicButtonProps {
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({ label, ...props }: ButtonProps) => {
+export const Button = ({ label, type = "button", ...props }: ButtonProps) => {
   return (
-    <BasicButton type="button" {...props}>
+    <BasicButton type={type} {...props}>
       {label}
     </BasicButton>
   );
