@@ -13,7 +13,7 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: "@storybook/nextjs",
-    options: { useSWC: true },
+    options: {},
   },
   docs: { autodocs: "tag" },
   staticDirs: ["../public"],
