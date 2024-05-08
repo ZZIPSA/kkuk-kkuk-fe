@@ -15,10 +15,10 @@ const Title: FormFields = ({ control }) => (
     name="title"
     render={({ field, fieldState }) => (
       <FormItem>
-        <FormLabel>키트 이름</FormLabel>
+        <FormLabel>제목</FormLabel>
         <FormControl>
           <Input
-            placeholder="키트 이름을 입력해주세요."
+            placeholder="제목을 입력해주세요."
             className={cn({
               "border-red-500": !!fieldState.error,
             })}
