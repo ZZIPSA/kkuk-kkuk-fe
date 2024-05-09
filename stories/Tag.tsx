@@ -4,6 +4,7 @@ import {
   ButtonBadge,
   BadgeVariant,
 } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export enum Uses {
   default = "default",
@@ -40,9 +41,18 @@ interface TagProps extends ButtonBadgeProps {
 /**
  * Primary UI component for user interaction
  */
-export const Tag = ({ use = Uses.default, label, ...props }: TagProps) => {
+export const Tag = ({
+  use = Uses.default,
+  label,
+  className,
+  ...props
+}: TagProps) => {
   return (
-    <ButtonBadge className={classNames[use]} variant={variants[use]} {...props}>
+    <ButtonBadge
+      className={cn(classNames[use], className)}
+      variant={variants[use]}
+      {...props}
+    >
       {"#"}
       {label}
     </ButtonBadge>
