@@ -1,20 +1,9 @@
 ---
-name: Bug report
+name: 🐞BUG
 about: Create a report to help us improve
-title: ''
 labels: bug
-assignees: ''
-
 ---
 
----
-name: Bug report
-about: 버그 제보
-title: "[BUG]"
-labels: bug
-assignees: ''
-
----
 
 ### 기대한 동작
 _정상적으로 동작했을 때 기대한 내용을 작성해요._
