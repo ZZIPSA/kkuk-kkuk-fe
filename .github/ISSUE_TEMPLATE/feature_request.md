@@ -1,24 +1,13 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: feature
-assignees: ''
-
+name: 📌FEATURE
+about: 기능을 추가하기 위한 이슈를 작성합니다.
 ---
 
----
-name: Feature request
-about: 아이디어 제안
-title: "[Feature]"
-labels: ''
-assignees: ''
-
----
-
-### 작업할 내용
-_어떤 작업을 진행해야 하는지 작성해요. (ex_기능의 상세 구현 사항, 고민 중인 문제 해결 방식 등)_
+### 작업 내용
+_어떤 작업을 진행해야 하는지 작성해요._
 
 
-### 추가 내용
-_기능과 관련된 원하는 내용을 자유롭게 작성해요. (ex_스크린샷이나 부가적인 내용 등)_
+### 상세 내용
+_기능을 추가하기 위해서 필요한 작업 내용을 커밋단위로 작성합니다. 커밋 메세지를 미리 적어놓아도 좋아요._
+- [ ] 작업내용1
+- [ ] 작업내용2
