@@ -24,7 +24,7 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader: { n
         </CardHeader>
       </Link>
       <CardContent className="p-0 flex flex-col gap-2">
-        <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis">{title}</CardTitle>
+        <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis text-base">{title}</CardTitle>
         <CardDescription className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
           {tags.map((tag) => (
             <Tag key={tag} label={tag} className="break-keep" />
