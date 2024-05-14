@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import Link from "next/link";
+import Link from 'next/link';
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+} from '@/components/ui/navigation-menu';
 
 export default function NavBar({
   leftItems,
@@ -36,10 +36,8 @@ function NavBarItem({ href, Inner }: { href: string; Inner: React.ReactNode }) {
   return (
     <NavigationMenuItem>
       <Link href={href} passHref>
-        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-          {Inner}
-        </NavigationMenuLink>
-      </Link>{" "}
+        <NavigationMenuLink className={navigationMenuTriggerStyle()}>{Inner}</NavigationMenuLink>
+      </Link>{' '}
     </NavigationMenuItem>
   );
 }
