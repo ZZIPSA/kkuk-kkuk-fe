@@ -38,4 +38,4 @@ next-env.d.ts
 *storybook.log
 
 # IDE
-.vscode
+.vscode/
