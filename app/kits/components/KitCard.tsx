@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { cn } from '@/lib/utils';
 import { Tag } from '@/stories/Tag';
 import { Kit } from '@/types/kit';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 type KitKeys = 'id' | 'title' | 'thumbnailImage' | 'tags' | 'uploader';
 type KitCardProps = Pick<Kit, KitKeys> & React.ComponentPropsWithoutRef<typeof Card>;
@@ -30,17 +31,12 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader: { n
           ))}
         </CardDescription>
       </CardContent>
-      <CardFooter className="flex flex-col p-0">
-        <div className="flex justify-start items-center w-full">
-          <Image
-            src={thumbnailImage}
-            alt={nickname}
-            width={32}
-            height={32}
-            className="border-gray-400 border-2 rounded-full aspect-square w-8 h-8 object-cover mr-4"
-          />
-          <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-muted-foreground">{nickname}</span>
-        </div>
+      <CardFooter className="p-0 flex gap-2">
+        <Avatar className="items-center border border-grey-100 w-6 h-6">
+          <AvatarImage src={thumbnailImage} />
+          <AvatarFallback>{nickname}</AvatarFallback>
+        </Avatar>
+        <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-[#A69C98] text-xs">{nickname}</span>
       </CardFooter>
     </Card>
   );
