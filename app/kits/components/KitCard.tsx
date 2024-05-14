@@ -10,7 +10,7 @@ type KitCardProps = Pick<Kit, KitKeys> & React.ComponentPropsWithoutRef<typeof C
 
 export default function KitCard({ id, title, thumbnailImage, tags, uploader: { nickname }, className, ...props }: KitCardProps) {
   return (
-    <Card className={cn('flex flex-col border-0 shadow-none', className)} {...props}>
+    <Card className={cn('flex flex-col border-0 shadow-none gap-2', className)} {...props}>
       <Link href={`/kits/${id}`} passHref>
         <CardHeader className="p-0">
           <Image
@@ -22,7 +22,7 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader: { n
           />
         </CardHeader>
       </Link>
-      <CardContent className="p-0">
+      <CardContent className="p-0 flex flex-col gap-2">
         <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis">{title}</CardTitle>
         <CardDescription className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
           {tags.map((tag) => (
