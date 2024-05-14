@@ -24,13 +24,13 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader: { n
       </Link>
       <CardContent className="p-0">
         <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis">{title}</CardTitle>
-      </CardContent>
-      <CardFooter className="flex flex-col p-0">
-        <div className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
+        <CardDescription className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
           {tags.map((tag) => (
             <Tag key={tag} label={tag} className="break-keep" />
           ))}
-        </div>
+        </CardDescription>
+      </CardContent>
+      <CardFooter className="flex flex-col p-0">
         <div className="flex justify-start items-center w-full">
           <Image
             src={thumbnailImage}
