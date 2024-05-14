@@ -18,7 +18,7 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader: { n
             alt={title}
             width={100}
             height={100}
-            className="border-gray-400 border rounded-md aspect-square w-full h-full object-cover"
+            className="border-black/20 border rounded-md aspect-square w-full h-full object-cover"
           />
         </CardHeader>
       </Link>
