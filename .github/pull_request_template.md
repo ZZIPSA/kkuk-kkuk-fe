@@ -1,9 +1,3 @@
----
-name: 🚀PULL REQUEST
-about: 풀리퀘스트 작성할 때 이용하는 템플릿입니다.
-assignees: blissful-y0
----
-
 ## 작업 내용
 
 관련 이슈: _이슈 번호_
