@@ -14,14 +14,14 @@ export const staticNavBarItems: NavBarItemProps[] = [
   },
 ];
 
-export const getSignedNavBarItems = ({ image }: { image?: string }): NavBarItemProps[] => [
+export const getSignedNavBarItems = ({ profileImage = '/default-profile.svg' }: { profileImage?: string }): NavBarItemProps[] => [
   { href: '/kits/new', Inner: <Pencil /> },
   { href: '/rallies', Inner: <Stamp /> },
   {
     href: '/my',
     Inner: (
       <Avatar className="w-7 h-7 border">
-        <AvatarImage src={image} />
+        <AvatarImage src={profileImage} />
       </Avatar>
     ),
   },
