@@ -1,25 +1,65 @@
-import { dummyRally } from "@/types/dummy";
-import {
-  PostRallyRequest,
-  UpdateRallyRequest,
-} from "@/types/requests/rallyRequest";
-import {
-  PostRallyResponse,
-  SingleRallyResponse,
-  UpdateRallyResponse,
-} from "@/types/responses/rallyResponses";
-import { NextResponse } from "next/server";
+import prisma from '@/lib/prisma';
+import { RallyStatus } from '@prisma/client';
+import { NextResponse } from 'next/server';
 
-const rally = dummyRally;
+export async function GET(request: Request, { params }: { params: { id: string } }) {
+  const id = params.id;
 
-export async function GET() {
-  return NextResponse.json<SingleRallyResponse>({ rally });
+  const rally = await prisma.rally.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      status: true,
+      kit: true,
+      starter: true,
+      stampCount: true,
+    },
+  });
+
+  return Response.json({ data: rally });
 }
 
-export async function PATCH(request: UpdateRallyRequest) {
-  return NextResponse.json<UpdateRallyResponse>({ rally });
-}
+export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+  const id = params.id;
 
-export async function POST(request: PostRallyRequest) {
-  return NextResponse.json<PostRallyResponse>({ rally });
+  const body = await request.json();
+  const { stampCount } = body;
+
+  if (stampCount === undefined || typeof stampCount !== 'number' || stampCount < 0) {
+    return NextResponse.json({ error: '필수 항목을 확인해주세요.' }, { status: 400 });
+  }
+
+  try {
+    const status = stampCount === 6 ? RallyStatus.inactive : RallyStatus.active;
+
+    const updatedRally = await prisma.rally.update({
+      where: { id },
+      data: { stampCount, status },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        status: true,
+        kit: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+        starter: {
+          select: {
+            id: true,
+            nickname: true,
+          },
+        },
+        stampCount: true,
+      },
+    });
+
+    return NextResponse.json({ data: updatedRally }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: '예기치 못한 에러로 랠리를 업데이트하지 못했습니다.' }, { status: 500 });
+  }
 }
