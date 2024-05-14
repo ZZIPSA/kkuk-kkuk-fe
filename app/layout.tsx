@@ -18,7 +18,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="border-b">
+        <header className="border-b px-4 py-1">
           <NavBar />
         </header>
         {children}
