@@ -9,13 +9,15 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 
-export default function NavBar({
-  leftItems,
-  rightItems,
-}: {
-  leftItems: { href: string; Inner: React.ReactNode }[];
-  rightItems: { href: string; Inner: React.ReactNode }[];
-}) {
+// import { auth } from "@/auth";
+import { getSignedNavBarItems, notSignedNavBarItems, staticNavBarItems as leftItems } from '../lib';
+
+export default function NavBar() {
+  const { user } = {
+    // user: false, // 비로그인 상태
+    user: { profileImage: '/kkuk-kkuk.svg' }, // 로그인 상태
+  }; // await auth();
+  const rightItems = user ? getSignedNavBarItems(user) : notSignedNavBarItems;
   return (
     <NavigationMenu className="max-w-full w-full justify-between">
       <NavigationMenuList>
