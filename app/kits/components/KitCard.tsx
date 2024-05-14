@@ -5,9 +5,16 @@ import { cn } from '@/lib/utils';
 import { Tag } from '@/stories/Tag';
 import { Kit } from '@/types/kit';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { User } from '@/types/user';
 
 type KitKeys = 'id' | 'title' | 'thumbnailImage' | 'tags' | 'uploader';
-type KitCardProps = Pick<Kit, KitKeys> & React.ComponentPropsWithoutRef<typeof Card>;
+interface KitCardProps extends Pick<Kit, KitKeys>, React.ComponentPropsWithoutRef<typeof Card> {
+  id: string;
+  title: string;
+  thumbnailImage: string;
+  tags: string[];
+  uploader: User;
+}
 
 export default function KitCard({ id, title, thumbnailImage, tags, uploader: { nickname }, className, ...props }: KitCardProps) {
   return (
