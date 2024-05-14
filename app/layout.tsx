@@ -31,7 +31,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="border-b mb-2">
+        <header className="border-b">
           <NavBar leftItems={staticNavBarItems} rightItems={rightNavBarItems} />
         </header>
         {children}
