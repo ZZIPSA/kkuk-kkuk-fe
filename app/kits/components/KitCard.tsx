@@ -10,9 +10,9 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Tag } from "@/stories/Tag";
-import { KitCardProps } from "./types";
+import { KitCardProps } from "../types";
 
-export function KitCard({
+export default function KitCard({
   kitId,
   title,
   description,

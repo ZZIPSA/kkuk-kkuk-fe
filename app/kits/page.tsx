@@ -1,4 +1,4 @@
-import { KitCard } from "./components";
+import KitCard from "./components/KitCard";
 import { Kit } from "./types";
 
 export default async function KitsPage() {
