@@ -38,7 +38,7 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader: { n
       </CardContent>
       <CardFooter className="p-0 flex gap-2">
         <Avatar className="items-center border border-grey-100 w-6 h-6">
-          <AvatarImage src={thumbnailImage} />
+          <AvatarImage src={thumbnailImage} alt={nickname} />
           <AvatarFallback>{nickname}</AvatarFallback>
         </Avatar>
         <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-[#A69C98] text-xs">{nickname}</span>
