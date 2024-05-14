@@ -5,13 +5,13 @@ import { cn } from '@/lib/utils';
 import { Tag } from '@/stories/Tag';
 import { Kit } from '@/types/kit';
 
-type KitKeys = 'id' | 'title' | 'description' | 'thumbnailImage' | 'tags' | 'uploaderId';
+type KitKeys = 'id' | 'title' | 'description' | 'thumbnailImage' | 'tags' | 'uploader';
 type KitCardProps = Pick<Kit, KitKeys> & React.ComponentPropsWithoutRef<typeof Card>;
 
-export default function KitCard({ kitId, title, description, thumbnailImage, tags, uploader: { nickname }, className, ...props }: KitCardProps) {
+export default function KitCard({ id, title, description, thumbnailImage, tags, uploader: { nickname }, className, ...props }: KitCardProps) {
   return (
     <Card className={(cn(className), 'flex flex-col')} {...props}>
-      <Link href={`/kits/${kitId}`} passHref>
+      <Link href={`/kits/${id}`} passHref>
         <CardHeader>
           <Image
             src={thumbnailImage}
