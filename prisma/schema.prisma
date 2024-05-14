@@ -37,7 +37,7 @@ model Kit {
   id             Int       @id @default(autoincrement())
   title          String
   description    String?
-  tag            String?
+  tags           String?
   thumbnailImage String?
   rewardImage    String?
   uploaderId     String?

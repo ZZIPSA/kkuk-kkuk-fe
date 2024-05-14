@@ -55,7 +55,7 @@ async function main() {
         description: `${index + 1}번 키트의 설명입니다.`,
         thumbnailImage: 'https://picsum.photos/360',
         rewardImage: 'https://picsum.photos/360',
-        tag: tags,
+        tags,
         uploaderId: users[Math.floor(Math.random() * users.length)].id,
         stamps: {
           create: Array.from({ length: 6 }, (_, stampIndex) => ({
@@ -73,11 +73,13 @@ async function main() {
 
   // 랠리 생성
   const rallyCreationPromises = Array.from({ length: 50 }, (_, index) => {
+    const stampCount = Math.floor(Math.random() * 7);
     return prisma.rally.create({
       data: {
         title: `랠리 ${index + 1}`,
         description: `${index + 1}번 랠리에 대한 설명입니다.`,
-        status: RallyStatus.active,
+        stampCount,
+        status: stampCount === 6 ? RallyStatus.inactive : RallyStatus.active,
         kitId: kits[Math.floor(Math.random() * kits.length)].id,
         starterId: users[Math.floor(Math.random() * users.length)].id,
       },

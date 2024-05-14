@@ -7,6 +7,7 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "profileImage" TEXT,
     "nickname" TEXT,
+    "twitterId" TEXT,
     "authToken" TEXT,
     "authProvider" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -21,7 +22,7 @@ CREATE TABLE "Kit" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
-    "tag" TEXT,
+    "tags" TEXT,
     "thumbnailImage" TEXT,
     "rewardImage" TEXT,
     "uploaderId" TEXT,
@@ -59,6 +60,9 @@ CREATE TABLE "Rally" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_twitterId_key" ON "User"("twitterId");
 
 -- AddForeignKey
 ALTER TABLE "Kit" ADD CONSTRAINT "Kit_uploaderId_fkey" FOREIGN KEY ("uploaderId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
