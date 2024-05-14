@@ -5,10 +5,10 @@ import { cn } from '@/lib/utils';
 import { Tag } from '@/stories/Tag';
 import { Kit } from '@/types/kit';
 
-type KitKeys = 'id' | 'title' | 'description' | 'thumbnailImage' | 'tags' | 'uploader';
+type KitKeys = 'id' | 'title' | 'thumbnailImage' | 'tags' | 'uploader';
 type KitCardProps = Pick<Kit, KitKeys> & React.ComponentPropsWithoutRef<typeof Card>;
 
-export default function KitCard({ id, title, description, thumbnailImage, tags, uploader: { nickname }, className, ...props }: KitCardProps) {
+export default function KitCard({ id, title, thumbnailImage, tags, uploader: { nickname }, className, ...props }: KitCardProps) {
   return (
     <Card className={(cn(className), 'flex flex-col')} {...props}>
       <Link href={`/kits/${id}`} passHref>
@@ -24,7 +24,6 @@ export default function KitCard({ id, title, description, thumbnailImage, tags, 
       </Link>
       <CardContent>
         <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis">{title}</CardTitle>
-        <CardDescription className="line-clamp-3">{description}</CardDescription>
       </CardContent>
       <CardFooter className="flex flex-col mt-auto">
         <div className="flex gap-2 overflow-x-auto w-full scrollbar-hide m-4">
