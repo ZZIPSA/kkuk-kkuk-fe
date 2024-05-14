@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  profileImage String?
+  nickname     String?
+  authToken    String?
+  authProvider String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime?
+  deletedAt    DateTime?
+  kits         Kit[]
+  rallies      Rally[]
+}
+
+model Kit {
+  id             Int       @id @default(autoincrement())
+  title          String
+  description    String?
+  tag            String?
+  thumbnailImage String?
+  rewardImage    String?
+  uploaderId     String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime?
+  deletedAt      DateTime?
+  uploader       User?     @relation(fields: [uploaderId], references: [id])
+  stamps         Stamp[]
+  rallies        Rally[]
+}
+
+model Stamp {
+  id    String @id @default(cuid())
+  kitId Int
+  image String
+  kit   Kit    @relation(fields: [kitId], references: [id])
+}
+
+model Rally {
+  id          String      @id @default(cuid())
+  title       String
+  description String?
+  status      RallyStatus
+  kitId       Int
+  starterId   String
+  stampCount  Int         @default(0)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime?
+  deletedAt   DateTime?
+  kit         Kit         @relation(fields: [kitId], references: [id])
+  starter     User        @relation(fields: [starterId], references: [id])
+}
+
+enum RallyStatus {
+  active
+  inactive
+}
