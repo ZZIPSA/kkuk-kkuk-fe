@@ -13,11 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum RallyStatus {
+  active
+  inactive
+}
+
 model User {
   id           String    @id @default(cuid())
   email        String    @unique
   profileImage String?
   nickname     String?
+  twitterId    String?   @unique
   authToken    String?
   authProvider String
   createdAt    DateTime  @default(now())
@@ -63,9 +69,4 @@ model Rally {
   deletedAt   DateTime?
   kit         Kit         @relation(fields: [kitId], references: [id])
   starter     User        @relation(fields: [starterId], references: [id])
-}
-
-enum RallyStatus {
-  active
-  inactive
 }
