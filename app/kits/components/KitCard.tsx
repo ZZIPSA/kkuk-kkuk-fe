@@ -10,23 +10,23 @@ type KitCardProps = Pick<Kit, KitKeys> & React.ComponentPropsWithoutRef<typeof C
 
 export default function KitCard({ id, title, thumbnailImage, tags, uploader: { nickname }, className, ...props }: KitCardProps) {
   return (
-    <Card className={(cn(className), 'flex flex-col')} {...props}>
+    <Card className={cn('flex flex-col border-0 shadow-none', className)} {...props}>
       <Link href={`/kits/${id}`} passHref>
-        <CardHeader>
+        <CardHeader className="p-0">
           <Image
             src={thumbnailImage}
             alt={title}
             width={100}
             height={100}
-            className="border-gray-400 border-2 rounded-md aspect-square w-full h-full object-cover"
+            className="border-gray-400 border rounded-md aspect-square w-full h-full object-cover"
           />
         </CardHeader>
       </Link>
-      <CardContent>
+      <CardContent className="p-0">
         <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis">{title}</CardTitle>
       </CardContent>
-      <CardFooter className="flex flex-col mt-auto">
-        <div className="flex gap-2 overflow-x-auto w-full scrollbar-hide m-4">
+      <CardFooter className="flex flex-col p-0">
+        <div className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
           {tags.map((tag) => (
             <Tag key={tag} label={tag} className="break-keep" />
           ))}
