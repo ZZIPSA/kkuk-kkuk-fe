@@ -5,9 +5,16 @@ import { cn } from '@/lib/utils';
 import { Tag } from '@/stories/Tag';
 import { Kit } from '@/types/kit';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { User } from '@/types/user';
 
 type KitKeys = 'id' | 'title' | 'thumbnailImage' | 'tags' | 'uploader';
-type KitCardProps = Pick<Kit, KitKeys> & React.ComponentPropsWithoutRef<typeof Card>;
+interface KitCardProps extends Pick<Kit, KitKeys>, React.ComponentPropsWithoutRef<typeof Card> {
+  id: string;
+  title: string;
+  thumbnailImage: string;
+  tags: string[];
+  uploader: User;
+}
 
 export default function KitCard({ id, title, thumbnailImage, tags, uploader: { nickname }, className, ...props }: KitCardProps) {
   return (
@@ -26,14 +33,12 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader: { n
       <CardContent className="p-0 flex flex-col gap-2">
         <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis text-base">{title}</CardTitle>
         <CardDescription className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
-          {tags.map((tag) => (
-            <Tag key={tag} label={tag} className="break-keep" />
-          ))}
+          {tags?.map((tag) => <Tag key={tag} label={tag} className="break-keep" />)}
         </CardDescription>
       </CardContent>
       <CardFooter className="p-0 flex gap-2">
         <Avatar className="items-center border border-grey-100 w-6 h-6">
-          <AvatarImage src={thumbnailImage} />
+          <AvatarImage src={thumbnailImage} alt={nickname} />
           <AvatarFallback>{nickname}</AvatarFallback>
         </Avatar>
         <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-[#A69C98] text-xs">{nickname}</span>
