@@ -1,26 +1,25 @@
-import prisma from '@/lib/prisma';
-import { dummyRallies } from '@/types/dummy';
-import { NextRequest, NextResponse } from 'next/server';
-
-const rallies = dummyRallies;
+import { NextResponse } from 'next/server';
+import { prisma, kitSelect, rallySelect, userSelect } from '@/lib/prisma';
 
 // TODO: 에러 메세지 통합
-// TODO: 랠리 조회 API, 페이지네이션
+// TODO: 페이지네이션
 export async function GET() {
-  return NextResponse.json({ rallies });
+  try {
+    const rallies = prisma.rally.findMany({ select: rallySelect });
+
+    return NextResponse.json({ data: rallies });
+  } catch (error) {
+    return NextResponse.json({ error: '예기치 못한 에러가 발생했습니다.' }, { status: 500 });
+  }
 }
 
-export async function POST(req: NextRequest) {
-  const formData = await req.formData();
-
+export async function POST(request: Request) {
+  const body = await request.json();
   // TODO: 로그인 구현 후 세션에서 starterId 취득
-  const title = (formData.get('title') as string) || null;
-  const description = (formData.get('description') as string) || null;
-  const kitId = (formData.get('kitId') as string) || null;
-  const starterId = (formData.get('starterId') as string) || null;
+  const { title, description, kitId, starterId } = body;
 
   if (!title || !kitId || !starterId) {
-    return NextResponse.json({ error: '필수 항목을 확인해주세요.' }, { status: 400 });
+    return NextResponse.json({ error: '요청이 유효하지 않습니다.' }, { status: 400 });
   }
 
   try {
@@ -34,18 +33,15 @@ export async function POST(req: NextRequest) {
         stampCount: 0,
       },
       include: {
-        kit: true,
+        kit: { select: kitSelect },
         starter: {
-          select: {
-            id: true,
-            nickname: true,
-          },
+          select: userSelect,
         },
       },
     });
 
     return NextResponse.json({ data: newRally }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: '예기치 못한 에러로 랠리를 생성하지 못했습니다.' }, { status: 500 });
+    return NextResponse.json({ error: '예기치 못한 에러가 발생했습니다.' }, { status: 500 });
   }
 }
