@@ -19,25 +19,65 @@ enum RallyStatus {
 }
 
 model User {
-  id           String    @id @default(cuid())
-  email        String    @unique
-  profileImage String?
-  nickname     String?
-  twitterId    String?   @unique
-  authToken    String?
-  authProvider String
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime?
-  deletedAt    DateTime?
-  kits         Kit[]
-  rallies      Rally[]
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime?
+  profileImage  String?
+  nickname      String?
+  accounts      Account[]
+  sessions      Session[]
+  kits          Kit[]
+  rallies       Rally[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  deletedAt DateTime?
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
 }
 
 model Kit {
-  id             Int       @id @default(autoincrement())
+  id             String    @id @default(cuid())
   title          String
   description    String?
-  tags           String?
+  tags           String[]
   thumbnailImage String?
   rewardImage    String?
   uploaderId     String?
@@ -51,7 +91,7 @@ model Kit {
 
 model Stamp {
   id    String @id @default(cuid())
-  kitId Int
+  kitId String
   image String
   kit   Kit    @relation(fields: [kitId], references: [id])
 }
@@ -61,7 +101,7 @@ model Rally {
   title       String
   description String?
   status      RallyStatus
-  kitId       Int
+  kitId       String
   starterId   String
   stampCount  Int         @default(0)
   createdAt   DateTime    @default(now())

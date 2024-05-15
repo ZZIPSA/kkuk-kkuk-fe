@@ -17,19 +17,26 @@ function generateRandomTag() {
   ];
 
   const tagCount = Math.floor(Math.random() * 4);
-  const tags = new Set();
+  const tags = [];
 
-  while (tags.size < tagCount) {
+  while (tags.length < tagCount) {
     const tag = possibleTags[Math.floor(Math.random() * possibleTags.length)];
-    tags.add(tag);
+    tags.push(tag);
   }
 
-  return tags.size > 0 ? Array.from(tags).join(', ') : null;
+  return tags;
 }
 
 async function main() {
   // 모든 테이블의 데이터를 삭제
-  await prisma.$transaction([prisma.rally.deleteMany(), prisma.stamp.deleteMany(), prisma.kit.deleteMany(), prisma.user.deleteMany()]);
+  await prisma.$transaction([
+    prisma.rally.deleteMany(),
+    prisma.stamp.deleteMany(),
+    prisma.kit.deleteMany(),
+    prisma.user.deleteMany(),
+    prisma.account.deleteMany(),
+    prisma.session.deleteMany(),
+  ]);
 
   // 사용자 생성
   const userCreationPromises = Array.from({ length: 50 }, (_, index) => {
@@ -38,7 +45,23 @@ async function main() {
         email: `user${index + 1}@example.com`,
         nickname: `User${index + 1}`,
         profileImage: 'https://picsum.photos/360',
-        authProvider: 'twitter',
+        accounts: {
+          create: [
+            {
+              type: 'twitter',
+              provider: 'twitter',
+              providerAccountId: `user${index + 1}`,
+            },
+          ],
+        },
+        sessions: {
+          create: [
+            {
+              sessionToken: `sessiontoken${index + 1}`,
+              expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+            },
+          ],
+        },
       },
     });
   });
