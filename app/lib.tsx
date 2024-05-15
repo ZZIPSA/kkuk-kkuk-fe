@@ -20,7 +20,7 @@ export const getSignedNavBarItems = ({ profileImage = '/default-profile.svg' }: 
   {
     href: '/my',
     Inner: (
-      <Avatar className="w-7 h-7 border">
+      <Avatar className="w-8 h-8 border">
         <AvatarImage src={profileImage} />
       </Avatar>
     ),
@@ -30,6 +30,6 @@ export const getSignedNavBarItems = ({ profileImage = '/default-profile.svg' }: 
 export const notSignedNavBarItems: NavBarItemProps[] = [
   {
     href: '/signin',
-    Inner: <Button label="로그인" type="button" className="text-sm px-4 h-fit py-1.5 rounded-lg" />,
+    Inner: <Button label="로그인" type="button" className="text-base px-4 py-2 h-fit rounded-lg" />,
   },
 ];
