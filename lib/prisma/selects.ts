@@ -12,6 +12,7 @@ export const kitSelect: Prisma.KitSelect = {
     select: userSelect,
   },
   createdAt: true,
+  updatedAt: true,
 };
 export const rallySelect: Prisma.RallySelect = {
   id: true,
@@ -24,4 +25,5 @@ export const rallySelect: Prisma.RallySelect = {
   },
   stampCount: true,
   createdAt: true,
+  updatedAt: true,
 };
