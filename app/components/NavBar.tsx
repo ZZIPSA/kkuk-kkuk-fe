@@ -1,14 +1,9 @@
 'use client';
+'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
 
 // import { auth } from "@/auth";
 import { User } from '@/types/user';
@@ -43,10 +38,10 @@ export default function NavBar() {
 
 function NavBarItem({ href, Inner }: { href: string; Inner: React.ReactNode }) {
   return (
-    <NavigationMenuItem className="p-">
+    <NavigationMenuItem>
       <Link href={href} passHref>
-        <NavigationMenuLink className={navigationMenuTriggerStyle()}>{Inner}</NavigationMenuLink>
-      </Link>{' '}
+        {Inner}
+      </Link>
     </NavigationMenuItem>
   );
 }
