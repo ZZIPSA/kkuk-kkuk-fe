@@ -15,8 +15,8 @@ function generateRandomTag() {
     '작심삼일이두번이면끝',
     '외않되',
   ];
-  // 랜덤하게 0개에서 3개의 태그 선택 (0을 포함하여 태그가 없는 경우도 처리)
-  const tagCount = Math.floor(Math.random() * 4); // 0~3
+
+  const tagCount = Math.floor(Math.random() * 4);
   const tags = new Set();
 
   while (tags.size < tagCount) {
@@ -24,7 +24,6 @@ function generateRandomTag() {
     tags.add(tag);
   }
 
-  // 태그가 하나도 선택되지 않은 경우 null 반환
   return tags.size > 0 ? Array.from(tags).join(', ') : null;
 }
 
