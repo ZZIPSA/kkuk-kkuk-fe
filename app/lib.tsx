@@ -1,7 +1,7 @@
-import { Pencil, Stamp } from 'lucide-react';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/stories/Button';
 import { NavBarItemProps } from './types';
+import { Pencil, Stamp } from '@/lib/icons';
 
 export const staticNavBarItems: NavBarItemProps[] = [
   {
@@ -15,8 +15,8 @@ export const staticNavBarItems: NavBarItemProps[] = [
 ];
 
 export const getSignedNavBarItems = ({ profileImage }: { profileImage: string | null }): NavBarItemProps[] => [
-  { href: '/kits/new', Inner: <Pencil /> },
-  { href: '/rallies', Inner: <Stamp /> },
+  { href: '/kits/new', Inner: <Pencil className="h-8 w-8 fill-foreground" /> },
+  { href: '/rallies', Inner: <Stamp className="h-8 w-8 stroke-foreground" /> },
   {
     href: '/my',
     Inner: (
