@@ -24,6 +24,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: "Button",
+    type: 'button',
   },
 };
 
@@ -31,6 +32,7 @@ export const Secondary: Story = {
   args: {
     variant: "secondary",
     label: "Secondary Button",
+    type: 'button',
   },
 };
 
@@ -38,6 +40,7 @@ export const Outline: Story = {
   args: {
     variant: "outline",
     label: "Outline Button",
+    type: 'button',
   },
 };
 
@@ -45,6 +48,7 @@ export const Ghost: Story = {
   args: {
     variant: "ghost",
     label: "Ghost Button",
+    type: 'button',
   },
 };
 
@@ -52,6 +56,7 @@ export const Link: Story = {
   args: {
     variant: "link",
     label: "Link Button",
+    type: 'button',
   },
 };
 
@@ -59,6 +64,7 @@ export const Destructive: Story = {
   args: {
     variant: "destructive",
     label: "Destructive Button",
+    type: 'button',
   },
 };
 
@@ -66,6 +72,7 @@ export const Large: Story = {
   args: {
     size: "lg",
     label: "LargeButton",
+    type: 'button',
   },
 };
 
@@ -73,6 +80,7 @@ export const Small: Story = {
   args: {
     size: "sm",
     label: "SmallButton",
+    type: 'button',
   },
 };
 
@@ -80,5 +88,6 @@ export const WithIcon: Story = {
   args: {
     size: "icon",
     label: "🚀",
+    type: 'button',
   },
 };
