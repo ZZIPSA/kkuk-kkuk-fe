@@ -8,20 +8,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { IDialog } from "@/src/domains/Dialog";
+} from '@/components/ui/alert-dialog';
 import { BasicButton as Button } from '@/components/ui/button';
+import { IDialog } from '@/src/domains/Dialog';
 
 function Dialog(props: IDialog) {
-  const {
-    title,
-    description,
-    buttonVariant = "default",
-    buttonSize,
-    onAction,
-    onCancel,
-    label,
-  } = props;
+  const { title, description, buttonVariant = 'default', buttonSize, onAction, onCancel, label } = props;
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
