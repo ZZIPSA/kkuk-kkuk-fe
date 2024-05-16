@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import { NextResponse } from 'next/server';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   const id = params.id;
@@ -16,5 +17,5 @@ export async function GET(request: Request, { params }: { params: { id: string }
     },
   });
 
-  return Response.json({ data: kit });
+  return NextResponse.json({ data: kit });
 }
