@@ -13,7 +13,11 @@ export const FormSchema = z.object({
     .optional(),
   tags: /** 임의 지정 */ z.array(z.string()).optional(),
   stamps: z
-    .instanceof(FileList)
+    .unknown()
+    .transform((value) => value as FileList | null | undefined)
+    .refine((files): files is FileList => (files ?? false) && true, {
+      message: '스탬프를 업로드해주세요.',
+    })
     .refine(
       (files) => Array.from(files).every((file) => file.size <= MAX_FILE_SIZE),
       {
