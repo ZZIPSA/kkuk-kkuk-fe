@@ -1,12 +1,10 @@
 'use client';
-'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
-
 // import { auth } from "@/auth";
-import { User } from '@/types/user';
+import { User } from '@prisma/client';
 import { getSignedNavBarItems, notSignedNavBarItems, staticNavBarItems as leftItems } from '../lib';
 
 type DefaultUser = Pick<User, 'profileImage'>; // 테스트용
