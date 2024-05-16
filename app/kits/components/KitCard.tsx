@@ -3,17 +3,15 @@ import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Tag } from '@/stories/Tag';
-import { Kit } from '@/types/kit';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User } from '@/types/user';
+import { KitCardInfo } from '@/types/kit';
 
-type KitKeys = 'id' | 'title' | 'thumbnailImage' | 'tags' | 'uploader';
-interface KitCardProps extends Pick<Kit, KitKeys>, React.ComponentPropsWithoutRef<typeof Card> {
+interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeof Card> {
   id: string;
   title: string;
-  thumbnailImage: string;
+  thumbnailImage: string | null;
   tags: string[];
-  uploader: User;
+  uploader: { nickname: string | null; profileImage: string | null } | null;
 }
 
 export default function KitCard({ id, title, thumbnailImage, tags, uploader: { nickname }, className, ...props }: KitCardProps) {
