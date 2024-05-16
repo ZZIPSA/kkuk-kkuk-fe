@@ -14,6 +14,13 @@ export const kitSelect: Prisma.KitSelect = {
   createdAt: true,
   updatedAt: true,
 };
+export const kitCardSelect = {
+  id: true,
+  title: true,
+  thumbnailImage: true,
+  tags: true,
+  uploader: { select: { nickname: true, profileImage: true } },
+} satisfies Prisma.KitSelect;
 export const rallySelect: Prisma.RallySelect = {
   id: true,
   title: true,
