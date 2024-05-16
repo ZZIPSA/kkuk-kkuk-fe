@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client';
 
-export const userSelect: Prisma.UserSelect = { id: true, email: true, profileImage: true, nickname: true };
-export const kitSelect: Prisma.KitSelect = {
+export const userSelect = { id: true, email: true, profileImage: true, nickname: true } satisfies Prisma.UserSelect;
+export const kitSelect = {
   id: true,
   title: true,
   description: true,
@@ -13,7 +13,7 @@ export const kitSelect: Prisma.KitSelect = {
   },
   createdAt: true,
   updatedAt: true,
-};
+} satisfies Prisma.KitSelect;
 export const kitCardSelect = {
   id: true,
   title: true,
@@ -21,7 +21,7 @@ export const kitCardSelect = {
   tags: true,
   uploader: { select: { nickname: true, profileImage: true } },
 } satisfies Prisma.KitSelect;
-export const rallySelect: Prisma.RallySelect = {
+export const rallySelect = {
   id: true,
   title: true,
   description: true,
@@ -33,4 +33,4 @@ export const rallySelect: Prisma.RallySelect = {
   stampCount: true,
   createdAt: true,
   updatedAt: true,
-};
+} satisfies Prisma.RallySelect;
