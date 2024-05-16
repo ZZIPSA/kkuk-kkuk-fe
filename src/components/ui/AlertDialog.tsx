@@ -9,8 +9,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import { IDialog } from "@/src/domains/Dialog";
+import { BasicButton as Button } from '@/components/ui/button';
 
 function Dialog(props: IDialog) {
   const {
