@@ -10,8 +10,12 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "@prisma/client": "^5.13.0",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-label": "^2.0.2",
@@ -21,6 +25,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.378.0",
     "next": "14.2.3",
+    "prisma": "^5.13.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.4",
@@ -28,6 +33,7 @@
     "tailwind-merge": "^2.3.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss-animate": "^1.0.7",
+    "ts-node": "^10.9.2",
     "zod": "^3.23.6",
     "zustand": "^4.5.2"
   },
