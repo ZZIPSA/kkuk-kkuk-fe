@@ -28,7 +28,7 @@ export async function POST(request: Request) {
         title,
         description,
         status: 'active',
-        kitId: +kitId,
+        kitId,
         starterId,
         stampCount: 0,
       },
