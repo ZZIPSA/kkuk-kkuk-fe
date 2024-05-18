@@ -1,13 +1,7 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { BasicInput as Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { FormFields } from "./types";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { BasicInput as Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import { FormFields } from './types';
 
 const Title: FormFields = ({ control }) => (
   <FormField
@@ -20,7 +14,7 @@ const Title: FormFields = ({ control }) => (
           <Input
             placeholder="제목을 입력해주세요."
             className={cn({
-              "border-red-500": !!fieldState.error,
+              'border-red-500': !!fieldState.error,
             })}
             {...field}
           />

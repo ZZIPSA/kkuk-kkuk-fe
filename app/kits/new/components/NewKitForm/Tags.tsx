@@ -1,11 +1,5 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { FormFields } from "./types";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { FormFields } from './types';
 
 const Tags: FormFields = ({ control }) => (
   <FormField
