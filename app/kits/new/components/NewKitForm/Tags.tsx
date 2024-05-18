@@ -1,4 +1,5 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { FormFields } from './types';
 
 const Tags: FormFields = ({ control }) => (
@@ -8,7 +9,9 @@ const Tags: FormFields = ({ control }) => (
     render={({}) => (
       <FormItem>
         <FormLabel>태그</FormLabel>
-        <FormControl>{/* TODO: Tags */}</FormControl>
+        <FormControl>
+          <Input type="text" className="w-full" />
+        </FormControl>
         <FormMessage />
       </FormItem>
     )}
