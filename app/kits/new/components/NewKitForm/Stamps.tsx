@@ -1,15 +1,8 @@
-import Image from "next/image";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormDescription,
-  FormMessage,
-} from "@/components/ui/form";
-import { BasicInput as Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { StampsField } from "./types";
+import Image from 'next/image';
+import { FormControl, FormField, FormItem, FormLabel, FormDescription, FormMessage } from '@/components/ui/form';
+import { BasicInput as Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import { StampsField } from './types';
 
 const Stamps: StampsField = ({ control, stampsRef }) => (
   <FormField
@@ -19,15 +12,9 @@ const Stamps: StampsField = ({ control, stampsRef }) => (
       <FormItem>
         <FormLabel>스탬프</FormLabel>
         <FormControl>
-          <Input
-            type="file"
-            multiple
-            accept="image/*"
-            className={cn({ "border-red-500": fieldState.error })}
-            {...stampsRef}
-          />
+          <Input type="file" multiple accept="image/*" className={cn({ 'border-red-500': fieldState.error })} {...stampsRef} />
         </FormControl>
-        <FormDescription className={cn("grid grid-cols-2 gap-4")}>
+        <FormDescription className={cn('grid grid-cols-2 gap-4')}>
           {field.value &&
             Array.from(field.value).map((file) => (
               <Image
