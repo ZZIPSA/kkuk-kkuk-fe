@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { FormControl, FormField, FormItem, FormLabel, FormDescription, FormMessage } from '@/components/ui/form';
-import { BasicInput as Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { StampsField } from './types';
 
