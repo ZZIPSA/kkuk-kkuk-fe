@@ -15,13 +15,14 @@ export const FormSchema = z.object({
     .refine((files): files is FileList => (files ?? false) && true, {
       message: '스탬프를 업로드해주세요.',
     })
-    .refine((files) => Array.from(files).every((file) => file.size <= MAX_FILE_SIZE), {
-      message: '5MB 이하의 파일을 업로드해주세요.',
-    })
-    .refine((files) => Array.from(files).every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type)), {
-      message: '이미지 파일을 업로드해주세요.',
-    })
+    .transform((files) => Array.from(files))
     .refine((files) => files.length === 6, {
       message: '6개의 이미지를 업로드해주세요.',
+    })
+    .refine((files) => files.every((file) => file.size <= MAX_FILE_SIZE), {
+      message: '5MB 이하의 파일을 업로드해주세요.',
+    })
+    .refine((files) => files.every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type)), {
+      message: '이미지 파일을 업로드해주세요.',
     }),
 });
