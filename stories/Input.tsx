@@ -1,4 +1,4 @@
-import { BasicInputProps, BasicInput } from '@/components/ui/input';
+import { InputProps, Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
 export enum Variants {
@@ -13,7 +13,7 @@ const classNames = {
   [Variants.disabled]: '',
 } as const;
 
-interface InputProps extends BasicInputProps {
+interface InputProps extends InputProps {
   /**
    * Variants for the Input component.
    */
@@ -42,7 +42,7 @@ export const TextInput = ({ variant = Variants.default, label, isNotVerified = f
         {label}
         {isRequired && <span className="text-red-500">*</span>}
       </label>
-      <BasicInput
+      <Input
         className={cn(classNames[variant], {
           'border-red-500 focus:border-red-500': isNotVerified,
         })}
