@@ -1,4 +1,5 @@
 import { InputProps, Input } from '@/components/ui/input';
+import { TextareaProps, Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 
 export enum Variants {
@@ -13,7 +14,7 @@ const classNames = {
   [Variants.disabled]: '',
 } as const;
 
-interface InputProps extends InputProps {
+interface TextInputProps extends Partial<InputProps & TextareaProps> {
   /**
    * Variants for the Input component.
    */
@@ -23,6 +24,12 @@ interface InputProps extends InputProps {
    * @default "default"
    */
   label: string;
+  /**
+   * Multiline input.
+   * True use textarea, false use input.
+   * @default false
+   */
+  multiline?: boolean;
   /**
    * Whether the input is verified or not.
    * For now, it takes parameter as a boolean.
@@ -34,22 +41,33 @@ interface InputProps extends InputProps {
 /**
  * Primary UI component for user interaction
  */
-export const TextInput = ({ variant = Variants.default, label, isNotVerified = false, ...props }: InputProps) => {
+export const TextInput = ({ variant = Variants.default, label, multiline = false, isNotVerified = false, ...props }: TextInputProps) => {
   const isRequired = variant === Variants.required;
   return (
-    <div>
-      <label>
-        {label}
+    <label className="flex flex-col w-full mb-6">
+      <p>
         {isRequired && <span className="text-red-500">*</span>}
-      </label>
-      <Input
-        className={cn(classNames[variant], {
-          'border-red-500 focus:border-red-500': isNotVerified,
-        })}
-        disabled={variant === Variants.disabled}
-        placeholder={label}
-        {...props}
-      />
-    </div>
+        <span className="font-bold">{label}</span>
+      </p>
+      {multiline ? (
+        <Textarea
+          className={cn(classNames[variant], {
+            'border-red-500 focus:border-red-500': isNotVerified,
+          })}
+          disabled={variant === Variants.disabled}
+          placeholder={label}
+          {...props}
+        />
+      ) : (
+        <Input
+          className={cn(classNames[variant], {
+            'border-red-500 focus:border-red-500': isNotVerified,
+          })}
+          disabled={variant === Variants.disabled}
+          placeholder={label}
+          {...props}
+        />
+      )}
+    </label>
   );
 };
