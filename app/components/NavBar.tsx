@@ -1,21 +1,18 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+import { useState } from 'react';
+import Link from 'next/link';
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
+// import { auth } from "@/auth";
+import { User } from '@prisma/client';
+import { getSignedNavBarItems, notSignedNavBarItems, staticNavBarItems as leftItems } from '../lib';
 
-export default function NavBar({
-  leftItems,
-  rightItems,
-}: {
-  leftItems: { href: string; Inner: React.ReactNode }[];
-  rightItems: { href: string; Inner: React.ReactNode }[];
-}) {
+type DefaultUser = Pick<User, 'profileImage'>; // 테스트용
+const defaultUser: DefaultUser = { profileImage: '/default-profile.svg' }; // 테스트용
+
+export default function NavBar() {
+  const [user, setUser] = useState<DefaultUser | null>(); // 테스트용
+  const rightItems = user ? getSignedNavBarItems(user) : notSignedNavBarItems; // 테스트용
   return (
     <NavigationMenu className="max-w-full w-full justify-between">
       <NavigationMenuList>
@@ -23,7 +20,12 @@ export default function NavBar({
           <NavBarItem href={href} Inner={Inner} key={href} />
         ))}
       </NavigationMenuList>
-      <NavigationMenuList>
+      <NavigationMenuList
+        onClick={
+          // 테스트용
+          () => setUser(user ? null : defaultUser)
+        }
+      >
         {rightItems.map(({ href, Inner }) => (
           <NavBarItem href={href} Inner={Inner} key={href} />
         ))}
@@ -36,10 +38,8 @@ function NavBarItem({ href, Inner }: { href: string; Inner: React.ReactNode }) {
   return (
     <NavigationMenuItem>
       <Link href={href} passHref>
-        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-          {Inner}
-        </NavigationMenuLink>
-      </Link>{" "}
+        {Inner}
+      </Link>
     </NavigationMenuItem>
   );
 }
