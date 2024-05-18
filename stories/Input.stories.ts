@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { Input, Variants } from './Input';
+import { TextInput, Variants } from './Input';
 
 const meta = {
   title: 'Example/Input',
-  component: Input,
+  component: TextInput,
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
   args: { onClick: fn() },
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof TextInput>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

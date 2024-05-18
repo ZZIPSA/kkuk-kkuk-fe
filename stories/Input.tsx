@@ -34,7 +34,7 @@ interface InputProps extends BasicInputProps {
 /**
  * Primary UI component for user interaction
  */
-export const Input = ({ variant = Variants.default, label, isNotVerified = false, ...props }: InputProps) => {
+export const TextInput = ({ variant = Variants.default, label, isNotVerified = false, ...props }: InputProps) => {
   const isRequired = variant === Variants.required;
   return (
     <div>
