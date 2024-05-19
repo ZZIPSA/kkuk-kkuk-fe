@@ -7,10 +7,25 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { KitCardInfo } from '@/types/kit';
 
 interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeof Card> {
+  /**
+   * The unique identifier of the kit.
+   */
   id: string;
+  /**
+   * The title of the kit.
+   */
   title: string;
+  /**
+   * The thumbnail image of the kit.
+   */
   thumbnailImage: string | null;
+  /**
+   * The tags of the kit.
+   */
   tags: string[];
+  /**
+   * The uploader of the kit.
+   */
   uploader: { nickname: string | null; profileImage: string | null } | null;
 }
 
