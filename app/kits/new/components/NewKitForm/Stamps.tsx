@@ -18,16 +18,16 @@ const Stamps: StampsField = ({ control, stampsRef }) => (
             Array.from(field.value)
               .filter((_, i) => i < 6)
               .map((file) => (
-                <div key={file.name} className="">
+                <div key={file.name} className="relative">
                   <Image
                     src={URL.createObjectURL(file)}
-                    className="rounded-md aspect-square w-full h-full object-cover"
+                    className="rounded-2xl aspect-square w-full object-cover"
                     alt={file.name}
                     width={100}
                     height={100}
                   />
                   <Trash
-                    className="float-right relative w-8 h-8 -top-9 right-1 cursor-pointer"
+                    className="absolute w-8 h-8 right-1 bottom-1 cursor-pointer"
                     onClick={() => {
                       onChange(field.value.filter((f) => f !== file));
                     }}
