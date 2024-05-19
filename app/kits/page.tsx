@@ -1,5 +1,5 @@
 import { kitCardSelect, prisma } from '@/lib/prisma';
-import KitCard from './components/KitCard';
+import KitCard from '@/components/KitCard';
 import { KitCardsInfo } from '@/types/kit';
 
 export default async function KitsPage() {
