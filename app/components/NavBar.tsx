@@ -11,7 +11,7 @@ type DefaultUser = Pick<User, 'profileImage'>; // 테스트용
 const defaultUser: DefaultUser = { profileImage: '/default-profile.svg' }; // 테스트용
 
 export default function NavBar() {
-  const [user, setUser] = useState<DefaultUser | null>(); // 테스트용
+  const [user, setUser] = useState<DefaultUser>(); // 테스트용
   const headerUserMenuItems = getHeaderUserMenuItems(user); // 테스트용
   return (
     <NavigationMenu className="max-w-full w-full justify-between">
@@ -23,10 +23,11 @@ export default function NavBar() {
       <NavigationMenuList
         onClick={
           // 테스트용
-          () => setUser(user ? null : defaultUser)
+          () => setUser(user ? undefined : defaultUser)
         }
       >
         {headerUserMenuItems
+          .filter(({ isGuest }) => !!user !== !!isGuest)
           .map(({ href, Inner }) => (
             <NavBarItem href={href} Inner={Inner} key={href} />
           ))}

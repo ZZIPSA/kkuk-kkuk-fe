@@ -2,6 +2,7 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/stories/Button';
 import { NavBarItemProps } from './types';
 import { Pencil, Stamp } from '@/lib/icons';
+import { User } from '@prisma/client';
 
 export const headerLogoItems: NavBarItemProps[] = [
   {
@@ -14,14 +15,14 @@ export const headerLogoItems: NavBarItemProps[] = [
   },
 ];
 
-export const getHeaderUserMenuItems = ({ profileImage }: { profileImage: string | null }): NavBarItemProps[] => [
+export const getHeaderUserMenuItems = (user?: Pick<User, 'profileImage'>): NavBarItemProps[] => [
   { href: '/kits/new', Inner: <Pencil className="h-8 w-8 fill-foreground" />, isGuest: false },
   { href: '/rallies', Inner: <Stamp className="h-8 w-8 stroke-foreground" />, isGuest: false },
   {
     href: '/my',
     Inner: (
       <Avatar className="w-8 h-8 border">
-        <AvatarImage src={profileImage ?? '/default-profile.svg'} />
+        <AvatarImage src={user?.profileImage ?? '/default-profile.svg'} />
       </Avatar>
     ),
     isGuest: false,
