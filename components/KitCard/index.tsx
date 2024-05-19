@@ -19,7 +19,7 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader, cla
   const nickname = uploader?.nickname ?? notFoundedUserNickname;
   const profileImage = uploader?.profileImage ?? notFoundedImage;
   return (
-    <Card className={cn('flex flex-col border-0 shadow-none gap-2', className)} {...props}>
+    <Card className={cn('h-full flex flex-col border-0 shadow-none gap-2', className)} {...props}>
       <CardHeader className="p-0">
         <Image
           src={thumbnailImage}
@@ -35,7 +35,7 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader, cla
           {tags?.map((tag) => <Tag key={tag} label={tag} className="break-keep" />)}
         </CardDescription>
       </CardContent>
-      <CardFooter className="p-0 flex gap-2">
+      <CardFooter className="p-0 flex gap-2 mt-auto">
         <Avatar className="items-center border border-grey-100 w-6 h-6">
           <AvatarImage src={profileImage} alt={nickname} />
           <AvatarFallback>{nickname}</AvatarFallback>
