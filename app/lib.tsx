@@ -3,6 +3,7 @@ import { Button } from '@/stories/Button';
 import { NavBarItemProps } from './types';
 import { Pencil, Stamp } from '@/lib/icons';
 import { User } from '@prisma/client';
+import { DEFAULT_PROFILE } from '@/lib/constants';
 
 export const headerLogoItems: NavBarItemProps[] = [
   {
@@ -22,7 +23,7 @@ export const getHeaderUserMenuItems = (user?: Pick<User, 'profileImage'>): NavBa
     href: '/my',
     Inner: (
       <Avatar className="w-8 h-8 border">
-        <AvatarImage src={user?.profileImage ?? '/default-profile.svg'} />
+        <AvatarImage src={user?.profileImage ?? DEFAULT_PROFILE} />
       </Avatar>
     ),
     isGuest: false,
