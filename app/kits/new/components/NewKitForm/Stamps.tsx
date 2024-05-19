@@ -3,6 +3,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormDescription, FormMessa
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { StampsField } from './types';
+import { Trash } from '@/lib/icons';
 
 const Stamps: StampsField = ({ control, stampsRef }) => (
   <FormField
@@ -13,16 +14,25 @@ const Stamps: StampsField = ({ control, stampsRef }) => (
         <FormLabel>스탬프</FormLabel>
         <FormDescription className={cn('grid grid-cols-2 gap-4')}>
           {field.value &&
-            Array.from(field.value).map((file) => (
-              <Image
-                src={URL.createObjectURL(file)}
-                className="rounded-md aspect-square w-full h-full object-cover"
-                alt={file.name}
-                key={file.name}
-                width={100}
-                height={100}
-              />
-            ))}
+            Array.from(field.value)
+              .filter((_, i) => i < 6)
+              .map((file) => (
+                <div key={file.name} className="">
+                  <Image
+                    src={URL.createObjectURL(file)}
+                    className="rounded-md aspect-square w-full h-full object-cover"
+                    alt={file.name}
+                    width={100}
+                    height={100}
+                  />
+                  <Trash
+                    className="float-right relative w-8 h-8 -top-9 right-1 cursor-pointer"
+                    onClick={() => {
+                      onChange(field.value.filter((f) => f !== file));
+                    }}
+                  />
+                </div>
+              ))}
         </FormDescription>
         <FormControl>
           <Input
