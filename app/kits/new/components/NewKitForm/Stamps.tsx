@@ -11,9 +11,6 @@ const Stamps: StampsField = ({ control, stampsRef }) => (
     render={({ field: { onChange, ...field }, fieldState }) => (
       <FormItem>
         <FormLabel>스탬프</FormLabel>
-        <FormControl>
-          <Input type="file" multiple accept="image/*" className={cn({ 'border-red-500': fieldState.error })} {...stampsRef} />
-        </FormControl>
         <FormDescription className={cn('grid grid-cols-2 gap-4')}>
           {field.value &&
             Array.from(field.value).map((file) => (
@@ -27,6 +24,16 @@ const Stamps: StampsField = ({ control, stampsRef }) => (
               />
             ))}
         </FormDescription>
+        <FormControl>
+          <Input
+            type="file"
+            accept="image/*"
+            multiple
+            className={cn({ 'border-red-500': fieldState.error })}
+            {...stampsRef}
+            onChange={(e) => onChange([...Array.from(e.target.files ?? [])])}
+          />
+        </FormControl>
         <FormMessage />
       </FormItem>
     )}
