@@ -24,12 +24,16 @@ interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeo
    */
   tags: string[];
   /**
+   * The description of the kit.
+   */
+  description?: string;
+  /**
    * The uploader of the kit.
    */
   uploader: { nickname: string | null; profileImage: string | null } | null;
 }
 
-export default function KitCard({ id, title, thumbnailImage, tags, uploader, className, ...props }: KitCardProps) {
+export default function KitCard({ id, title, thumbnailImage, tags, uploader, className, description, ...props }: KitCardProps) {
   thumbnailImage ??= notFoundedImage;
   const nickname = uploader?.nickname ?? notFoundedUserNickname;
   const profileImage = uploader?.profileImage ?? notFoundedImage;
@@ -58,6 +62,7 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader, cla
         </div>
       </CardContent>
       <CardFooter>
+        <CardDescription>{description}</CardDescription>
       </CardFooter>
     </Card>
   );
