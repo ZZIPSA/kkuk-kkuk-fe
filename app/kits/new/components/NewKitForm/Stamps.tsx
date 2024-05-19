@@ -11,8 +11,9 @@ const Stamps: StampsField = ({ control, stampsRef }) => (
     name="stamps"
     render={({ field: { onChange, ...field }, fieldState }) => (
       <FormItem>
-        <FormLabel>스탬프</FormLabel>
+        <FormLabel>스탬프 이미지 등록</FormLabel>
         <FormDescription className={cn('grid grid-cols-2 gap-4')}>
+          <span className="col-span-full">첫번째로 등록된 이미지는 대표이미지 , 마지막 등록된 이미지는 완주용 보상 이미지로 적용됩니다.</span>
           {field.value &&
             Array.from(field.value)
               .filter((_, i) => i < 6)
