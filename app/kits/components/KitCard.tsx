@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { notFoundedUserNickname, notFoundedImage } from '@/lib/notFound';
+import { defaultUserNickname, defaultImage } from '@/lib/notFound';
 import { Tag } from '@/stories/Tag';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { KitCardInfo } from '@/types/kit';
@@ -16,9 +16,9 @@ interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeo
 }
 
 export default function KitCard({ id, title, thumbnailImage, tags, uploader, className, ...props }: KitCardProps) {
-  thumbnailImage ??= notFoundedImage;
-  const nickname = uploader?.nickname ?? notFoundedUserNickname;
-  const profileImage = uploader?.profileImage ?? notFoundedImage;
+  thumbnailImage ??= defaultImage;
+  const nickname = uploader?.nickname ?? defaultUserNickname;
+  const profileImage = uploader?.profileImage ?? defaultImage;
   return (
     <Card className={cn('flex flex-col border-0 shadow-none gap-2', className)} {...props}>
       <Link href={`/kits/${id}`} passHref>
