@@ -26,9 +26,6 @@ export const getSignedNavBarItems = ({ profileImage }: { profileImage: string | 
     ),
     isGuest: false,
   },
-];
-
-export const notSignedNavBarItems: NavBarItemProps[] = [
   {
     href: '/signin',
     Inner: <Button label="로그인" type="button" className="text-base px-4 py-2 h-fit rounded-lg" />,
