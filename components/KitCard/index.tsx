@@ -46,16 +46,18 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader, cla
       </CardHeader>
       <CardContent className="p-0 flex flex-col gap-2">
         <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis text-base">{title}</CardTitle>
-        <CardDescription className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
+        <div className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
           {tags?.map((tag) => <Tag key={tag} label={tag} className="break-keep" />)}
-        </CardDescription>
+        </div>
+        <div className="p-0 flex items-center gap-2 mt-auto">
+          <Avatar className="items-center border border-grey-100 w-6 h-6">
+            <AvatarImage src={profileImage} alt={nickname} />
+            <AvatarFallback>{nickname}</AvatarFallback>
+          </Avatar>
+          <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-[#A69C98] text-xs">{nickname}</span>
+        </div>
       </CardContent>
-      <CardFooter className="p-0 flex gap-2 mt-auto">
-        <Avatar className="items-center border border-grey-100 w-6 h-6">
-          <AvatarImage src={profileImage} alt={nickname} />
-          <AvatarFallback>{nickname}</AvatarFallback>
-        </Avatar>
-        <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-[#A69C98] text-xs">{nickname}</span>
+      <CardFooter>
       </CardFooter>
     </Card>
   );
