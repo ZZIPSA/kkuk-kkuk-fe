@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { notFoundedUserNickname, notFoundedImage } from '@/lib/notFound';
@@ -21,17 +20,15 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader, cla
   const profileImage = uploader?.profileImage ?? notFoundedImage;
   return (
     <Card className={cn('flex flex-col border-0 shadow-none gap-2', className)} {...props}>
-      <Link href={`/kits/${id}`} passHref>
-        <CardHeader className="p-0">
-          <Image
-            src={thumbnailImage}
-            alt={title}
-            width={100}
-            height={100}
-            className="border-black/20 border rounded-md aspect-square w-full h-full object-cover"
-          />
-        </CardHeader>
-      </Link>
+      <CardHeader className="p-0">
+        <Image
+          src={thumbnailImage}
+          alt={title}
+          width={100}
+          height={100}
+          className="border-black/20 border rounded-md aspect-square w-full h-full object-cover"
+        />
+      </CardHeader>
       <CardContent className="p-0 flex flex-col gap-2">
         <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis text-base">{title}</CardTitle>
         <CardDescription className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
