@@ -3,7 +3,7 @@ import { Button } from '@/stories/Button';
 import { NavBarItemProps } from './types';
 import { Pencil, Stamp } from '@/lib/icons';
 
-export const staticNavBarItems: NavBarItemProps[] = [
+export const headerLogoItems: NavBarItemProps[] = [
   {
     href: '/',
     Inner: (
@@ -14,7 +14,7 @@ export const staticNavBarItems: NavBarItemProps[] = [
   },
 ];
 
-export const getSignedNavBarItems = ({ profileImage }: { profileImage: string | null }): NavBarItemProps[] => [
+export const getHeaderUserMenuItems = ({ profileImage }: { profileImage: string | null }): NavBarItemProps[] => [
   { href: '/kits/new', Inner: <Pencil className="h-8 w-8 fill-foreground" />, isGuest: false },
   { href: '/rallies', Inner: <Stamp className="h-8 w-8 stroke-foreground" />, isGuest: false },
   {
