@@ -1,7 +1,7 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/stories/Button';
 import { NavBarItemProps } from './types';
-import { Pencil, Stamp } from '@/lib/icons';
+import { Pencil, Stamp } from '@/components/icons';
 
 export const staticNavBarItems: NavBarItemProps[] = [
   {

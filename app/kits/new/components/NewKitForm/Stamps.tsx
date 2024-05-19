@@ -3,7 +3,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormDescription, FormMessa
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { StampsField } from './types';
-import { Trash } from '@/lib/icons';
+import { Trash } from '@/components/icons';
 
 const Stamps: StampsField = ({ control, stampsRef }) => (
   <FormField
