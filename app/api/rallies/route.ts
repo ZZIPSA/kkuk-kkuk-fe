@@ -5,7 +5,7 @@ import { prisma, kitSelect, rallySelect, userSelect } from '@/lib/prisma';
 // TODO: 페이지네이션
 export async function GET() {
   try {
-    const rallies = prisma.rally.findMany({ select: rallySelect });
+    const rallies = await prisma.rally.findMany({ select: rallySelect });
 
     return NextResponse.json({ data: rallies });
   } catch (error) {
