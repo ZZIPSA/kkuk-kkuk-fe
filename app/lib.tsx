@@ -1,11 +1,13 @@
-import { Pencil, Stamp } from "lucide-react";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/stories/Button";
-import { NavBarItemProps } from "./types";
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/stories/Button';
+import { NavBarItemProps } from './types';
+import { Pencil, Stamp } from '@/lib/icons';
+import { User } from '@prisma/client';
+import { DEFAULT_PROFILE } from '@/lib/constants';
 
-export const staticNavBarItems: NavBarItemProps[] = [
+export const headerLogoItems: NavBarItemProps[] = [
   {
-    href: "/",
+    href: '/',
     Inner: (
       <Avatar className="w-7 h-7">
         <AvatarImage src="/kkuk-kkuk.svg" />
@@ -14,32 +16,21 @@ export const staticNavBarItems: NavBarItemProps[] = [
   },
 ];
 
-export const getSignedNavBarItems = ({
-  image = "/kkuk-kkuk.svg",
-}: {
-  image?: string;
-}): NavBarItemProps[] => [
-  { href: "/kits/new", Inner: <Pencil /> },
-  { href: "/rallies", Inner: <Stamp /> },
+export const getHeaderUserMenuItems = (user?: Pick<User, 'profileImage'>): NavBarItemProps[] => [
+  { href: '/kits/new', Inner: <Pencil className="h-8 w-8 fill-foreground" />, isGuest: false },
+  { href: '/rallies', Inner: <Stamp className="h-8 w-8 stroke-foreground" />, isGuest: false },
   {
-    href: "/my",
+    href: '/my',
     Inner: (
-      <Avatar className="w-7 h-7 border">
-        <AvatarImage src={image} />
+      <Avatar className="w-8 h-8 border">
+        <AvatarImage src={user?.profileImage ?? DEFAULT_PROFILE} />
       </Avatar>
     ),
+    isGuest: false,
   },
-];
-
-export const notSignedNavBarItems: NavBarItemProps[] = [
   {
-    href: "/signin",
-    Inner: (
-      <Button
-        label="로그인"
-        type="button"
-        className="text-sm px-4 h-fit py-1.5 rounded-lg"
-      />
-    ),
+    href: '/signin',
+    Inner: <Button label="로그인" type="button" className="text-base px-4 py-2 h-fit rounded-lg" />,
+    isGuest: true,
   },
 ];
