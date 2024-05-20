@@ -16,8 +16,6 @@ interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeo
 }
 
 export default function KitCard({ id, title, thumbnailImage, tags, uploader, className, ...props }: KitCardProps) {
-  thumbnailImage ??= DEFAULT_PROFILE;
-  const nickname = uploader?.nickname ?? DEFAULT_USER_NICKNAME;
   const profileImage = uploader?.profileImage ?? DEFAULT_PROFILE;
   return (
     <Card className={cn('flex flex-col border-0 shadow-none gap-2', className)} {...props}>
