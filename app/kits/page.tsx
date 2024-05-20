@@ -1,9 +1,24 @@
-import { kitCardSelect, prisma } from '@/lib/prisma';
 import KitCard from './components/KitCard';
-import { KitCardsInfo } from '@/types/kit';
+import { KitCardsInfo } from '@/types/Kit';
+
+async function fetchKits(): Promise<KitCardsInfo> {
+  const response = await fetch('http://localhost:3000/api/kits', {
+    cache: 'no-store',
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch kits');
+  }
+
+  const json = await response.json();
+  const { data } = json;
+
+  return data;
+}
 
 export default async function KitsPage() {
-  const kits: KitCardsInfo = await prisma.kit.findMany({ select: kitCardSelect });
+  const kits = await fetchKits();
+
   return (
     <main className="w-full p-4 pt-6 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4 lg:gap-4">
       <h1 className="text-xl font-bold text-foreground col-span-full">등록된 키트</h1>

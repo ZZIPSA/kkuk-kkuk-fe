@@ -2,8 +2,8 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/stories/Button';
 import { NavBarItemProps } from './types';
 import { Pencil, Stamp } from '@/lib/icons';
-import { User } from '@prisma/client';
 import { DEFAULT_PROFILE } from '@/lib/constants';
+import { UserModel } from '@/types/models';
 
 export const headerLogoItems: NavBarItemProps[] = [
   {
@@ -16,7 +16,7 @@ export const headerLogoItems: NavBarItemProps[] = [
   },
 ];
 
-export const getHeaderUserMenuItems = (user?: Pick<User, 'profileImage'>): NavBarItemProps[] => [
+export const getHeaderUserMenuItems = (user?: Pick<UserModel, 'profileImage'>): NavBarItemProps[] => [
   { href: '/kits/new', Inner: <Pencil className="h-8 w-8 fill-foreground" />, isGuest: false },
   { href: '/rallies', Inner: <Stamp className="h-8 w-8 stroke-foreground" />, isGuest: false },
   {
