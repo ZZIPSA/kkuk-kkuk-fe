@@ -1,32 +1,36 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+import { useState } from 'react';
+import Link from 'next/link';
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
+// import { auth } from "@/auth";
+import { User } from '@prisma/client';
+import { getHeaderUserMenuItems, headerLogoItems } from '../lib';
 
-export default function NavBar({
-  leftItems,
-  rightItems,
-}: {
-  leftItems: { href: string; Inner: React.ReactNode }[];
-  rightItems: { href: string; Inner: React.ReactNode }[];
-}) {
+type DefaultUser = Pick<User, 'profileImage'>; // 테스트용
+const defaultUser: DefaultUser = { profileImage: '/default-profile.svg' }; // 테스트용
+
+export default function NavBar() {
+  const [user, setUser] = useState<DefaultUser>(); // 테스트용
+  const headerUserMenuItems = getHeaderUserMenuItems(user); // 테스트용
   return (
     <NavigationMenu className="max-w-full w-full justify-between">
       <NavigationMenuList>
-        {leftItems.map(({ href, Inner }) => (
+        {headerLogoItems.map(({ href, Inner }) => (
           <NavBarItem href={href} Inner={Inner} key={href} />
         ))}
       </NavigationMenuList>
-      <NavigationMenuList>
-        {rightItems.map(({ href, Inner }) => (
-          <NavBarItem href={href} Inner={Inner} key={href} />
-        ))}
+      <NavigationMenuList
+        onClick={
+          // 테스트용
+          () => setUser(user ? undefined : defaultUser)
+        }
+      >
+        {headerUserMenuItems
+          .filter(({ isGuest }) => !!user !== !!isGuest)
+          .map(({ href, Inner }) => (
+            <NavBarItem href={href} Inner={Inner} key={href} />
+          ))}
       </NavigationMenuList>
     </NavigationMenu>
   );
@@ -36,10 +40,8 @@ function NavBarItem({ href, Inner }: { href: string; Inner: React.ReactNode }) {
   return (
     <NavigationMenuItem>
       <Link href={href} passHref>
-        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-          {Inner}
-        </NavigationMenuLink>
-      </Link>{" "}
+        {Inner}
+      </Link>
     </NavigationMenuItem>
   );
 }
