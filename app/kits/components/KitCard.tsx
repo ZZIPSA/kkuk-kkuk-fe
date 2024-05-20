@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { notFoundedUserNickname, notFoundedImage } from '@/lib/notFound';
+import { DEFAULT_PROFILE } from '@/lib/constants';
 import { Tag } from '@/stories/Tag';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { KitCardInfo } from '@/types/kit';
@@ -16,15 +16,14 @@ interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeo
 }
 
 export default function KitCard({ id, title, thumbnailImage, tags, uploader, className, ...props }: KitCardProps) {
-  thumbnailImage ??= notFoundedImage;
-  const nickname = uploader?.nickname ?? notFoundedUserNickname;
-  const profileImage = uploader?.profileImage ?? notFoundedImage;
+  const profileImage = uploader?.profileImage ?? DEFAULT_PROFILE;
+  const nickname = uploader?.nickname;
   return (
     <Card className={cn('flex flex-col border-0 shadow-none gap-2', className)} {...props}>
       <Link href={`/kits/${id}`} passHref>
         <CardHeader className="p-0">
           <Image
-            src={thumbnailImage}
+            src={thumbnailImage ?? ''}
             alt={title}
             width={100}
             height={100}
@@ -40,7 +39,7 @@ export default function KitCard({ id, title, thumbnailImage, tags, uploader, cla
       </CardContent>
       <CardFooter className="p-0 flex gap-2">
         <Avatar className="items-center border border-grey-100 w-6 h-6">
-          <AvatarImage src={profileImage} alt={nickname} />
+          <AvatarImage src={profileImage} alt={nickname ?? ''} />
           <AvatarFallback>{nickname}</AvatarFallback>
         </Avatar>
         <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-[#A69C98] text-xs">{nickname}</span>
