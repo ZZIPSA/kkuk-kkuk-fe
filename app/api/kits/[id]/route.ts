@@ -13,7 +13,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       tags: true,
       thumbnailImage: true,
       rewardImage: true,
-      uploaderId: true,
+      uploader: true,
     },
   });
 
