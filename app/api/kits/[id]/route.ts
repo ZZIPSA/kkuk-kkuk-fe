@@ -14,6 +14,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       thumbnailImage: true,
       rewardImage: true,
       uploader: true,
+      stamps: true,
     },
   });
 
