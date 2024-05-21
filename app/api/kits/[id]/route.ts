@@ -18,5 +18,5 @@ export async function GET(request: Request, { params }: { params: { id: string }
     },
   });
 
-  return NextResponse.json({ data: kit });
+  return NextResponse.json({ data: kit }, { status: kit ? 200 : 404 });
 }
