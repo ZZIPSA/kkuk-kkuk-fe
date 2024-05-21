@@ -64,7 +64,7 @@ export default function KitCard({
       className={cn(
         'border-0 shadow-none gap-2',
         {
-          'flex flex-col': variant === KitCardVariants.vertical,
+          'flex flex-col h-full': variant === KitCardVariants.vertical,
           flex: variant === KitCardVariants.horizontal,
           'grid grid-cols-2 gap-y-6': variant === KitCardVariants.description,
         },
@@ -81,7 +81,7 @@ export default function KitCard({
           className="border-black/20 border rounded-md aspect-square w-full h-full object-cover"
         />
       </CardHeader>
-      <CardContent className="p-0 flex flex-col gap-2">
+      <CardContent className="p-0 flex flex-col gap-2 h-full">
         <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis text-base">{title}</CardTitle>
         <div className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
           {tags?.map((tag) => <Tag key={tag} label={tag} className="break-keep" />)}
