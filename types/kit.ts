@@ -1,6 +1,5 @@
-import type { Prisma } from '@prisma/client';
-import type { prisma } from '@/lib/prisma';
-import type { kitCardSelect } from '@/lib/prisma';
+import { KitModel, UserModel } from './models';
 
-export type KitCardInfo = NonNullable<Prisma.Result<typeof prisma.kit, { select: typeof kitCardSelect }, 'findFirst'>>;
-export type KitCardsInfo = Prisma.Result<typeof prisma.kit, { select: typeof kitCardSelect }, 'findMany'>;
+type KitCardUploader = { uploader: Pick<UserModel, 'profileImage' | 'nickname'> };
+
+export type KitCardInfo = Pick<KitModel, 'id' | 'title' | 'thumbnailImage' | 'tags'> & KitCardUploader;
