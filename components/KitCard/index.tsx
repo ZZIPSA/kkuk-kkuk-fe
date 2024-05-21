@@ -66,7 +66,7 @@ export default function KitCard({
         {
           'flex flex-col h-full': variant === KitCardVariants.vertical,
           flex: variant === KitCardVariants.horizontal,
-          'grid grid-cols-2 gap-y-6': variant === KitCardVariants.description,
+          'grid grid-cols-2 gap-y-6 px-4 py-6': variant === KitCardVariants.description,
         },
         className,
       )}

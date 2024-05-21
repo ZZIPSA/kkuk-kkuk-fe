@@ -8,7 +8,7 @@ export default async function KitPage({ params: { id } }: { params: { id: string
   const { title, description, tags, thumbnailImage, uploader } = kit;
 
   return (
-    <main className="grid grid-cols-1 px-4 py-6">
+    <main className="grid grid-cols-1">
       <KitCard
         id={id}
         title={title}
