@@ -1,5 +1,4 @@
 import KitCard, { KitCardVariants } from '@/components/KitCard';
-import { DEFAULT_KIT_THUMBNAIL } from '@/lib/constants';
 import { notFound } from 'next/navigation';
 
 export default async function KitPage({ params: { kitId } }: { params: { kitId: string } }) {
@@ -15,7 +14,7 @@ export default async function KitPage({ params: { kitId } }: { params: { kitId: 
         title={title}
         description={description ?? ''}
         tags={tags}
-        thumbnailImage={thumbnailImage ?? DEFAULT_KIT_THUMBNAIL}
+        thumbnailImage={thumbnailImage}
         uploader={uploader}
         variant={KitCardVariants.description}
       />

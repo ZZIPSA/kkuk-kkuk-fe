@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { notFoundedUserNickname, notFoundedImage } from '@/lib/notFound';
+import { DEFAULT_KIT_THUMBNAIL, DEFAULT_PROFILE } from '@/lib/constants';
 import { Tag } from '@/stories/Tag';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { KitCardInfo } from '@/types/kit';
@@ -56,9 +56,9 @@ export default function KitCard({
   description,
   ...props
 }: KitCardProps) {
-  thumbnailImage ??= notFoundedImage;
-  const nickname = uploader?.nickname ?? notFoundedUserNickname;
-  const profileImage = uploader?.profileImage ?? notFoundedImage;
+  thumbnailImage ??= DEFAULT_KIT_THUMBNAIL;
+  const nickname = uploader?.nickname ?? '';
+  const profileImage = uploader?.profileImage ?? DEFAULT_PROFILE;
   return (
     <Card
       className={cn(
