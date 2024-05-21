@@ -33,12 +33,27 @@ interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeo
    */
   description?: string;
   /**
+   * The variant of the kit card.
+   * @default 'vertical'
+   */
+  variant?: KitCardVariants;
+  /**
    * The uploader of the kit.
    */
   uploader: { nickname: string | null; profileImage: string | null } | null;
 }
 
-export default function KitCard({ id, title, thumbnailImage, tags, uploader, className, description, ...props }: KitCardProps) {
+export default function KitCard({
+  id,
+  title,
+  thumbnailImage,
+  tags,
+  uploader,
+  variant = KitCardVariants.vertical,
+  className,
+  description,
+  ...props
+}: KitCardProps) {
   thumbnailImage ??= notFoundedImage;
   const nickname = uploader?.nickname ?? notFoundedUserNickname;
   const profileImage = uploader?.profileImage ?? notFoundedImage;
