@@ -5,6 +5,8 @@ import { notFoundedUserNickname, notFoundedImage } from '@/lib/notFound';
 import { Tag } from '@/stories/Tag';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { KitCardInfo } from '@/types/kit';
+import { Bookmark, Heart } from '@/lib/icons';
+
 export enum KitCardVariants {
   vertical = 'vertical',
   horizontal = 'horizontal',
@@ -95,6 +97,16 @@ export default function KitCard({
           </Avatar>
           <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-[#A69C98] text-xs">{nickname}</span>
         </div>
+        {variant === KitCardVariants.description && (
+          <div className="flex justify-end gap-2 mt-auto">
+            <button className="border border-grey-200 bg-grey-50 rounded-full w-10 aspect-square">
+              <Bookmark className="w-6 h-6 stroke-none fill-grey-100 m-auto" />
+            </button>
+            <button className="border border-grey-200 bg-grey-50 rounded-full w-10 aspect-square">
+              <Heart className="w-6 h-6 stroke-none fill-grey-100 m-auto" />
+            </button>
+          </div>
+        )}
       </CardContent>
       {variant === KitCardVariants.description && (
         <CardContent className="col-span-full bg-grey-50 px-4 py-2 rounded-xl">
