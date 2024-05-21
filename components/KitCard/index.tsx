@@ -5,6 +5,11 @@ import { notFoundedUserNickname, notFoundedImage } from '@/lib/notFound';
 import { Tag } from '@/stories/Tag';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { KitCardInfo } from '@/types/kit';
+export enum KitCardVariants {
+  vertical = 'vertical',
+  horizontal = 'horizontal',
+  description = 'description',
+}
 
 interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeof Card> {
   /**
