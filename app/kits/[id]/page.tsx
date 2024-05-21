@@ -1,5 +1,6 @@
 import KitCard, { KitCardVariants } from '@/components/KitCard';
 import { notFound } from 'next/navigation';
+import RallyPreview from './components/RallyPreview';
 
 export default async function KitPage({ params: { id } }: { params: { id: string } }) {
   console.log(`${process.env.API_URL}/api/kits/${id}`);
@@ -18,6 +19,7 @@ export default async function KitPage({ params: { id } }: { params: { id: string
         uploader={uploader}
         variant={KitCardVariants.description}
       />
+      <RallyPreview stamps={stamps} />
     </main>
   );
 }
