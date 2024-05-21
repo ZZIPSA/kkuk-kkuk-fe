@@ -5,15 +5,9 @@ import { cn } from '@/lib/utils';
 import { DEFAULT_PROFILE } from '@/lib/constants';
 import { Tag } from '@/stories/Tag';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { KitCardInfo } from '@/types/kit';
+import { KitCardInfo } from '@/types/Kit';
 
-interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeof Card> {
-  id: string;
-  title: string;
-  thumbnailImage: string | null;
-  tags: string[];
-  uploader: { nickname: string | null; profileImage: string | null } | null;
-}
+type KitCardProps = KitCardInfo & React.HTMLAttributes<HTMLDivElement>;
 
 export default function KitCard({ id, title, thumbnailImage, tags, uploader, className, ...props }: KitCardProps) {
   const profileImage = uploader?.profileImage ?? DEFAULT_PROFILE;
