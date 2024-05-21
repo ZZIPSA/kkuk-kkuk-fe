@@ -58,7 +58,18 @@ export default function KitCard({
   const nickname = uploader?.nickname ?? notFoundedUserNickname;
   const profileImage = uploader?.profileImage ?? notFoundedImage;
   return (
-    <Card className={cn('h-full flex flex-col border-0 shadow-none gap-2', className)} {...props}>
+    <Card
+      className={cn(
+        'border-0 shadow-none gap-2',
+        {
+          'flex flex-col': variant === KitCardVariants.vertical,
+          flex: variant === KitCardVariants.horizontal,
+          'grid grid-cols-2 gap-y-6': variant === KitCardVariants.description,
+        },
+        className,
+      )}
+      {...props}
+    >
       <CardHeader className="p-0">
         <Image
           src={thumbnailImage}
@@ -73,7 +84,11 @@ export default function KitCard({
         <div className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
           {tags?.map((tag) => <Tag key={tag} label={tag} className="break-keep" />)}
         </div>
-        <div className="p-0 flex items-center gap-2 mt-auto">
+        <div
+          className={cn('p-0 flex items-center gap-2', {
+            'mt-auto': variant === KitCardVariants.vertical,
+          })}
+        >
           <Avatar className="items-center border border-grey-100 w-6 h-6">
             <AvatarImage src={profileImage} alt={nickname} />
             <AvatarFallback>{nickname}</AvatarFallback>
@@ -81,9 +96,11 @@ export default function KitCard({
           <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-[#A69C98] text-xs">{nickname}</span>
         </div>
       </CardContent>
-      <CardFooter>
-        <CardDescription>{description}</CardDescription>
-      </CardFooter>
+      {variant === KitCardVariants.description && (
+        <CardContent className="col-span-full bg-grey-50 px-4 py-2 rounded-xl">
+          <CardDescription className=" text-grey-300 ">{description}</CardDescription>
+        </CardContent>
+      )}
     </Card>
   );
 }
