@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { DEFAULT_KIT_THUMBNAIL, DEFAULT_PROFILE } from '@/lib/constants';
 import { Tag } from '@/stories/Tag';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { KitCardInfo } from '@/types/kit';
+import { KitCardInfo } from '@/types/Kit';
 import { Bookmark, Heart } from '@/lib/icons';
 
 export enum KitCardVariants {
