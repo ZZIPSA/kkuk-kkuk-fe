@@ -13,7 +13,7 @@ export async function POST(request: Request) {
   const { title, description, imageUrls, thumbnailImage, rewardImage, tags } = await request.json();
 
   if (!title || !Array.isArray(imageUrls) || !thumbnailImage || !rewardImage) {
-    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    return NextResponse.json({ error: '필수 항목을 입력해주세요.' }, { status: 400 });
   }
 
   const lastKit = await prisma.kit.findMany({
@@ -48,6 +48,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ data: kit });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ error: 'Error creating kit' }, { status: 500 });
+    return NextResponse.json({ error: '키트를 생성하지 못했습니다.' }, { status: 500 });
   }
 }
