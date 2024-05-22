@@ -26,7 +26,7 @@ export function Stamp({ image, variant = StampVariants.default, size = 100, orde
         height={size}
         src={image}
         alt="Stamp"
-        className={cn('rounded-full w-full', {
+        className={cn('rounded-full w-full aspect-square object-contain', {
           'border-2 border-primary': variant !== StampVariants.monochrome,
           'filter grayscale border border-grey-200 border-dashed': variant === StampVariants.monochrome,
         })}
