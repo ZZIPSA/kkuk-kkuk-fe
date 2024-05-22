@@ -1,5 +1,6 @@
 import { MyPageResult } from '@/types/User';
 import UserInfo from './components/UserInfo';
+import MenuTabs from './components/MenuTabs';
 
 export default async function MyLayout({ children }: { children: React.ReactNode }) {
   const {
@@ -10,6 +11,7 @@ export default async function MyLayout({ children }: { children: React.ReactNode
   return (
     <main>
       <UserInfo profileImage={profileImage} nickname={nickname} twitterAccount={twitterAccount} rallies={rallies} />
+      <MenuTabs />
       {children}
     </main>
   );
