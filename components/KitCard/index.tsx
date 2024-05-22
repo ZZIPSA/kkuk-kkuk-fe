@@ -13,7 +13,7 @@ export enum KitCardVariants {
   description = 'description',
 }
 
-interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeof Card> {
+interface KitCardProps extends NonNullable<KitCardInfo>, React.ComponentPropsWithoutRef<typeof Card> {
   /**
    * The unique identifier of the kit.
    */
@@ -25,7 +25,7 @@ interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeo
   /**
    * The thumbnail image of the kit.
    */
-  thumbnailImage: string | null;
+  thumbnailImage: string;
   /**
    * The tags of the kit.
    */
@@ -42,7 +42,7 @@ interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeo
   /**
    * The uploader of the kit.
    */
-  uploader: { nickname: string | null; profileImage: string | null } | null;
+  uploader: { nickname: string; profileImage: string };
 }
 
 export default function KitCard({
