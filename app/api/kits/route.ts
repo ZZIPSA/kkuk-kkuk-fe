@@ -8,10 +8,11 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  // TODO: 업로더 아이디는 세션에서 취득
   const uploaderId = 'clwhgit8j0001doaigd5t2qt5';
   const { title, description, imageUrls, thumbnailImage, rewardImage, tags } = await request.json();
 
-  if (!title || !description || !Array.isArray(imageUrls) || !thumbnailImage || !rewardImage || !!Array.isArray(tags)) {
+  if (!title || !Array.isArray(imageUrls) || !thumbnailImage || !rewardImage) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 

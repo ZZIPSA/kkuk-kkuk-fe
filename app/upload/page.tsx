@@ -5,6 +5,8 @@ import { useState } from 'react';
 
 /**
  * 업로드를 위한 예시 페이지입니다. 배포 전에 삭제되어야 합니다.
+ * 타이틀이나 설명, 파일 크기 및 확장자에 대한 검증은 하고 있지않습니다.
+ * 선업로드 방식이 적용되어있지 않습니다.
  * API를 보낼 때, 태그가 추가되어야 합니다.
  *
  */
@@ -55,7 +57,6 @@ const UploadPage = () => {
             const data = await response.json();
 
             // 2. 파일 업로드
-            console.log('uploading');
             const uploadResponse = await fetch(data.presignedUrl, {
               method: 'PUT',
               headers: {
@@ -74,7 +75,6 @@ const UploadPage = () => {
       );
 
       setUploadedUrls(imageUrls);
-      console.log(imageUrls);
 
       // 3. Kit 생성 요청
       const createKitResponse = await fetch('/api/kits', {
@@ -85,9 +85,8 @@ const UploadPage = () => {
         body: JSON.stringify({
           title: kitTitle,
           description: kitDescription,
-          thumbnailImage: imageUrls[0], // 첫 번째 이미지를 썸네일로 사용
+          thumbnailImage: imageUrls[0],
           rewardImage: imageUrls[5],
-          uploaderId: 'clwhgit8j0001doaigd5t2qt5', // 실제 uploaderId를 사용
           imageUrls,
         }),
       });
@@ -98,7 +97,7 @@ const UploadPage = () => {
 
       const kitData = await createKitResponse.json();
 
-      alert('Kit created and files uploaded successfully!');
+      alert('키트를 생성했습니다!'); // TODO: 프론트 구현후 삭제
 
       // 초기화
       setFiles(Array(6).fill(null));
@@ -107,7 +106,7 @@ const UploadPage = () => {
       setUploadedUrls([]);
     } catch (error) {
       console.error('Error uploading files', error);
-      alert('Error uploading files');
+      alert('파일을 업로드 하지 못했습니다.');
     } finally {
       setUploading(false);
     }
