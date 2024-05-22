@@ -15,10 +15,11 @@ interface StampProps extends RallyPreviewStamp {
   order: number;
 }
 
+const STAMP_BY_ROW = 3;
 export function Stamp({ image, variant = StampVariants.default, size = 100, order }: StampProps) {
-  const rows = Math.floor(order / 3);
+  const rows = Math.floor(order / RallyPreview);
   const isReverse = rows % 2 === 1;
-  order += isReverse ? 2 - (order % 3) * 2 : 0;
+  order += isReverse ? STAMP_BY_ROW - 1 - (order % STAMP_BY_ROW) * 2 : 0;
   return (
     <div className={cn('relative', `order-${order}`)}>
       <Image
