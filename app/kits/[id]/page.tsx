@@ -1,8 +1,8 @@
-import KitCard, { KitCardVariants } from '@/components/KitCard';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import KitCard, { KitCardVariants } from '@/components/KitCard';
 import RallyPreview from './components/RallyPreview';
 import StampsPreview from './components/StampsPreview';
-import Link from 'next/link';
 
 export default async function KitPage({ params: { id } }: { params: { id: string } }) {
   const { data: kit } = await fetch(`${process.env.API_URL}/api/kits/${id}`).then((res) => res.json());
