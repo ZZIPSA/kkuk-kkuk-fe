@@ -10,6 +10,7 @@ export async function GET() {
 
   const data = await prisma.user.findUnique({
     where: { id },
+    select: { profileImage: true, nickname: true, accounts: { select: { provider: true, userId: true } }, rallies: true },
   });
 
   return NextResponse.json({ data });
