@@ -108,10 +108,10 @@ export default function KitCard({
           </div>
         )}
       </CardContent>
-      {variant === KitCardVariants.description && (
-        <CardContent className="col-span-full bg-grey-50 px-4 py-2 rounded-xl">
-          <CardDescription className=" text-grey-300 ">{description}</CardDescription>
-        </CardContent>
+      {variant === KitCardVariants.description && description && (
+        <CardFooter className="col-span-full bg-grey-50 px-4 py-2 rounded-xl">
+          <CardDescription className="text-grey-300">{description}</CardDescription>
+        </CardFooter>
       )}
     </Card>
   );

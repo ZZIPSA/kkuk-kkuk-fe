@@ -14,7 +14,7 @@ export default async function KitPage({ params: { id } }: { params: { id: string
       <KitCard
         id={id}
         title={title}
-        description={description ?? ''}
+        description={description}
         tags={tags}
         thumbnailImage={thumbnailImage}
         uploader={uploader}
