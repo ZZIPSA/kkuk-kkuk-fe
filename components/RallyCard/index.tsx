@@ -1,9 +1,11 @@
+import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { DEFAULT_KIT_THUMBNAIL } from '@/lib/constants';
-import { MyRally } from '@/types/Rally';
-import Image from 'next/image';
+import { MyRally, JoinedRally } from '@/types/Rally';
 
-type RallyCardProps = Pick<MyRally, 'stampCount'> & Pick<MyRally['kit'], 'thumbnailImage' | 'title'> & Pick<MyRally['kit']['_count'], 'stamps'>;
+type RallyCardProps = Pick<MyRally['kit'], 'thumbnailImage' | 'title'> &
+  Partial<Pick<JoinedRally['kit']['_count'], 'stamps'>> &
+  Partial<Pick<JoinedRally, 'stampCount'>>;
 
 export default function RallyCard({ stampCount: count, thumbnailImage: thumb, title, stamps: total }: RallyCardProps) {
   thumb ??= DEFAULT_KIT_THUMBNAIL;
@@ -20,7 +22,7 @@ export default function RallyCard({ stampCount: count, thumbnailImage: thumb, ti
       </CardHeader>
       <CardContent className="p-0">
         <CardDescription className="text-xs text-foreground">
-          진행 상황: {count} / {total}
+          {count && total && `진행 상황: ${count} / ${total}`}
         </CardDescription>
       </CardContent>
       <CardFooter className="p-0">
