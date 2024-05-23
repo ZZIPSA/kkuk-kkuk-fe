@@ -37,8 +37,8 @@ interface InputProps extends BasicInputProps {
 export const Input = ({ variant = Variants.default, label, isNotVerified = false, ...props }: InputProps) => {
   const isRequired = variant === Variants.required;
   return (
-    <div>
-      <label>
+    <div className="flex flex-col gap-4">
+      <label className="font-bold">
         {label}
         {isRequired && <span className="text-red-500">*</span>}
       </label>
