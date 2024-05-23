@@ -13,9 +13,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
       tags: true,
       thumbnailImage: true,
       rewardImage: true,
-      uploaderId: true,
+      uploader: true,
+      stamps: true,
     },
   });
 
-  return NextResponse.json({ data: kit });
+  return NextResponse.json({ data: kit }, { status: kit ? 200 : 404 });
 }
