@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import ProfileImage from './ProfileImage';
 import RalliesCounts from './RalliesCounts';
 
-enum UserInfoVariant {
+export enum UserInfoVariant {
   default = 'default',
   settings = 'settings',
 }
