@@ -16,3 +16,6 @@ export interface JoinedRally extends MyRally {
   stampCount: number;
 }
 
+export interface CompletedRally extends MyRally {
+  updatedAt: Date | null;
+}
