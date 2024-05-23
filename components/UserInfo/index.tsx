@@ -3,6 +3,11 @@ import { Badge } from '@/components/ui/badge';
 import ProfileImage from './ProfileImage';
 import RalliesCounts from './RalliesCounts';
 
+enum UserInfoVariant {
+  default = 'default',
+  settings = 'settings',
+}
+
 export default async function UserInfo() {
   const {
     data: { profileImage, nickname, accounts, rallies },
