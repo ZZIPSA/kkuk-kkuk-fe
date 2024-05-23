@@ -30,11 +30,12 @@ interface InputProps extends BasicInputProps {
    * @default false
    */
   isNotVerified?: boolean;
+  ref?: React.Ref<HTMLInputElement>;
 }
 /**
  * Primary UI component for user interaction
  */
-export const Input = ({ variant = Variants.default, label, isNotVerified = false, ...props }: InputProps) => {
+export const Input = ({ variant = Variants.default, label, isNotVerified = false, ref, ...props }: InputProps) => {
   const isRequired = variant === Variants.required;
   return (
     <div className="flex flex-col gap-4">
@@ -48,6 +49,7 @@ export const Input = ({ variant = Variants.default, label, isNotVerified = false
         })}
         disabled={variant === Variants.disabled}
         placeholder={label}
+        ref={ref}
         {...props}
       />
     </div>
