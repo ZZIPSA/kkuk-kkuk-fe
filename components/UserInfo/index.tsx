@@ -12,7 +12,7 @@ interface UserInfoProps {
   variant?: UserInfoVariant;
 }
 
-export default async function UserInfo() {
+export default async function UserInfo({ variant = UserInfoVariant.default }: UserInfoProps) {
   const {
     data: { profileImage, nickname, accounts, rallies },
   }: { data: UserInfoResult } = await fetch(process.env.API_URL + '/api/my').then((res) => res.json());
