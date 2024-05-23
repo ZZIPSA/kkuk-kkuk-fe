@@ -1,5 +1,3 @@
-'use client';
-
 import { UserInfoResult } from '@/types/User';
 import { Badge } from '@/components/ui/badge';
 import ProfileImage from './ProfileImage';
