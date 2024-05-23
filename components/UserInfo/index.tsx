@@ -29,7 +29,7 @@ export default async function UserInfo({ variant = UserInfoVariant.default }: Us
           </Badge>
         )}
       </div>
-      <RalliesCounts rallies={rallies} />
+      {variant === UserInfoVariant.default && <RalliesCounts rallies={rallies} />}
     </section>
   );
 }
