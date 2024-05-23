@@ -1,12 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { useSession } from '@/auth/react';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
-import { useSession } from '@/auth'; //
 import { getHeaderUserMenuItems, headerLogoItems } from '../lib';
 
-export default async function NavBar() {
-  const { user } = await useSession();
+export default function NavBar() {
+  const {
+    data: { user },
+  } = useSession();
   const headerUserMenuItems = getHeaderUserMenuItems(user); // 테스트용
   return (
     <NavigationMenu className="max-w-full w-full justify-between">

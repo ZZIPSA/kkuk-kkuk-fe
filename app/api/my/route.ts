@@ -4,7 +4,9 @@ import { prisma } from '@/lib/prisma';
 
 //TODO: 로그인 구현 후 id는 세션에서 취득
 export async function GET() {
-  const { user } = await auth();
+  const {
+    data: { user },
+  } = await auth();
   if (!user) return signIn();
   const { id } = user;
 

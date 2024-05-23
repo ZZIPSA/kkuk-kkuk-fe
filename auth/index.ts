@@ -3,8 +3,7 @@
 // useSession 는 Auth.js 도입 이후 "next-auth/react" 에서 가져옵니다.
 
 import { redirect } from 'next/navigation';
-import { prisma } from '@/lib/prisma';
+import user from './user';
 
-export const auth = async () => ({ user: await prisma.user.findFirst({}) });
-export const useSession = auth;
+export const auth = async () => ({ data: { user: user! } });
 export const signIn = async () => redirect('/signin');

@@ -5,7 +5,9 @@ import { prisma } from '@/lib/prisma';
 import { CompletedRally } from '@/types/Rally';
 
 export async function GET() {
-  const { user } = await auth();
+  const {
+    data: { user },
+  } = await auth();
   if (!user) return signIn();
   const { id } = user;
 

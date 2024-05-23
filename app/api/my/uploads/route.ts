@@ -4,7 +4,9 @@ import { prisma } from '@/lib/prisma';
 import { KitCardInfo } from '@/types/Kit';
 
 export async function GET() {
-  const { user } = await auth();
+  const {
+    data: { user },
+  } = await auth();
   if (!user) return signIn();
   const { id } = user;
 
