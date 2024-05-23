@@ -15,7 +15,7 @@ export default function ProfileImage({ profileImage, nickname, variant }: Profil
   return (
     <Avatar
       className={cn('border', {
-        'size-16 row-span-2': variant === UserInfoVariant.default,
+        'size-16': variant === UserInfoVariant.default,
         'size-25': variant === UserInfoVariant.settings,
       })}
     >
