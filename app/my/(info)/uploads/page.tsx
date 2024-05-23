@@ -8,7 +8,7 @@ export default async function UploadsPage() {
     <article className="px-4 py-6 grid grid-cols-2 gap-x-2 gap-y-4">
       {rallies.map(({ id, tags, thumbnailImage, title, uploader }) => (
         <Link key={id} href={`/kits/${id}`}>
-          <KitCard tags={tags} thumbnailImage={thumbnailImage} title={title} uploader={uploader} />
+          <KitCard id={id} tags={tags} thumbnailImage={thumbnailImage} title={title} uploader={uploader} />
         </Link>
       ))}
     </article>
