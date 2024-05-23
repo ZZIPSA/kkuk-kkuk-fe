@@ -2,6 +2,7 @@ import { UserInfoResult } from '@/types/User';
 import { Badge } from '@/components/ui/badge';
 import ProfileImage from './ProfileImage';
 import RalliesCounts from './RalliesCounts';
+import { cn } from '@/lib/utils';
 
 export enum UserInfoVariant {
   default = 'default',
@@ -20,7 +21,12 @@ export default async function UserInfo({ variant = UserInfoVariant.default }: Us
 
   return (
     <section className="flex flex-col py-6 px-4 gap-4">
-      <div className="grid grid-cols-[64px_auto] w-full gap-x-2">
+      <div
+        className={cn('w-full grid', {
+          'grid-cols-[64px_auto] gap-x-2': variant === UserInfoVariant.default,
+          'grid-rows-2 justify-items-center gap-4': variant === UserInfoVariant.settings,
+        })}
+      >
         <ProfileImage profileImage={profileImage} nickname={nickname} />
         {variant === UserInfoVariant.default && <h1 className="font-bold w-full">{nickname}</h1>}
         {twitterAccount && (
