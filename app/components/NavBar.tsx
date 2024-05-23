@@ -1,14 +1,17 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useSession } from '@/auth/react';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
+import { MY_PAGE_PATH } from '@/lib/constants';
 import { getHeaderUserMenuItems, headerLogoItems } from '../lib';
 
 export default function NavBar() {
   const {
     data: { user },
   } = useSession();
+  const path = usePathname();
   const headerUserMenuItems = getHeaderUserMenuItems(user); // 테스트용
   return (
     <NavigationMenu className="max-w-full w-full justify-between">
@@ -20,6 +23,7 @@ export default function NavBar() {
       <NavigationMenuList>
         {headerUserMenuItems
           .filter(({ isGuest }) => !!user !== !!isGuest)
+          .filter(({ showAtMyPage }) => showAtMyPage === undefined || path.startsWith(MY_PAGE_PATH) === showAtMyPage)
           .map(({ href, Inner }) => (
             <NavBarItem href={href} Inner={Inner} key={href} />
           ))}
