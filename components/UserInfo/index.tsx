@@ -23,7 +23,7 @@ export default async function UserInfo({ variant = UserInfoVariant.default }: Us
           'grid-rows-2 justify-items-center gap-4': variant === UserInfoVariant.settings,
         })}
       >
-        <ProfileImage profileImage={profileImage} nickname={nickname} />
+        <ProfileImage profileImage={profileImage} nickname={nickname} variant={variant} />
         {variant === UserInfoVariant.default && <h1 className="font-bold w-full">{nickname}</h1>}
         {twitterAccount && (
           <Badge variant="secondary" className="w-fit text-xs font-normal gap-2">
