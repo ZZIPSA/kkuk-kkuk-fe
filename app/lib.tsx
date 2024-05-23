@@ -1,7 +1,7 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/stories/Button';
 import { NavBarItemProps } from './types';
-import { Pencil, Stamp } from '@/lib/icons';
+import { Pencil, Settings, Stamp } from '@/lib/icons';
 import { DEFAULT_PROFILE } from '@/lib/constants';
 import { UserModel } from '@/types/models';
 
@@ -27,7 +27,9 @@ export const getHeaderUserMenuItems = (user?: Pick<UserModel, 'profileImage'>): 
       </Avatar>
     ),
     isGuest: false,
+    showAtMyPage: false,
   },
+  { href: '/my/settings', Inner: <Settings className="h-8 w-8 fill-foreground" />, showAtMyPage: true },
   {
     href: '/signin',
     Inner: <Button label="로그인" type="button" className="text-base px-4 py-2 h-fit rounded-lg" />,
