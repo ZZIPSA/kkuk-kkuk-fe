@@ -8,6 +8,10 @@ enum UserInfoVariant {
   settings = 'settings',
 }
 
+interface UserInfoProps {
+  variant?: UserInfoVariant;
+}
+
 export default async function UserInfo() {
   const {
     data: { profileImage, nickname, accounts, rallies },
