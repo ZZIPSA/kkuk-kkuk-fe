@@ -19,10 +19,11 @@ async function main() {
   const inactiveRallies = await prisma.rally.createMany({
     data: kits
       .filter((_, i) => 20 <= i && i < 40)
-      .map((kit) => ({
+      .map((kit, i) => ({
         starterId: user.id,
         kitId: kit.id,
         title: `완료 랠리 ${kit.title}`,
+        updatedAt: new Date(2024, 4, i - 20),
         status: RallyStatus.inactive,
       })),
   });
