@@ -43,8 +43,8 @@ async function main() {
     return prisma.user.create({
       data: {
         email: `user${index + 1}@example.com`,
-        nickname: `User${index + 1}`,
-        profileImage: 'https://picsum.photos/360',
+        name: `User${index + 1}`,
+        image: 'https://picsum.photos/360',
         accounts: {
           create: [
             {
