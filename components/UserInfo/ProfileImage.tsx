@@ -13,7 +13,12 @@ interface ProfileImageProps extends Pick<UserModel, 'profileImage' | 'nickname'>
 
 export default function ProfileImage({ profileImage, nickname, variant }: ProfileImageProps) {
   return (
-    <Avatar className="w-16 h-16 border row-span-2">
+    <Avatar
+      className={cn('border', {
+        'size-16 row-span-2': variant === UserInfoVariant.default,
+        'size-25': variant === UserInfoVariant.settings,
+      })}
+    >
       <AvatarImage src={profileImage ?? DEFAULT_PROFILE} alt={nickname ?? ''} />
       <AvatarFallback>{nickname}</AvatarFallback>
     </Avatar>

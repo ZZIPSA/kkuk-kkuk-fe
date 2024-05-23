@@ -20,7 +20,7 @@ export default async function UserInfo({ variant = UserInfoVariant.default }: Us
       <div
         className={cn('w-full grid', {
           'grid-cols-[64px_auto] gap-x-2': variant === UserInfoVariant.default,
-          'grid-rows-2 justify-items-center gap-4': variant === UserInfoVariant.settings,
+          'grid-rows-[25_auto] justify-items-center gap-4': variant === UserInfoVariant.settings,
         })}
       >
         <ProfileImage profileImage={profileImage} nickname={nickname} variant={variant} />
