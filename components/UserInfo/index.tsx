@@ -5,6 +5,7 @@ import RalliesCounts from './RalliesCounts';
 import { cn } from '@/lib/utils';
 import { UserInfoVariant } from './variants';
 import { Pencil } from 'lucide-react';
+import { Input } from '@/stories/Input';
 
 interface UserInfoProps {
   variant?: UserInfoVariant;
@@ -37,7 +38,8 @@ export default async function UserInfo({ variant = UserInfoVariant.default }: Us
           </Badge>
         )}
       </div>
-      {variant === UserInfoVariant.default && <RalliesCounts rallies={rallies} />}
+      {variant === UserInfoVariant.default && <RalliesCounts rallies={rallies ?? []} />}
+      {variant === UserInfoVariant.settings && <Input label="닉네임" value={nickname} />}
     </section>
   );
 }
