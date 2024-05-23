@@ -73,6 +73,7 @@ async function main() {
     const tags = generateRandomTag();
     return prisma.kit.create({
       data: {
+        id: String(index + 1).padStart(7, '0'),
         title: `키트 ${index + 1}`,
         description: `${index + 1}번 키트의 설명입니다.`,
         thumbnailImage: 'https://picsum.photos/360',
