@@ -22,6 +22,7 @@ async function main() {
       .map((kit, i) => ({
         starterId: user.id,
         kitId: kit.id,
+        stampCount: 6,
         title: `완료 랠리 ${kit.title}`,
         updatedAt: new Date(2024, 4, i - 20),
         status: RallyStatus.inactive,

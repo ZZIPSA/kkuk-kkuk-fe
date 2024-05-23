@@ -10,7 +10,7 @@ export async function GET() {
   const { id } = user;
 
   const data: CompletedRally[] = await prisma.rally.findMany({
-    where: { starterId: id, status: RallyStatus.inactive },
+    where: { starterId: id, status: RallyStatus.inactive, stampCount: { equals: 6 } },
     select: {
       id: true,
       stampCount: true,
