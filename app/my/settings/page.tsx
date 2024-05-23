@@ -1,4 +1,5 @@
-import UserInfo, { UserInfoVariant } from '@/components/UserInfo';
+import UserInfo from '@/components/UserInfo';
+import { UserInfoVariant } from '@/components/UserInfo/variants';
 
 export default async function SettingsPage() {
   return (

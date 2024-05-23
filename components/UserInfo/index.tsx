@@ -3,11 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import ProfileImage from './ProfileImage';
 import RalliesCounts from './RalliesCounts';
 import { cn } from '@/lib/utils';
-
-export enum UserInfoVariant {
-  default = 'default',
-  settings = 'settings',
-}
+import { UserInfoVariant } from './variants';
 
 interface UserInfoProps {
   variant?: UserInfoVariant;
