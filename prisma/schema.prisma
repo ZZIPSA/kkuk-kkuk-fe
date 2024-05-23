@@ -23,7 +23,7 @@ model User {
   email         String    @unique
   emailVerified DateTime?
   profileImage  String?
-  nickname      String?
+  nickname      String
   accounts      Account[]
   sessions      Session[]
   kits          Kit[]
@@ -74,12 +74,12 @@ model VerificationToken {
 }
 
 model Kit {
-  id             String    @id @default(cuid())
+  id             String    @id
   title          String
   description    String?
   tags           String[]
-  thumbnailImage String?
-  rewardImage    String?
+  thumbnailImage String
+  rewardImage    String
   uploaderId     String
   createdAt      DateTime  @default(now())
   updatedAt      DateTime?
