@@ -65,14 +65,18 @@ export default function KitCard({
         'border-0 shadow-none gap-2',
         {
           'flex flex-col h-full': variant === KitCardVariants.vertical,
-          flex: variant === KitCardVariants.horizontal,
+          'flex justify-between gap-2': variant === KitCardVariants.horizontal,
           'grid grid-cols-2 gap-y-6 px-4 py-6': variant === KitCardVariants.description,
         },
         className,
       )}
       {...props}
     >
-      <CardHeader className="p-0">
+      <CardHeader
+        className={cn('p-0', {
+          'w-full': variant === KitCardVariants.horizontal,
+        })}
+      >
         <Image
           src={thumbnailImage}
           alt={title}
@@ -81,7 +85,11 @@ export default function KitCard({
           className="border-black/20 border rounded-md aspect-square w-full h-full object-cover"
         />
       </CardHeader>
-      <CardContent className="p-0 flex flex-col gap-2 h-full">
+      <CardContent
+        className={cn('p-0 flex flex-col gap-2 h-full', {
+          'w-full': variant === KitCardVariants.horizontal,
+        })}
+      >
         <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis text-base">{title}</CardTitle>
         <div className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
           {tags?.map((tag) => <Tag key={tag} label={tag} className="break-keep" />)}
@@ -106,6 +114,9 @@ export default function KitCard({
               <Heart className="w-6 h-6 stroke-none fill-grey-100 m-auto" />
             </button>
           </div>
+        )}
+        {variant === KitCardVariants.horizontal && description && (
+          <CardDescription className="text-grey-300 bg-grey-50 px-4 py-2 rounded-xl">{description}</CardDescription>
         )}
       </CardContent>
       {variant === KitCardVariants.description && description && (
