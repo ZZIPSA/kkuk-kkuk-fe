@@ -1,4 +1,5 @@
 import type { Prisma, VerificationToken } from '@prisma/client';
+export { RallyStatus } from '@prisma/client';
 
 export type UserModel = Prisma.UserGetPayload<{ include: { accounts: true; sessions: true; kits: true; rallies: true } }>;
 export type AccountModel = Prisma.AccountGetPayload<{ include: { user: true } }>;

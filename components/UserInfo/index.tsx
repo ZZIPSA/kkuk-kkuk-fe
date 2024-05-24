@@ -1,10 +1,11 @@
-import { UserInfoResult } from '@/types/User';
+import { Pencil } from 'lucide-react';
+import { auth, signIn } from '@/auth';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
+import { UserInfoResult } from '@/types/User';
 import ProfileImage from './ProfileImage';
 import RalliesCounts from './RalliesCounts';
-import { cn } from '@/lib/utils';
 import { UserInfoVariant } from './variants';
-import { Pencil } from 'lucide-react';
 import NicknameInput from './NicknameInput';
 
 interface UserInfoProps {
@@ -13,8 +14,13 @@ interface UserInfoProps {
 
 export default async function UserInfo({ variant = UserInfoVariant.default }: UserInfoProps) {
   const {
+    data: { user },
+  } = await auth();
+  if (!user) return signIn();
+  const api = `${process.env.API_URL}/api/user/${user.id}`;
+  const {
     data: { profileImage, nickname, accounts, rallies },
-  }: { data: UserInfoResult } = await fetch(process.env.API_URL + '/api/my').then((res) => res.json());
+  }: { data: UserInfoResult } = await fetch(api).then((res) => res.json());
   const twitterAccount = accounts.find(({ provider }) => provider === 'twitter');
 
   return (
