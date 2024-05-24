@@ -8,7 +8,7 @@ export default async function CompletesPage() {
   return (
     <article className="px-4 py-6 grid grid-cols-2 gap-x-2 gap-y-4">
       {rallies.map(({ id, updatedAt, kit: { thumbnailImage, title } }) => (
-        <Link key={id} href={`/rally/${id}`}>
+        <Link key={id} href={`/rallies/${id}`}>
           <RallyCard thumbnailImage={thumbnailImage} title={title} updatedAt={updatedAt} />
         </Link>
       ))}
