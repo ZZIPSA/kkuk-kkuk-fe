@@ -11,6 +11,7 @@ type RallyCardProps = Pick<MyRally['kit'], 'thumbnailImage' | 'title'> &
 export default function RallyCard({ thumbnailImage: thumb, title, stamps: total, stampCount: count, updatedAt: completedAt }: RallyCardProps) {
   thumb ??= DEFAULT_KIT_THUMBNAIL;
   const intl = new Intl.DateTimeFormat('ko-KR', { dateStyle: 'short' });
+
   return (
     <Card className="border-0 shadow-none flex flex-col gap-2">
       <CardHeader className="p-0">
@@ -24,7 +25,7 @@ export default function RallyCard({ thumbnailImage: thumb, title, stamps: total,
       </CardHeader>
       <CardContent className="p-0">
         <CardDescription className="text-xs text-foreground">
-          {count && total && `진행 상황: ${count} / ${total}`}
+          {total && `진행 상황: ${count} / ${total}`}
           {completedAt && `완료일: ${intl.format(new Date(completedAt))}`}
         </CardDescription>
       </CardContent>
