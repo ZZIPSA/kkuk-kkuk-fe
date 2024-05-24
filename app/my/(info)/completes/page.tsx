@@ -1,6 +1,6 @@
 import { CompletedRally } from '@/types/Rally';
-import RallyCard from '@/components/RallyCard';
 import Link from 'next/link';
+import RallyCard from '@/components/RallyCard';
 
 export default async function CompletesPage() {
   const { data: rallies }: { data: CompletedRally[] } = await fetch(process.env.API_URL + '/api/my/completes').then((res) => res.json());

@@ -1,6 +1,6 @@
-import RallyCard from '@/components/RallyCard';
 import { JoinedRally } from '@/types/Rally';
 import Link from 'next/link';
+import RallyCard from '@/components/RallyCard';
 
 export default async function JoinsPage() {
   const { data: rallies }: { data: JoinedRally[] } = await fetch(process.env.API_URL + '/api/my/joins').then((res) => res.json());

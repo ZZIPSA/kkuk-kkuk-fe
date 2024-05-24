@@ -1,10 +1,10 @@
-import { UserInfoResult } from '@/types/User';
+import { Pencil } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
+import { UserInfoResult } from '@/types/User';
 import ProfileImage from './ProfileImage';
 import RalliesCounts from './RalliesCounts';
-import { cn } from '@/lib/utils';
 import { UserInfoVariant } from './variants';
-import { Pencil } from 'lucide-react';
 import NicknameInput from './NicknameInput';
 
 interface UserInfoProps {

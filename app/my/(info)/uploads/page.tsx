@@ -1,6 +1,6 @@
+import Link from 'next/link';
 import KitCard from '@/components/KitCard';
 import { KitCardInfo } from '@/types/Kit';
-import Link from 'next/link';
 
 export default async function UploadsPage() {
   const { data: rallies }: { data: KitCardInfo[] } = await fetch(process.env.API_URL + '/api/my/uploads').then((res) => res.json());
