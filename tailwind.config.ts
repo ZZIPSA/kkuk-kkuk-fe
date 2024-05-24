@@ -88,9 +88,11 @@ const config = {
         'rally-route': "url('/rally-route.svg')",
       },
       spacing: {
+        15: '3.75rem',
         25: '6.25rem',
       },
       size: {
+        15: '3.75rem',
         25: '6.25rem',
       },
     },
