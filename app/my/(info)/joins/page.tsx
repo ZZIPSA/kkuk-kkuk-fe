@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { auth, signIn } from '@/auth';
 import RallyCard from '@/components/RallyCard';
-import { MyRally } from '@/types/Rally';
+import { MyRally, RallyStatus } from '@/types/Rally';
 
 export default async function JoinsPage() {
   const {
@@ -13,21 +13,23 @@ export default async function JoinsPage() {
 
   return (
     <article className="px-4 py-6 grid grid-cols-2 gap-x-2 gap-y-4">
-      {rallies.map(
-        ({
-          id,
-          stampCount,
-          kit: {
-            thumbnailImage,
-            title,
-            _count: { stamps },
-          },
-        }) => (
-          <Link key={id} href={`/rallies/${id}`}>
-            <RallyCard stampCount={stampCount} thumbnailImage={thumbnailImage} title={title} stamps={stamps} />
-          </Link>
-        ),
-      )}
+      {rallies
+        .filter(({ status }) => status === RallyStatus.active)
+        .map(
+          ({
+            id,
+            stampCount,
+            kit: {
+              thumbnailImage,
+              title,
+              _count: { stamps },
+            },
+          }) => (
+            <Link key={id} href={`/rallies/${id}`}>
+              <RallyCard stampCount={stampCount} thumbnailImage={thumbnailImage} title={title} stamps={stamps} />
+            </Link>
+          ),
+        )}
     </article>
   );
 }
