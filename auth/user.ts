@@ -1,5 +1,3 @@
-import { prisma } from '@/lib/prisma';
-
 const user = {
   id: 'clwhgit650000doaippp04jqa',
   email: 'user1@example.com',
@@ -12,4 +10,4 @@ const user = {
 };
 
 // prisma.user.findFirstOrThrow({}).then((user) => user);
-export default await user;
+export default user;
