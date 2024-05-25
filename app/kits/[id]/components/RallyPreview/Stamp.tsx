@@ -17,14 +17,13 @@ interface StampProps extends RallyPreviewStamp {
 
 const STAMP_BY_ROW = 3;
 export function Stamp({ image, variant = StampVariants.default, size = 100, order }: StampProps) {
-  const rows = Math.floor(order / RallyPreview);
+  const rows = Math.floor(order / STAMP_BY_ROW);
   const isReverse = rows % 2 === 1;
   order += isReverse ? STAMP_BY_ROW - 1 - (order % STAMP_BY_ROW) * 2 : 0;
   return (
-    <div className={cn('relative', `order-${order}`)}>
+    <div className={cn('relative aspect-square', `order-${order}`)}>
       <Image
-        width={size}
-        height={size}
+        fill
         src={image}
         alt="Stamp"
         className={cn('rounded-full w-full aspect-square object-cover bg-background', {
