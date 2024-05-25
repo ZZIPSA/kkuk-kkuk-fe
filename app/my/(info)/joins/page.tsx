@@ -1,14 +1,11 @@
 import Link from 'next/link';
-import { auth, signIn } from '@/auth';
+import { getUserOnly } from '@/auth';
 import RallyCard from '@/components/RallyCard';
 import { MyRally, RallyStatus } from '@/types/Rally';
 
 export default async function JoinsPage() {
-  const {
-    data: { user },
-  } = await auth();
-  if (!user) return signIn();
-  const api = `${process.env.API_URL}/api/user/${user.id}/rallies`;
+  const { id: userId } = await getUserOnly();
+  const api = `${process.env.API_URL}/api/user/${userId}/rallies`;
   const { data: rallies }: { data: MyRally[] } = await fetch(api).then((res) => res.json());
 
   return (
