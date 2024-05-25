@@ -1,20 +1,54 @@
 import Link from 'next/link';
 import KitCard from '@/components/KitCard';
 import { KitCardInfo } from '@/types/Kit';
+import { prisma } from '@/lib/prisma';
 
 async function fetchKits(): Promise<KitCardInfo[]> {
-  const response = await fetch('http://localhost:3000/api/kits', {
-    cache: 'no-store',
+  // const response = await fetch('http://localhost:3000/api/kits', {
+  //   cache: 'no-store',
+  // });
+
+  // if (!response.ok) {
+  //   throw new Error('Failed to fetch kits');
+  // }
+
+  // const json = await response.json();
+  // const { data } = json;
+  const data = await prisma.kit.findUniqueOrThrow({
+    where: {
+      id: '0000031',
+    },
   });
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch kits');
-  }
+  // const result = {
+  //   ...data,
+  //   uploader: {
+  //     nickname: data?.uploaderId,
+  //     profileImage: 'profileImage',
+  //   },
+  // } satisfies {
+  //   id: string;
+  //   title: string;
+  //   thumbnailImage: string;
+  //   tags: string[];
+  //   uploader: {
+  //     nickname: string;
+  //     profileImage: string;
+  //   };
+  // };
 
-  const json = await response.json();
-  const { data } = json;
-
-  return data;
+  return Array.from(
+    { length: 10 },
+    (_) =>
+      ({
+        ...data,
+        thumbnailImage: '/default-thumbnail.jpg',
+        uploader: {
+          nickname: data?.uploaderId,
+          profileImage: 'profileImage',
+        },
+      }) satisfies KitCardInfo,
+  );
 }
 
 export default async function KitsPage() {
