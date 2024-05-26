@@ -13,7 +13,7 @@ export async function GET(_: Request, { params: { id } }: { params: { id: string
       thumbnailImage: true,
       tags: true,
       uploader: {
-        select: { profileImage: true, nickname: true },
+        select: { image: true, name: true },
       },
     },
   }) */

@@ -16,14 +16,14 @@ export const headerLogoItems: NavBarItemProps[] = [
   },
 ];
 
-export const getHeaderUserMenuItems = (user?: Pick<UserModel, 'profileImage'>): NavBarItemProps[] => [
+export const getHeaderUserMenuItems = (user?: Pick<UserModel, 'image'>): NavBarItemProps[] => [
   { href: '/kits/new', Inner: <Pencil className="h-8 w-8 fill-foreground" />, isGuest: false },
   { href: '/rallies', Inner: <Stamp className="h-8 w-8 stroke-foreground" />, isGuest: false },
   {
     href: '/my',
     Inner: (
       <Avatar className="w-8 h-8 border">
-        <AvatarImage src={user?.profileImage ?? DEFAULT_PROFILE} />
+        <AvatarImage src={user?.image ?? DEFAULT_PROFILE} />
       </Avatar>
     ),
     isGuest: false,

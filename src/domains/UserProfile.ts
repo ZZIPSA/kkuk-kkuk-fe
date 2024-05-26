@@ -4,7 +4,7 @@ type User = {
   id: number;
   nickName: string;
   name: string;
-  profileImage: string;
+  image: string;
 };
 
 export type { User };
