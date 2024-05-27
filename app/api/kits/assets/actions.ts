@@ -36,7 +36,7 @@ export async function uploadBlurImage(base64File: string, index: number): Promis
 }
 
 /**
- * 파일을 처리하고 S3에 업로드합니다.
+ * 파일을 처리하고 S3에 업로드
  *
  * @param file 유저가 업로드한 스탬프 이미지 파일
  * @param applyBlur 블러 처리를 할지 여부
@@ -82,7 +82,7 @@ async function getPresignedUrl(fileName: string): Promise<string> {
 }
 
 /**
- * 파일을 S3에 업로드합니다.
+ * 파일을 S3에 업로드
  *
  * @param webpFile 업로드할 파일 버퍼
  * @param presignedUrl 업로드할 presigned URL

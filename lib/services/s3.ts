@@ -16,7 +16,7 @@ export class S3Manager {
   }
 
   /**
-   * S3에 있는 객체를 newKey로 복사합니다.
+   * S3에 있는 객체를 newKey로 복사
    *
    * @param targetKey 복사할 객체의 S3 key
    * @param newKey 복사된 객체의 S3 key
@@ -36,7 +36,7 @@ export class S3Manager {
   }
 
   /**
-   * S3에 있는 객체를 이동합니다.
+   * S3에 있는 객체를 이동
    *
    * @param targetKey 이동할 객체의 S3 key
    * @param destinationKey 객체가 이동될 목표 S3 key
@@ -81,7 +81,6 @@ export class S3Manager {
   }
 
   extractS3Key(url: string): string {
-    // URL 패턴을 정의합니다.
     const regex = /https:\/\/(?:[a-z0-9-]+\.)?s3\.[a-z0-9-]+\.amazonaws\.com\/([^?]+)/;
     const match = url.match(regex);
 
