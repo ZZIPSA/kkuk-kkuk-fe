@@ -2,6 +2,7 @@
 
 import { blurImage, convertToWebP } from '@/lib/sharp';
 
+// TODO: 유틸로 뺴기
 const base64ToArrayBuffer = (base64: string): ArrayBuffer => {
   const binaryString = Buffer.from(base64, 'base64').toString('binary');
   const len = binaryString.length;
@@ -13,7 +14,7 @@ const base64ToArrayBuffer = (base64: string): ArrayBuffer => {
 };
 
 /**
- * 하나의 스탬프 단위로 파일을 선업로드합니다.
+ * 하나의 스탬프 단위로 파일을 선업로드
  *
  * @param base64File 유저가 업로드한 스탬프 이미지 파일 (Base64 문자열)
  * @param index 파일 인덱스
@@ -24,7 +25,7 @@ export async function preuploadStamp(base64File: string, index: number): Promise
 }
 
 /**
- * 블러 처리 및 webp 변환 후 S3에 업로드합니다.
+ * 블러 처리 및 webp 변환 후 S3에 업로드
  *
  * @param base64File 유저가 업로드한 스탬프 이미지 파일 (Base64 문자열)
  * @param index 파일 인덱스
@@ -57,7 +58,7 @@ async function processAndUpload(file: string, applyBlur: boolean, index: number)
 }
 
 /**
- * S3 Presigned URL을 가져옵니다.
+ * S3 Presigned URL 취득
  *
  * @param fileName 업로드할 파일 이름
  * @returns Presigned URL

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/auth';
 import { S3Manager } from '@/lib/services/s3';
+import { BUCKET_NAME, REGION } from '@/lib/constants';
 
 export async function GET() {
   const kits = await prisma.kit.findMany({});
@@ -21,6 +22,7 @@ export async function POST(request: Request) {
   const uploaderId = 'clwnjgnp10004dnxeusl9exo3';
 
   const { title, description, imageUrls, thumbnailImage, rewardImage, blurredImage, tags } = await request.json();
+
   if (!title || !Array.isArray(imageUrls) || !thumbnailImage || !rewardImage || !blurredImage || !uploaderId) {
     return NextResponse.json({ error: '필수 항목을 입력해주세요.' }, { status: 400 });
   }
@@ -40,10 +42,10 @@ export async function POST(request: Request) {
       imageUrls.map(async (url: string, index: number) => {
         const targetKey = s3.extractS3Key(url);
         const newUrl = `${uploaderId}/${newKitId}/${index}`;
-
+        const objectUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${newUrl}`;
         await s3.moveObject(targetKey, newUrl);
         // http 붙여야함
-        return newUrl;
+        return objectUrl;
       }),
     );
 

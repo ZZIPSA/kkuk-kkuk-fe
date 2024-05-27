@@ -1,12 +1,6 @@
 import { S3Client, PutObjectCommand, CopyObjectCommand, DeleteObjectCommand, GetObjectCommand, GetObjectCommandOutput } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-
-// TODO: 상수는 분리해서 별도 파일에서 관리
-const REGION = process.env.AWS_REGION!;
-const ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID!;
-const SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY!;
-const BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME!;
-const BASE_KEY = process.env.AWS_S3_BASE_KEY!;
+import { ACCESS_KEY_ID, BASE_KEY, BUCKET_NAME, REGION, SECRET_ACCESS_KEY } from '../constants';
 
 export class S3Manager {
   private client: S3Client;
@@ -37,8 +31,7 @@ export class S3Manager {
     try {
       await this.client.send(copyCommand);
     } catch (err) {
-      // TODO: 에러 처리
-      console.error('Error moving object:', err);
+      throw new Error('Error Copying object');
     }
   }
 
@@ -58,7 +51,7 @@ export class S3Manager {
       await this.copyObject(targetKey, destinationKey);
       await this.client.send(deleteCommand);
     } catch (err) {
-      console.error('Error moving object:', err);
+      throw new Error('Error moving object');
     }
   }
 
@@ -80,8 +73,7 @@ export class S3Manager {
       const url = await getSignedUrl(this.client, putCommand, { expiresIn: 60 });
       return url;
     } catch (err) {
-      console.error('Error generating presigned URL:', err);
-      throw err;
+      throw new Error('Error generating presigned URL');
     }
   }
 
@@ -93,8 +85,7 @@ export class S3Manager {
     if (match && match[1]) {
       return match[1];
     } else {
-      console.error('Invalid S3 URL');
-      throw new Error();
+      throw new Error('Invalid S3 URL');
     }
   }
 }
