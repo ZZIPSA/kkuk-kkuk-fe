@@ -37,19 +37,16 @@ export async function POST(request: Request) {
   const newKitId = (lastKitId + 1).toString().padStart(7, '0');
 
   try {
-    // blur 이미지 등 메타데이터는 별도 이동 필요
     const newKitUrls = await Promise.all(
       imageUrls.map(async (url: string, index: number) => {
         const targetKey = s3.extractS3Key(url);
-        const newUrl = `${uploaderId}/${newKitId}/${index}`;
-        const objectUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${newUrl}`;
-        await s3.moveObject(targetKey, newUrl);
-        // http 붙여야함
-        return objectUrl;
+        const newUrl = await s3.moveObject(targetKey, `${uploaderId}/${newKitId}/${index}`);
+
+        return newUrl;
       }),
     );
 
-    const newBlurUrl = await s3.copyObject(s3.extractS3Key(blurredImage), `${uploaderId}/${newKitId}/6`);
+    const newBlurUrl = await s3.moveObject(s3.extractS3Key(blurredImage), `${uploaderId}/${newKitId}/6`);
 
     const kit = await prisma.kit.create({
       data: {
@@ -59,9 +56,9 @@ export async function POST(request: Request) {
         stamps: {
           create: newKitUrls.map((url) => ({ image: url })),
         },
-        rewardImage,
-        thumbnailImage,
-        blurredImage,
+        rewardImage: newKitUrls[5],
+        thumbnailImage: newKitUrls[0],
+        blurredImage: newBlurUrl,
         tags,
         uploaderId,
       },
@@ -69,7 +66,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ data: kit });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ error: '키트를 생성하지 못했습니다.' }, { status: 500 });
   }
 }

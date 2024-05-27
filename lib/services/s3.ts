@@ -41,7 +41,7 @@ export class S3Manager {
    * @param targetKey 이동할 객체의 S3 key
    * @param destinationKey 객체가 이동될 목표 S3 key
    */
-  async moveObject(targetKey: string, destinationKey: string): Promise<void> {
+  async moveObject(targetKey: string, destinationKey: string): Promise<string> {
     const deleteCommand = new DeleteObjectCommand({
       Bucket: BUCKET_NAME,
       Key: targetKey,
@@ -50,6 +50,9 @@ export class S3Manager {
     try {
       await this.copyObject(targetKey, destinationKey);
       await this.client.send(deleteCommand);
+
+      const objectUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${destinationKey}`;
+      return objectUrl;
     } catch (err) {
       throw new Error('Error moving object');
     }
