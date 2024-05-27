@@ -4,10 +4,10 @@ import { createRef, useState } from 'react';
 import { Input } from '@/stories/Input';
 import { Button } from '@/stories/Button';
 
-export default function NicknameInput({ nickname }: { nickname: string }) {
+export default function NicknameInput({ name }: { name: string }) {
   const ref = createRef<HTMLInputElement>();
-  const [value, setValue] = useState(nickname);
-  const modified = value !== nickname;
+  const [value, setValue] = useState(name);
+  const modified = value !== name;
   return (
     <form>
       <Input label="닉네임" value={value} ref={ref} onChange={(e) => setValue(e.target.value)} />

@@ -8,8 +8,8 @@ export async function GET(_: Request, { params: { id } }: { params: { id: string
     /* await prisma.user.findUnique({
     where: { id },
     select: {
-      profileImage: true,
-      nickname: true,
+      image: true,
+      name: true,
       accounts: { select: { provider: true, userId: true } },
       rallies: {
         select: { status: true },
@@ -18,8 +18,8 @@ export async function GET(_: Request, { params: { id } }: { params: { id: string
   });
  */
     {
-      profileImage: 'https://picsum.photos/100',
-      nickname: 'test',
+      image: 'https://picsum.photos/100',
+      name: 'test',
       accounts: [{ provider: 'twitter', userId: 'test' }],
       rallies: [{ status: 'active' }, { status: 'inactive' }],
     } satisfies UserInfoResult;
