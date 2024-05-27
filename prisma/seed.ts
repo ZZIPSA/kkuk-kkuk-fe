@@ -78,6 +78,7 @@ async function main() {
         description: `${index + 1}번 키트의 설명입니다.`,
         thumbnailImage: 'https://picsum.photos/360',
         rewardImage: 'https://picsum.photos/360',
+        blurredImage: 'https://picsum.photos/360',
         tags,
         uploaderId: users[Math.floor(Math.random() * users.length)].id,
         stamps: {
