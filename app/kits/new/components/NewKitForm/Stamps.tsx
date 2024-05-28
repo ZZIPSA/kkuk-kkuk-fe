@@ -12,9 +12,6 @@ const Stamps: StampsField = ({ control, stampsRef }) => (
     render={({ field: { onChange, ...field }, fieldState }) => (
       <FormItem>
         <FormLabel aria-required>스탬프</FormLabel>
-        <FormControl>
-          <Input type="file" multiple accept="image/*" className={cn({ 'border-red-500': fieldState.error })} {...stampsRef} />
-        </FormControl>
         <FormDescription className={cn('grid grid-cols-2 gap-4')}>
           <span className="col-span-full">첫번째로 등록된 이미지는 대표이미지 , 마지막 등록된 이미지는 완주용 보상 이미지로 적용됩니다.</span>
           {field.value &&
@@ -43,7 +40,7 @@ const Stamps: StampsField = ({ control, stampsRef }) => (
             type="file"
             accept="image/*"
             multiple
-            className={cn({ 'border-red-500': fieldState.error })}
+            className="hidden"
             {...stampsRef}
             onChange={(e) => onChange([...Array.from(e.target.files ?? [])])}
           />
