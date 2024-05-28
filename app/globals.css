@@ -73,5 +73,5 @@
 }
 
 .required {
-  @apply before:content-['*'] before:text-red-500;
+  @apply before:content-['*'] before:text-primary;
 }
