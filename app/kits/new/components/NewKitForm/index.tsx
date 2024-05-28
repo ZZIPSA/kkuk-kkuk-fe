@@ -26,7 +26,7 @@ export default function NewKitForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6">
         <Stamps control={form.control} stampsRef={stampsRef} />
         <Title control={form.control} />
         <Tags control={form.control} />
