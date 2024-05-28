@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useUser } from '@/hooks/use-user';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
 import { MY_PAGE_PATH } from '@/lib/constants';
-import { getHeaderUserMenuItems, headerLogoItems } from '../lib';
+import { getHeaderUserMenuItems, headerLogoItems } from './lib';
 
 export default function NavBar() {
   const user = useUser();
