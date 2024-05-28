@@ -1,9 +1,10 @@
+import { User } from 'next-auth';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { DEFAULT_PROFILE, MY_PAGE_PATH } from '@/lib/constants';
+import { Pencil, Settings, Stamp } from '@/lib/icons';
 import { Button } from '@/stories/Button';
 import { NavBarItemProps } from './types';
-import { Pencil, Settings, Stamp } from '@/lib/icons';
-import { DEFAULT_PROFILE } from '@/lib/constants';
-import { User } from 'next-auth';
+import path from 'path';
 
 export const headerLogoItems: NavBarItemProps[] = [
   {
@@ -36,3 +37,13 @@ export const getHeaderUserMenuItems = (user?: Pick<User, 'image'>): NavBarItemPr
     isGuest: true,
   },
 ];
+
+export const filterByGuestOrMember =
+  (user?: User) =>
+  ({ isGuest }: NavBarItemProps) =>
+    !!user !== !!isGuest;
+
+export const filterByPath =
+  (path: string) =>
+  ({ showAtMyPage }: NavBarItemProps) =>
+    showAtMyPage === undefined || path.startsWith(MY_PAGE_PATH) === showAtMyPage;

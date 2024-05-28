@@ -4,8 +4,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useUser } from '@/hooks/use-user';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
-import { MY_PAGE_PATH } from '@/lib/constants';
-import { getHeaderUserMenuItems, headerLogoItems } from './lib';
+import { filterByGuestOrMember, filterByPath, getHeaderUserMenuItems, headerLogoItems } from './lib';
 
 export default function NavBar() {
   const user = useUser();
@@ -20,8 +19,8 @@ export default function NavBar() {
       </NavigationMenuList>
       <NavigationMenuList>
         {headerUserMenuItems
-          .filter(({ isGuest }) => !!user !== !!isGuest)
-          .filter(({ showAtMyPage }) => showAtMyPage === undefined || path.startsWith(MY_PAGE_PATH) === showAtMyPage)
+          .filter(filterByGuestOrMember(user))
+          .filter(filterByPath(path))
           .map(({ href, Inner }) => (
             <NavBarItem href={href} Inner={Inner} key={href} />
           ))}
