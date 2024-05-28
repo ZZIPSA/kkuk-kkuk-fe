@@ -1,14 +1,7 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormDescription,
-  FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
-import { FormFields } from "./types";
+import { FormControl, FormField, FormItem, FormLabel, FormDescription, FormMessage } from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
+import { FormFields } from './types';
 
 const Description: FormFields = ({ control }) => (
   <FormField
@@ -21,7 +14,7 @@ const Description: FormFields = ({ control }) => (
           <Textarea
             placeholder="Tell us a little bit about yourself"
             className={cn({
-              "border-red-500": !!fieldState.error,
+              'border-red-500': !!fieldState.error,
             })}
             {...field}
           >
@@ -32,7 +25,7 @@ const Description: FormFields = ({ control }) => (
         <FormDescription>
           <span
             className={cn({
-              "text-red-500": !!fieldState.error,
+              'text-red-500': !!fieldState.error,
             })}
           >
             {field.value?.length ?? 0}
