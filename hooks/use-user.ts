@@ -1,4 +1,4 @@
 import { signIn, useSession } from 'next-auth/react';
 
-export const useUser = () => useSession().data?.user;
-export const useUserOnly = () => useUser() ?? (signIn() as never);
+export const useMember = () => useSession().data?.user;
+export const useUserOnly = () => useMember() ?? (signIn() as never);
