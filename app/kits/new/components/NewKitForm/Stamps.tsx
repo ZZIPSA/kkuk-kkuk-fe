@@ -10,7 +10,7 @@ const Stamps: StampsField = ({ control, stampsRef }) => (
     name="stamps"
     render={({ field: { onChange, ...field }, fieldState }) => (
       <FormItem>
-        <FormLabel>스탬프</FormLabel>
+        <FormLabel aria-required>스탬프</FormLabel>
         <FormControl>
           <Input type="file" multiple accept="image/*" className={cn({ 'border-red-500': fieldState.error })} {...stampsRef} />
         </FormControl>
