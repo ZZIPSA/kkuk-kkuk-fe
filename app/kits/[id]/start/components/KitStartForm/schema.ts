@@ -19,7 +19,5 @@ const formSchema = z
   .required({
     title: true,
   });
-// .required({
-//   title:
-// });
+
 export default formSchema;

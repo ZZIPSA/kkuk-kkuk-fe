@@ -72,10 +72,8 @@ const FormLabel = React.forwardRef<React.ElementRef<typeof LabelPrimitive.Root>,
       <Label
         ref={ref}
         className={cn(
-          error && 'text-destructive font-bold',
-          {
-            'before:content-["*"] before:text-red-500': props['aria-required'],
-          },
+          error && 'text-destructive',
+          { required: props['aria-required'] }, //
           className,
         )}
         htmlFor={formItemId}
