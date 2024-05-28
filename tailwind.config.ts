@@ -87,6 +87,12 @@ const config = {
       backgroundImage: {
         'rally-route': "url('/rally-route.svg')",
       },
+      spacing: {
+        25: '6.25rem',
+      },
+      size: {
+        25: '6.25rem',
+      },
     },
   },
   safelist: [{ pattern: /^order-\d+$/ }],

@@ -1,17 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { useMember } from '@/hooks/use-user';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
-// import { auth } from "@/auth";
+import { MY_PAGE_PATH } from '@/lib/constants';
 import { getHeaderUserMenuItems, headerLogoItems } from '../lib';
-import { UserModel } from '@/types/models';
-
-type DefaultUser = Pick<UserModel, 'profileImage'>; // 테스트용
-const defaultUser: DefaultUser = { profileImage: '/default-profile.svg' }; // 테스트용
 
 export default function NavBar() {
-  const [user, setUser] = useState<DefaultUser>(); // 테스트용
+  const user = useMember();
+  const path = usePathname();
   const headerUserMenuItems = getHeaderUserMenuItems(user); // 테스트용
   return (
     <NavigationMenu className="max-w-full w-full justify-between">
@@ -20,14 +18,10 @@ export default function NavBar() {
           <NavBarItem href={href} Inner={Inner} key={href} />
         ))}
       </NavigationMenuList>
-      <NavigationMenuList
-        onClick={
-          // 테스트용
-          () => setUser(user ? undefined : defaultUser)
-        }
-      >
+      <NavigationMenuList>
         {headerUserMenuItems
           .filter(({ isGuest }) => !!user !== !!isGuest)
+          .filter(({ showAtMyPage }) => showAtMyPage === undefined || path.startsWith(MY_PAGE_PATH) === showAtMyPage)
           .map(({ href, Inner }) => (
             <NavBarItem href={href} Inner={Inner} key={href} />
           ))}

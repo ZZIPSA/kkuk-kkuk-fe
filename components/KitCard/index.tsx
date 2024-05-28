@@ -13,7 +13,7 @@ export enum KitCardVariants {
   description = 'description',
 }
 
-interface KitCardProps extends NonNullable<KitCardInfo>, React.ComponentPropsWithoutRef<typeof Card> {
+interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeof Card> {
   /**
    * The unique identifier of the kit.
    */
@@ -39,10 +39,6 @@ interface KitCardProps extends NonNullable<KitCardInfo>, React.ComponentPropsWit
    * @default 'vertical'
    */
   variant?: KitCardVariants;
-  /**
-   * The uploader of the kit.
-   */
-  uploader: { nickname: string; profileImage: string };
 }
 
 export default function KitCard({
@@ -57,8 +53,8 @@ export default function KitCard({
   ...props
 }: KitCardProps) {
   thumbnailImage ??= DEFAULT_KIT_THUMBNAIL;
-  const nickname = uploader?.nickname ?? '';
-  const profileImage = uploader?.profileImage ?? DEFAULT_PROFILE;
+  const name = uploader?.name ?? '';
+  const image = uploader?.image ?? DEFAULT_PROFILE;
   return (
     <Card
       className={cn(
@@ -86,10 +82,10 @@ export default function KitCard({
           })}
         >
           <Avatar className="items-center border border-grey-100 w-6 h-6">
-            <AvatarImage src={profileImage} alt={nickname} />
-            <AvatarFallback>{nickname}</AvatarFallback>
+            <AvatarImage src={image} alt={name} />
+            <AvatarFallback>{name}</AvatarFallback>
           </Avatar>
-          <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-[#A69C98] text-xs">{nickname}</span>
+          <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-[#A69C98] text-xs">{name}</span>
         </div>
         {variant === KitCardVariants.description && (
           <div className="flex justify-end gap-2 mt-auto">
