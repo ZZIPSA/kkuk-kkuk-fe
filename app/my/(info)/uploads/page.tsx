@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { getUserOnly } from '@/auth';
+import { ensureMember } from '@/auth';
 import KitCard from '@/components/KitCard';
 import { KitCardInfo } from '@/types/Kit';
 
 export default async function UploadsPage() {
-  const { id: userId } = await getUserOnly();
+  const { id: userId } = await ensureMember();
   const api = `${process.env.API_URL}/api/user/${userId}/kits`;
   const { data: rallies }: { data: KitCardInfo[] } = await fetch(api).then((res) => res.json());
 

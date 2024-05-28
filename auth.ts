@@ -22,4 +22,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 });
 
 export const getMember = async () => (await auth())?.user;
-export const getUserOnly = async () => (await getMember()) ?? signIn();
+export const ensureMember = async () => (await getMember()) ?? signIn();
