@@ -11,7 +11,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ data: presignedUrl });
   } catch (error) {
-    console.error(error);
     return NextResponse.json({ error: '업로드 URL을 생성하지 못했습니다.' }, { status: 500 });
   }
 }

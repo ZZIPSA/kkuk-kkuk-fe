@@ -44,7 +44,6 @@ const UploadPage = () => {
         newUploadedUrls[index] = imageUrl;
         setUploadedUrls(newUploadedUrls);
       } catch (error) {
-        console.error('Error uploading file', error);
         alert('파일을 업로드 하지 못했습니다.');
       } finally {
         setUploading(false);
@@ -88,7 +87,6 @@ const UploadPage = () => {
       setUploadedUrls(Array(6).fill(''));
       setBlurredUrl(null);
     } catch (error) {
-      console.error('Error creating kit', error);
       alert('키트를 생성하지 못했습니다.');
     } finally {
       setUploading(false);
