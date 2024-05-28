@@ -37,11 +37,12 @@ interface TextInputProps extends Partial<InputProps & TextareaProps> {
    * @default false
    */
   isNotVerified?: boolean;
+  ref?: React.Ref<HTMLInputElement>;
 }
 /**
  * Primary UI component for user interaction
  */
-export const TextInput = ({ variant = Variants.default, label, multiline = false, isNotVerified = false, ...props }: TextInputProps) => {
+export const TextInput = ({ variant = Variants.default, label, multiline = false, isNotVerified = false, ref, ...props }: TextInputProps) => {
   const isRequired = variant === Variants.required;
   return (
     <label className="flex flex-col w-full mb-6">

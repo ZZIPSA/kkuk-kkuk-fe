@@ -43,8 +43,8 @@ async function main() {
     return prisma.user.create({
       data: {
         email: `user${index + 1}@example.com`,
-        nickname: `User${index + 1}`,
-        profileImage: 'https://picsum.photos/360',
+        name: `User${index + 1}`,
+        image: 'https://picsum.photos/360',
         accounts: {
           create: [
             {
@@ -73,6 +73,7 @@ async function main() {
     const tags = generateRandomTag();
     return prisma.kit.create({
       data: {
+        id: String(index + 1).padStart(7, '0'),
         title: `키트 ${index + 1}`,
         description: `${index + 1}번 키트의 설명입니다.`,
         thumbnailImage: 'https://picsum.photos/360',

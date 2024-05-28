@@ -16,6 +16,13 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        // TODO: 로컬/프로덕션 분리 필요
+        protocol: 'https',
+        hostname: '*.s3.ap-northeast-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   webpack: (config, options) => {

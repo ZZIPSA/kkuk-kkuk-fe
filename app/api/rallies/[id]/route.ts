@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { RallyStatus } from '@prisma/client';
 import { prisma, rallySelect } from '@/lib/prisma';
+import { RallyStatus } from '@prisma/client';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   const id = params.id;

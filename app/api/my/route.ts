@@ -1,12 +1,15 @@
-import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import { auth } from '@/auth';
+import { prisma } from '@/lib/prisma';
 
-//TODO: 로그인 구현 후 id는 세션에서 취득
 export async function GET() {
-  const id = 'clw812wi3000oftre6au63u1f';
+  const session = await auth();
+  const currentUser = session?.user;
+
+  if (!currentUser) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 400 });
 
   const user = await prisma.user.findUnique({
-    where: { id },
+    where: { id: currentUser.id },
   });
 
   return NextResponse.json({ data: user });
