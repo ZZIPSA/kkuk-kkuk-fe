@@ -71,3 +71,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.required {
+  @apply before:content-['*'] before:text-red-500;
+}
