@@ -72,6 +72,7 @@ const FormLabel = React.forwardRef<React.ElementRef<typeof LabelPrimitive.Root>,
       <Label
         ref={ref}
         className={cn(
+          'font-bold',
           error && 'text-destructive',
           { required: props['aria-required'] }, //
           className,
