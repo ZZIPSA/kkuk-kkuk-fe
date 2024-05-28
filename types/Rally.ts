@@ -1,7 +1,7 @@
 import { RallyModel, UserModel } from './models';
 export { RallyStatus } from './models';
 
-type RallyStarter = { starter: Pick<UserModel, 'profileImage' | 'nickname'> };
+type RallyStarter = { starter: Pick<UserModel, 'image' | 'name'> };
 export type RallyInfo = Pick<RallyModel, 'id' | 'title'> & RallyStarter;
 
 export interface MyRally extends Pick<RallyModel, 'id' | 'status' | 'stampCount' | 'updatedAt'> {

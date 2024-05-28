@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { auth } from '@/auth';
 
 export async function GET() {
   const kits = await prisma.kit.findMany({});
@@ -8,11 +9,16 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  // TODO: 업로더 아이디는 세션에서 취득
-  const uploaderId = 'clwhgit8j0001doaigd5t2qt5';
+  // TODO: auth, 필수 항목 미들웨어 구현
+  const session = await auth();
+  const currentUser = session?.user;
+
+  if (!currentUser) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 400 });
+
+  const uploaderId = currentUser.id;
   const { title, description, imageUrls, thumbnailImage, rewardImage, tags } = await request.json();
 
-  if (!title || !Array.isArray(imageUrls) || !thumbnailImage || !rewardImage) {
+  if (!title || !Array.isArray(imageUrls) || !thumbnailImage || !rewardImage || !uploaderId) {
     return NextResponse.json({ error: '필수 항목을 입력해주세요.' }, { status: 400 });
   }
 

@@ -7,11 +7,11 @@ import { AvatarFallback } from '@radix-ui/react-avatar';
 import { UserInfoVariant } from './variants';
 import { cn } from '@/lib/utils';
 
-interface ProfileImageProps extends Pick<UserModel, 'profileImage' | 'nickname'> {
+interface ProfileImageProps extends Pick<UserModel, 'image' | 'name'> {
   variant: UserInfoVariant;
 }
 
-export default function ProfileImage({ profileImage, nickname, variant }: ProfileImageProps) {
+export default function ProfileImage({ image, name, variant }: ProfileImageProps) {
   return (
     <Avatar
       className={cn('border', {
@@ -19,8 +19,8 @@ export default function ProfileImage({ profileImage, nickname, variant }: Profil
         'size-25': variant === UserInfoVariant.settings,
       })}
     >
-      <AvatarImage src={profileImage ?? DEFAULT_PROFILE} alt={nickname ?? ''} />
-      <AvatarFallback>{nickname}</AvatarFallback>
+      <AvatarImage src={image ?? DEFAULT_PROFILE} alt={name ?? ''} />
+      <AvatarFallback>{name}</AvatarFallback>
     </Avatar>
   );
 }

@@ -1,5 +1,5 @@
 import { Pencil } from 'lucide-react';
-import { auth, signIn } from '@/auth';
+import { getUserOnly } from '@/auth';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { UserInfoResult } from '@/types/User';
@@ -13,13 +13,10 @@ interface UserInfoProps {
 }
 
 export default async function UserInfo({ variant = UserInfoVariant.default }: UserInfoProps) {
+  const { id: userId } = await getUserOnly();
+  const api = `${process.env.API_URL}/api/user/${userId}`;
   const {
-    data: { user },
-  } = await auth();
-  if (!user) return signIn();
-  const api = `${process.env.API_URL}/api/user/${user.id}`;
-  const {
-    data: { profileImage, nickname, accounts, rallies },
+    data: { image, name, accounts, rallies },
   }: { data: UserInfoResult } = await fetch(api).then((res) => res.json());
   const twitterAccount = accounts.find(({ provider }) => provider === 'twitter');
 
@@ -32,12 +29,12 @@ export default async function UserInfo({ variant = UserInfoVariant.default }: Us
         })}
       >
         <span className="row-span-2 relative">
-          <ProfileImage profileImage={profileImage} nickname={nickname} variant={variant} />
+          <ProfileImage image={image} name={name} variant={variant} />
           {variant === UserInfoVariant.settings && (
             <Pencil className="absolute bottom-0.5 right-0.5 w-6 h-6 p-0.5 rounded-full bg-foreground fill-background" />
           )}
         </span>
-        {variant === UserInfoVariant.default && <h1 className="font-bold w-full">{nickname}</h1>}
+        {variant === UserInfoVariant.default && <h1 className="font-bold w-full">{name}</h1>}
         {twitterAccount && (
           <Badge variant="secondary" className="w-fit text-xs font-normal gap-2">
             <span className="text-2xl">𝕏</span>@{twitterAccount.userId}
@@ -45,7 +42,7 @@ export default async function UserInfo({ variant = UserInfoVariant.default }: Us
         )}
       </div>
       {variant === UserInfoVariant.default && <RalliesCounts rallies={rallies ?? []} />}
-      {variant === UserInfoVariant.settings && <NicknameInput nickname={nickname} />}
+      {variant === UserInfoVariant.settings && <NicknameInput name={name} />}
     </section>
   );
 }
