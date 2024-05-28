@@ -73,17 +73,11 @@ export default function KitCard({
       {...props}
     >
       <CardHeader
-        className={cn('p-0', {
+        className={cn('p-0 relative aspect-square flex-shrink-0', {
           'w-full': variant === KitCardVariants.horizontal,
         })}
       >
-        <Image
-          src={thumbnailImage}
-          alt={title}
-          width={100}
-          height={100}
-          className="border-black/20 border rounded-md aspect-square w-full h-full object-cover"
-        />
+        <Image src={thumbnailImage} alt={title} fill className="border-black/20 border rounded-md aspect-square w-full h-full object-cover" />
       </CardHeader>
       <CardContent
         className={cn('p-0 flex flex-col gap-2 h-full', {

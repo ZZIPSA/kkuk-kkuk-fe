@@ -9,7 +9,9 @@ export default function StampsPreview({ stamps }: StampPreviewProps) {
       <h2 className="font-bold">스탬프 목록</h2>
       <div className="grid grid-cols-3 auto-rows-auto gap-2">
         {stamps.map(({ id, image }) => (
-          <Image key={id} src={image} width={100} height={100} alt="Stamp" className="rounded-lg w-full aspect-square object-cover" />
+          <div key={id} className="w-full aspect-square relative">
+            <Image src={image} fill alt="Stamp" className="rounded-lg aspect-square object-cover" />
+          </div>
         ))}
       </div>
     </section>
