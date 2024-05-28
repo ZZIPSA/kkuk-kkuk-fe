@@ -23,7 +23,7 @@ export default async function KitPage({ params: { id } }: { params: { id: string
       <RallyPreview stamps={stamps} />
       <StampsPreview stamps={stamps} />
       <section className="flex justify-center px-4 pb-6 bg-grey-50">
-        <Link href="/kits/new" className="w-full py-4 rounded-lg bg-primary font-bold text-white text-center ">
+        <Link href={`/kits/${id}/start`} className="w-full py-4 rounded-lg bg-primary font-bold text-white text-center ">
           랠리 시작하기
         </Link>
       </section>
