@@ -61,18 +61,14 @@ export default function KitCard({
         'border-0 shadow-none gap-2',
         {
           'flex flex-col h-full': variant === KitCardVariants.vertical,
-          'flex justify-between gap-2': variant === KitCardVariants.horizontal,
+          'flex justify-between gap-2 w-full': variant === KitCardVariants.horizontal,
           'grid grid-cols-2 gap-y-6 px-4 py-6': variant === KitCardVariants.description,
         },
         className,
       )}
       {...props}
     >
-      <CardHeader
-        className={cn('p-0 relative aspect-square flex-shrink-0', {
-          'w-full': variant === KitCardVariants.horizontal,
-        })}
-      >
+      <CardHeader className={cn('p-0 relative aspect-square w-full')}>
         <Image src={thumbnailImage} alt={title} fill className="border-black/20 border rounded-md aspect-square w-full h-full object-cover" />
       </CardHeader>
       <CardContent
