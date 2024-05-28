@@ -1,5 +1,5 @@
 import { Pencil } from 'lucide-react';
-import { auth, signIn } from '@/auth';
+import { ensureMember } from '@/auth';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { UserInfoResult } from '@/types/User';
@@ -13,11 +13,8 @@ interface UserInfoProps {
 }
 
 export default async function UserInfo({ variant = UserInfoVariant.default }: UserInfoProps) {
-  const {
-    data: { user },
-  } = await auth();
-  if (!user) return signIn();
-  const api = `${process.env.API_URL}/api/user/${user.id}`;
+  const { id: userId } = await ensureMember();
+  const api = `${process.env.API_URL}/api/user/${userId}`;
   const {
     data: { image, name, accounts, rallies },
   }: { data: UserInfoResult } = await fetch(api).then((res) => res.json());

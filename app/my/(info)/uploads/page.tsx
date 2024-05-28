@@ -1,14 +1,11 @@
 import Link from 'next/link';
-import { auth, signIn } from '@/auth';
+import { ensureMember } from '@/auth';
 import KitCard from '@/components/KitCard';
 import { KitCardInfo } from '@/types/Kit';
 
 export default async function UploadsPage() {
-  const {
-    data: { user },
-  } = await auth();
-  if (!user) return signIn();
-  const api = `${process.env.API_URL}/api/user/${user.id}/kits`;
+  const { id: userId } = await ensureMember();
+  const api = `${process.env.API_URL}/api/user/${userId}/kits`;
   const { data: rallies }: { data: KitCardInfo[] } = await fetch(api).then((res) => res.json());
 
   return (
