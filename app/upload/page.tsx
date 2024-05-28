@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { preuploadStamp, uploadBlurImage } from '../api/kits/assets/actions';
+import { preuploadStamp, preuploadStampWithBlur } from '../api/kits/assets/actions';
 
+// TODO: 유틸로 뺴기
 const arrayBufferToBase64 = (buffer: ArrayBuffer) => {
   let binary = '';
   const bytes = new Uint8Array(buffer);
@@ -34,7 +35,7 @@ const UploadPage = () => {
         const base64File = arrayBufferToBase64(bufferFile);
 
         if (index === 5) {
-          const blurUrl = await uploadBlurImage(base64File, index);
+          const blurUrl = await preuploadStampWithBlur(base64File, index);
           setBlurredUrl(blurUrl);
         }
 

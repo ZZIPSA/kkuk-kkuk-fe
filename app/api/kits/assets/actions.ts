@@ -31,7 +31,7 @@ export async function preuploadStamp(base64File: string, index: number): Promise
  * @param index 파일 인덱스
  * @returns 업로드 완료된 S3 Presigned URL
  */
-export async function uploadBlurImage(base64File: string, index: number): Promise<string> {
+export async function preuploadStampWithBlur(base64File: string, index: number): Promise<string> {
   return await processAndUpload(base64File, true, index);
 }
 
