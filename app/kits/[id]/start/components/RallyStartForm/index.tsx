@@ -9,7 +9,7 @@ import formSchema from './schema';
 import TitleField from './TitleField';
 import DescriptionField from './DescriptionField';
 
-export default function KitStartForm() {
+export default function RallyStartForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
