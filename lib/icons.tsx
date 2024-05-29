@@ -5,3 +5,4 @@ export { default as Heart } from '@/assets/heart.svg';
 export { default as Bookmark } from '@/assets/bookmark.svg';
 export { default as Check } from '@/assets/check.svg';
 export { default as Settings } from '@/assets/settings.svg';
+export { default as ErrorIcon } from '@/assets/error-icon.svg';
