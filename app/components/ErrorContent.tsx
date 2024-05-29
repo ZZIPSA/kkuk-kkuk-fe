@@ -1,7 +1,7 @@
-import { ErrorIcon } from '@/lib/icons';
-import { errorButtonStyles, errorIconStyles, errorMainBodyStyles, errorTitleStyles } from './styles';
 import Link from 'next/link';
 import { TWITTER_ACCOUNT_ID } from '@/lib/constants';
+import { ErrorIcon } from '@/lib/icons';
+import { errorButtonStyles, errorIconStyles, errorMainBodyStyles, errorTitleStyles } from './styles';
 
 export default function ErrorContent() {
   return (
