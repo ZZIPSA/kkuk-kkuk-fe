@@ -47,12 +47,12 @@ async function processAndUpload(file: string, applyBlur: boolean, index: number)
   if (!file) throw new Error('올바른 파일을 업로드 해주세요.');
 
   const arrayBuffer = base64ToArrayBuffer(file);
-  const convertedFile = await convertToWebP(arrayBuffer);
-  const finalFile = applyBlur ? await blurImage(convertedFile) : convertedFile;
-  const finalIndex = applyBlur ? (index + 1).toString() : index.toString();
-  const presignedUrl = await getPresignedUrl(finalIndex);
+  const webpFile = await convertToWebP(arrayBuffer);
+  const convertedFile = applyBlur ? await blurImage(webpFile) : webpFile;
+  const lastIndex = (applyBlur ? index + 1 : index).toString();
+  const presignedUrl = await getPresignedUrl(lastIndex);
 
-  await uploadWebp(finalFile, presignedUrl);
+  await uploadWebp(convertedFile, presignedUrl);
 
   return presignedUrl;
 }

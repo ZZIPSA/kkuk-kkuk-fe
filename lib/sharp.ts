@@ -8,7 +8,7 @@ import sharp from 'sharp';
  * @returns 블러 처리된 이미지 버퍼
  */
 export async function blurImage(buffer: Buffer | Uint8Array | ArrayBuffer): Promise<Buffer> {
-  return await sharp(buffer).blur(30).toBuffer();
+  return await sharp(buffer).blur(20).toBuffer();
 }
 
 /**

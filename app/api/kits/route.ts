@@ -19,6 +19,7 @@ export async function POST(request: Request) {
   // if (!currentUser) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 400 });
 
   // const uploaderId = currentUser.id;
+  // TODO: 테스트용 상수 제거
   const uploaderId = 'clwnjgnp10004dnxeusl9exo3';
 
   const { title, description, imageUrls, thumbnailImage, rewardImage, blurredImage, tags } = await request.json();
