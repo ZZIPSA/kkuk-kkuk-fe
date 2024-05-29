@@ -20,3 +20,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
 });
+
+export const getMember = async () => (await auth())?.user;
+export const ensureMember = async () => (await getMember()) ?? signIn();
