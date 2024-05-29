@@ -1,5 +1,7 @@
 import { ErrorIcon } from '@/lib/icons';
 import { errorButtonStyles, errorIconStyles, errorMainBodyStyles, errorTitleStyles } from './styles';
+import Link from 'next/link';
+import { TWITTER_ACCOUNT_ID } from '@/lib/constants';
 
 export default function ErrorContent() {
   return (
@@ -11,7 +13,9 @@ export default function ErrorContent() {
         <br />
         운영자에게 문의해주시기 바랍니다.
       </p>
-      <button className={errorButtonStyles}>팀 ㅈIPSA 트위터 확인하기</button>
+      <Link href={`https://twitter.com/${TWITTER_ACCOUNT_ID}`}>
+        <button className={errorButtonStyles}>팀 ㅈIPSA 트위터 확인하기</button>
+      </Link>
     </main>
   );
 }
