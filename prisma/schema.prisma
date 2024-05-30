@@ -96,6 +96,7 @@ model Kit {
   tags           String[]
   thumbnailImage String
   rewardImage    String
+  blurredImage   String
   uploaderId     String
   createdAt      DateTime  @default(now())
   updatedAt      DateTime?
