@@ -1,31 +1,17 @@
 import { NextResponse } from 'next/server';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-
-const s3 = new S3Client({
-  region: process.env.AWS_REGION!!,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!!,
-  },
-});
+import { S3Manager } from '@/lib/services/s3';
 
 export async function POST(request: Request) {
-  const { fileName, fileType } = await request.json();
-
-  const params = {
-    Bucket: process.env.AWS_S3_BUCKET_NAME,
-    Key: `local/stamps/${fileName}`,
-    ContentType: fileType,
-  };
+  // TODO: 테스트용 상수 제거
+  const userId = 'clwnjgnp10004dnxeusl9exo3';
+  const { fileName } = await request.json();
+  const s3 = new S3Manager();
 
   try {
-    const command = new PutObjectCommand(params);
-    const presignedUrl = await getSignedUrl(s3, command, { expiresIn: 60 * 15 });
+    const presignedUrl = await s3.getPresignedUrl(fileName, userId);
 
-    return NextResponse.json({ presignedUrl });
+    return NextResponse.json({ data: presignedUrl });
   } catch (error) {
-    console.error(error);
     return NextResponse.json({ error: '업로드 URL을 생성하지 못했습니다.' }, { status: 500 });
   }
 }
