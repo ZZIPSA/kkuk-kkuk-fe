@@ -1,6 +1,7 @@
 export const DEFAULT_PROFILE = '/default-profile.svg';
 export const DEFAULT_KIT_THUMBNAIL = '/kkuk-kkuk.svg';
 export const MY_PAGE_PATH = '/my';
+export const TWITTER_ACCOUNT_ID = '';
 
 // TODO: BE 상수 분리
 export const REGION = process.env.AWS_REGION!;
