@@ -6,7 +6,7 @@ export const lastStampStyles =
   'border-2 border-indigo-500 bg-indigo-500 after:absolute after:top-3 after:-left-8 after:py-2 after:px-8 after:content-["Reward"] after:font-bold after:origin-center after:-rotate-45';
 export const lastEmptyStampStyles = 'after:text-indigo-500 after:bg-white';
 export const lastStampPreviewStyles = 'after:text-white after:bg-indigo-500';
-export const notFirstOrLastStampStyles = 'border border-grey-100';
+export const defaultStampStyles = 'border border-grey-100';
 
 // EmptyStamp
 export const stampEmptyStampStyles = 'text-grey-400 text-sm font-bold size-full flex flex-col gap-4 justify-center items-center';
