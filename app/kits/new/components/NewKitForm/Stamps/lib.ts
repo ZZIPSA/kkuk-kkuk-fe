@@ -30,3 +30,5 @@ export const getStampSpanStyles = (isFirst: boolean, isLast: boolean, isEmpty: b
       [lastStampPreviewSpanStyles]: !isEmpty,
     })]: isLast,
   });
+
+export const getStampSpanContents = (index: number, total: number) => (index === total ? 'Reward' : `${index + 1}일째`);
