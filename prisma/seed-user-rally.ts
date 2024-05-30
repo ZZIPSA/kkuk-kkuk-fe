@@ -15,6 +15,7 @@ async function main() {
         status: RallyStatus.active,
       })),
   });
+  console.log('=== active rallies ===');
   console.log({ activeRallies });
   const inactiveRallies = await prisma.rally.createMany({
     data: kits
@@ -28,6 +29,7 @@ async function main() {
         status: RallyStatus.inactive,
       })),
   });
+  console.log('=== inactive rallies ===');
   console.log({ inactiveRallies });
   const { id } = kits.at(-1)!;
   const uploadKits = await prisma.kit.createMany({
@@ -40,6 +42,7 @@ async function main() {
       uploaderId: user.id,
     })),
   });
+  console.log('=== upload kits ===');
   console.log({ uploadKits });
 }
 
