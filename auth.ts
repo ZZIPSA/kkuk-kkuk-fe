@@ -19,6 +19,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
+  secret:process.env.NEXTAUTH_SECRET
 });
 
 export const getMember = async () => (await auth())?.user;
