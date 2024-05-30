@@ -1,15 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { cn } from '@/lib/utils';
-import {
-  stampInputLabelStyles,
-  notFirstOrLastStampStyles,
-  firstStampStyles,
-  lastStampStyles,
-  lastEmptyStampStyles,
-  lastStampPreviewStyles,
-} from './styles';
 import StampPreview from './StampPreview';
 import EmptyStamp from './EmptyStamp';
 import { getStampLabelStyles, getStampSpanStyles } from './lib';
@@ -21,15 +12,7 @@ export default function StampInput({ index, total }: { index: number; total: num
   const isEmpty = file === undefined;
 
   return (
-    <label
-      className={cn(stampInputLabelStyles, {
-        [notFirstOrLastStampStyles]: index !== 0 && index !== total,
-        [firstStampStyles]: index === 0,
-        [lastStampStyles]: index === total,
-        [lastEmptyStampStyles]: index === total && file === undefined,
-        [lastStampPreviewStyles]: index === total && file !== undefined,
-      })}
-    >
+    <label className={getStampLabelStyles(isFirst, isLast)}>
       <span className={getStampSpanStyles(isFirst, isLast, isEmpty)}>{isLast ? 'Reward' : `${index + 1}일째`}</span>
       {file !== undefined ? <StampPreview file={file} setFile={setFile} /> : <EmptyStamp index={index} total={total} />}
       <input type="file" accept="image/*" hidden onChange={(e) => setFile(e.target.files?.[0])} />
