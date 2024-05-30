@@ -31,4 +31,4 @@ export const getStampSpanStyles = (isFirst: boolean, isLast: boolean, isEmpty: b
     })]: isLast,
   });
 
-export const getStampSpanContents = (index: number, total: number) => (index === total ? 'Reward' : `${index + 1}일째`);
+export const getStampSpanContents = (index: number, total: number) => (index === total ? 'Reward' : `${index + 1}일차`);
