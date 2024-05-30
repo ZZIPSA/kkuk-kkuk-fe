@@ -1,12 +1,9 @@
 // StampInput
 export const stampInputLabelStyles = 'relative rounded-[1.125rem] aspect-square w-full overflow-hidden';
-export const firstStampStyles =
-  'border-2 border-primary after:absolute after:top-0 after:left-0 after:bg-primary after:py-2 after:px-6 after:rounded-br-2xl after:content-["대표"] after:text-background after:font-bold';
-export const lastStampStyles =
-  'border-2 border-indigo-500 bg-indigo-500 after:absolute after:top-3 after:-left-8 after:py-2 after:px-8 after:content-["Reward"] after:font-bold after:origin-center after:-rotate-45';
-export const lastEmptyStampStyles = 'after:text-indigo-500 after:bg-white';
-export const lastStampPreviewStyles = 'after:text-white after:bg-indigo-500';
 export const defaultStampStyles = 'border border-grey-100';
+export const firstStampStyles = 'border-2 border-primary';
+export const lastStampStyles = 'border-2 border-indigo-500 bg-indigo-500';
+
 // StampSpan
 export const stampSpanStyles = 'absolute font-bold z-10';
 export const notLastStampSpanStyles = 'top-0 left-0 py-2 px-6 rounded-br-2xl text-background';
