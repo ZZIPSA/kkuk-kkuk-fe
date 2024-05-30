@@ -38,7 +38,7 @@ export const getHeaderUserMenuItems = (user?: Pick<User, 'image'>): NavBarItemPr
   },
 ];
 
-export const filterByGuestOrMember =
+export const filterByAuth =
   (user?: User) =>
   ({ isGuest }: NavBarItemProps) =>
     !!user !== !!isGuest;

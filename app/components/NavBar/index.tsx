@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useMember } from '@/hooks/use-user';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
-import { filterByGuestOrMember, filterByPath, getHeaderUserMenuItems, headerLogoItems } from './lib';
+import { filterByAuth, filterByPath, getHeaderUserMenuItems, headerLogoItems } from './lib';
 
 export default function NavBar() {
   const user = useMember();
@@ -19,7 +19,7 @@ export default function NavBar() {
       </NavigationMenuList>
       <NavigationMenuList>
         {headerUserMenuItems
-          .filter(filterByGuestOrMember(user))
+          .filter(filterByAuth(user))
           .filter(filterByPath(path))
           .map(({ href, Inner }) => (
             <NavBarItem href={href} Inner={Inner} key={href} />
