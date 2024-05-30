@@ -7,6 +7,14 @@ export const lastStampStyles =
 export const lastEmptyStampStyles = 'after:text-indigo-500 after:bg-white';
 export const lastStampPreviewStyles = 'after:text-white after:bg-indigo-500';
 export const defaultStampStyles = 'border border-grey-100';
+// StampSpan
+export const stampSpanStyles = 'absolute font-bold z-10';
+export const notLastStampSpanStyles = 'top-0 left-0 py-2 px-6 rounded-br-2xl text-background';
+export const defaultStampSpanStyles = 'bg-grey-100';
+export const firstStampSpanStyles = 'bg-primary';
+export const lastStampSpanStyles = 'top-3 -left-8 py-2 px-8 origin-center -rotate-45';
+export const lastEmptyStampSpanStyles = 'text-indigo-500 bg-white';
+export const lastStampPreviewSpanStyles = 'text-white bg-indigo-500';
 
 // EmptyStamp
 export const stampEmptyStampStyles = 'text-grey-400 text-sm font-bold size-full flex flex-col gap-4 justify-center items-center';
