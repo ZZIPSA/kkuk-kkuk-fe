@@ -8,10 +8,12 @@ import {
 } from './styles';
 
 export default function EmptyStamp({ index, total }: { index: number; total: number }) {
+  const isLast = index === total;
+
   return (
     <div className={stampEmptyStampStyles}>
       <div className={stampEmptyStampIconStyles}>
-        {index === total ? <Gift className={stampEmptyStampGiftIconStyles} /> : <Picture className={stampEmptyStampPictureIconStyles} />}
+        {isLast ? <Gift className={stampEmptyStampGiftIconStyles} /> : <Picture className={stampEmptyStampPictureIconStyles} />}
         <CirclePlus className={stampEmptyStampCirclePlusIconStyles} />
       </div>
       000 x 000 px

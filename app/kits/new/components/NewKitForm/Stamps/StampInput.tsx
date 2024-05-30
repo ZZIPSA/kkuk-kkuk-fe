@@ -15,6 +15,9 @@ import EmptyStamp from './EmptyStamp';
 
 export default function StampInput({ index, total }: { index: number; total: number }) {
   const [file, setFile] = useState<File>();
+  const isFirst = index === 0;
+  const isLast = index === total;
+  const isEmpty = file === undefined;
 
   return (
     <label
