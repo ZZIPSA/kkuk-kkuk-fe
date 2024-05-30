@@ -14,7 +14,10 @@ const Stamps: StampsField = ({ control, stampsRef }) => (
       <FormItem>
         <FormLabel aria-required>스탬프 이미지 등록</FormLabel>
         <FormDescription className={cn('grid grid-cols-2 gap-4')}>
-          <span className="col-span-full">첫번째로 등록된 이미지는 대표이미지 , 마지막 등록된 이미지는 완주용 보상 이미지로 적용됩니다.</span>
+          <span className="col-span-full">
+            1일차에 등록된 이미지는 대표이미지, 6일차에 등록된 이미지는 완주용 보상 이미지로 적용됩니다. 360 x 360px 이하, 150kb 이하의 이미지를
+            등록할 수 있습니다.
+          </span>
           {Array.from({ length: 6 }).map((_, i) => (
             <StampInput key={i} index={i} total={LAST_INDEX} />
           ))}

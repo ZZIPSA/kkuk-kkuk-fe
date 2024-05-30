@@ -16,7 +16,6 @@ export default function EmptyStamp({ index, total }: { index: number; total: num
         {isLast ? <Gift className={stampEmptyStampGiftIconStyles} /> : <Picture className={stampEmptyStampPictureIconStyles} />}
         <CirclePlus className={stampEmptyStampCirclePlusIconStyles} />
       </div>
-      000 x 000 px
     </div>
   );
 }
