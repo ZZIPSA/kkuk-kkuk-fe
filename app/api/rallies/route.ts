@@ -1,22 +1,17 @@
 import { NextResponse } from 'next/server';
-import { prisma, kitSelect, rallySelect, userSelect } from '@/lib/prisma';
-
-// TODO: 에러 메세지 통합
-// TODO: 페이지네이션
-export async function GET() {
-  try {
-    const rallies = await prisma.rally.findMany({ select: rallySelect });
-
-    return NextResponse.json({ data: rallies });
-  } catch (error) {
-    return NextResponse.json({ error: '예기치 못한 에러가 발생했습니다.' }, { status: 500 });
-  }
-}
+import { auth } from '@/auth';
+import { prisma, kitSelect, userSelect } from '@/lib/prisma';
 
 export async function POST(request: Request) {
   const body = await request.json();
-  // TODO: 로그인 구현 후 세션에서 starterId 취득
-  const { title, description, kitId, starterId } = body;
+  const session = await auth();
+  const currentUser = session?.user;
+
+  if (!currentUser) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 403 });
+
+  const starterId = currentUser.id;
+
+  const { title, description, kitId } = body;
 
   if (!title || !kitId || !starterId) {
     return NextResponse.json({ error: '요청이 유효하지 않습니다.' }, { status: 400 });
