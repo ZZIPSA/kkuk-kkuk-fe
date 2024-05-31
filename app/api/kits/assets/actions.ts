@@ -73,7 +73,7 @@ async function getPresignedUrl(fileName: string): Promise<string> {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to get presigned URL');
+    throw new Error('미리 서명된 URL을 생성하지 못했습니다.');
   }
 
   const { data: presignedUrl } = await response.json();
@@ -97,6 +97,6 @@ async function uploadWebp(webpFile: Buffer, presignedUrl: string): Promise<void>
   });
 
   if (!response.ok) {
-    throw new Error('Failed to upload file');
+    throw new Error('파일을 업로드하지 못했습니다.');
   }
 }
