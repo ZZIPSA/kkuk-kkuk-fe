@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, CopyObjectCommand, DeleteObjectCommand, GetObjectCommand, GetObjectCommandOutput } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, CopyObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { ACCESS_KEY_ID, BASE_KEY, BUCKET_NAME, REGION, SECRET_ACCESS_KEY } from '../constants';
 
@@ -51,7 +51,7 @@ export class S3Manager {
       await this.copyObject(targetKey, destinationKey);
       await this.client.send(deleteCommand);
 
-      const objectUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${destinationKey}`;
+      const objectUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${BASE_KEY}/${destinationKey}`;
       return objectUrl;
     } catch (err) {
       throw new Error('Error moving object');
