@@ -1,5 +1,5 @@
 import { RallyPreviewStamp } from '@/types/Stamp';
-import { Stamp, StampVariants } from './Stamp';
+import { Stamp, StampVariants } from '@/components/RallyStamp';
 
 type RallyPreviewProps = { stamps: RallyPreviewStamp[] };
 

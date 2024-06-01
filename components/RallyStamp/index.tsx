@@ -37,3 +37,4 @@ export function Stamp({ image, variant = StampVariants.default, size = 100, orde
     </div>
   );
 }
+
