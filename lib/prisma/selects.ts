@@ -8,6 +8,8 @@ export const kitSelect = {
   tags: true,
   thumbnailImage: true,
   rewardImage: true,
+  blurredImage: true,
+  stamps: true,
   uploader: {
     select: userSelect,
   },

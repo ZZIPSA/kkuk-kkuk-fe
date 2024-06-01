@@ -77,6 +77,7 @@ async function getPresignedUrl(fileName: string): Promise<string> {
   });
 
   if (!response.ok) {
+    // NOTE: 필요시 에러코드 추가
     throw new Error('미리 서명된 URL을 생성하지 못했습니다.');
   }
 
@@ -101,6 +102,7 @@ async function uploadWebp(webpFile: Buffer, presignedUrl: string): Promise<void>
   });
 
   if (!response.ok) {
+    // NOTE: 필요시 에러코드 추가
     throw new Error('파일을 업로드하지 못했습니다.');
   }
 }

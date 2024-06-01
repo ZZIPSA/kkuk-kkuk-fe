@@ -6,7 +6,7 @@ export async function GET() {
   const session = await auth();
   const currentUser = session?.user;
 
-  if (!currentUser) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 403 });
+  if (!currentUser) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 401 });
 
   const user = await prisma.user.findUnique({
     where: { id: currentUser.id },

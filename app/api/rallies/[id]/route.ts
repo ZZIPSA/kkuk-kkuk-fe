@@ -27,7 +27,7 @@ export async function PATCH(request: Request, { params }: patchRallyParams) {
   const body = await request.json();
   const { stampCount } = body;
 
-  if (!currentUser) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 403 });
+  if (!currentUser) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 401 });
 
   if (stampCount === undefined || typeof stampCount !== 'number' || stampCount < 0) {
     return NextResponse.json({ error: '필수 항목을 입력해주세요.' }, { status: 400 });
