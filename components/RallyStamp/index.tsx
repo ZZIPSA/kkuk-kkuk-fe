@@ -16,7 +16,8 @@ interface StampProps extends RallyPreviewStamp {
 }
 
 const STAMP_BY_ROW = 3;
-export function Stamp({ image, variant = StampVariants.default, size = 100, order }: StampProps) {
+
+export function Stamp({ image, variant = StampVariants.default, order }: StampProps) {
   const rows = Math.floor(order / STAMP_BY_ROW);
   const isReverse = rows % 2 === 1;
   order += isReverse ? STAMP_BY_ROW - 1 - (order % STAMP_BY_ROW) * 2 : 0;
