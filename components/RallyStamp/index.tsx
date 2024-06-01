@@ -32,9 +32,8 @@ export function Stamp({ image, variant = StampVariants.default, size = 100, orde
         })}
       />
       {variant === StampVariants.checked && (
-        <Check className="absolute right-0 bottom-0 w-6 h-6 p-1 stroke-white bg-primary rounded-full fill-none" />
+        <Check className="absolute right-0 bottom-0 w-[26%] h-[26%] p-1 stroke-white stroke-2 bg-primary rounded-full fill-none" />
       )}
     </div>
   );
 }
-
