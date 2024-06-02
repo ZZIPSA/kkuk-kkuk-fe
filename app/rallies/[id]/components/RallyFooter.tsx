@@ -1,6 +1,7 @@
 import { BasicButton as Button } from '@/components/ui/button';
 import { Stamp } from '@/lib/icons';
 import { cn } from '@/lib/utils';
+import { rallyFooterStyles } from './styles';
 
 enum RallyStampButtonVariant {
   Stampable = 'stampable',
@@ -23,21 +24,21 @@ export function RallyFooter({ owned, variant }: RallyFooterProps) {
     disabled: variant === RallyStampButtonVariant.Disabled,
   };
   return (
-    <footer className="mt-auto flex flex-col gap-2">
-      {owned && <Button className="w-full bg-background text-grey-400 border border-grey-100">친구에게 공유하기</Button>}
+    <footer className={rallyFooterStyles.footer}>
+      {owned && <Button className={rallyFooterStyles.shareButton}>친구에게 공유하기</Button>}
       <Button
         disabled={is.disabled}
-        className={cn('w-full', {
-          'bg-primary': is.stampable,
-          'bg-indigo-500': is.reward,
-          'bg-grey-100': is.disabled,
+        className={cn(rallyFooterStyles.stampButton.default, {
+          [rallyFooterStyles.stampButton.primary]: is.stampable,
+          [rallyFooterStyles.stampButton.indigo]: is.reward,
+          [rallyFooterStyles.stampButton.grey]: is.disabled,
         })}
       >
         <Stamp
-          className={cn('w-6 h-6 mr-1 fill-white', {
-            'stroke-primary': is.stampable,
-            'stroke-indigo-500': is.reward,
-            'stroke-grey-100': is.disabled,
+          className={cn(rallyFooterStyles.stampIcon.default, {
+            [rallyFooterStyles.stampIcon.primary]: is.stampable,
+            [rallyFooterStyles.stampIcon.indigo]: is.reward,
+            [rallyFooterStyles.stampIcon.grey]: is.disabled,
           })}
         />
         스탬프 찍기

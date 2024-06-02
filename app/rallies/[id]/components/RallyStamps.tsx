@@ -1,5 +1,6 @@
 import { RallyStamp, StampStatus, StampKind } from '@/components/RallyStamp';
 import { RallyPreviewStamp } from '@/types/Stamp';
+import { rallyStampsStyles } from './styles';
 
 interface RallyStampsProps {
   stamps: RallyPreviewStamp[];
@@ -10,9 +11,9 @@ interface RallyStampsProps {
 
 export default function RallyStamps({ stamps, total, stampCount, owned }: RallyStampsProps) {
   return (
-    <article className="font-bold">
-      <h2 className="pb-6">스탬프 랠리</h2>
-      <section className="bg-rally-route bg-contain bg-center bg-no-repeat grid grid-cols-3 auto-rows-auto gap-y-6 gap-x-2">
+    <article className={rallyStampsStyles.container}>
+      <h2 className={rallyStampsStyles.title}>스탬프 랠리</h2>
+      <section className={rallyStampsStyles.stamps}>
         {stamps
           .map((e, i) => ({
             ...e,
