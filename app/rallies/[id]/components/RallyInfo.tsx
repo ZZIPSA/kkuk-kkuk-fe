@@ -1,5 +1,5 @@
 import { Progress } from '@/components/ui/progress';
-import { getMsToDate, dateIntl } from '@/lib/date';
+import { convertMsToDate, dateIntl } from '@/lib/date';
 import { RallyStatus } from '@/types/Rally';
 import { rallyInfoStyles } from './styles';
 
@@ -22,7 +22,7 @@ export default function RallyInfo({ title, percentage, createdAt, updatedAt, dea
       <h1 className={rallyInfoStyles.title}>{title}</h1>
       <span className={rallyInfoStyles.percentage}>{percentage.toFixed(0)}%</span>
       <Progress value={percentage} className={rallyInfoStyles.progress} />
-      {isActive && <div className={rallyInfoStyles.dDay}>D-day {getMsToDate(dDay)}</div>}
+      {isActive && <div className={rallyInfoStyles.dDay}>D-day {convertMsToDate(dDay)}</div>}
       <p className={rallyInfoStyles.date}>
         <span className={rallyInfoStyles.startDate}>시작일: {dateIntl.format(new Date(createdAt))}</span>
         {!isActive && // TODO: 실패 시에는 표시하지 않아야 함
