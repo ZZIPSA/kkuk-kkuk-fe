@@ -1,43 +1,23 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { KitResult } from '@/types/Kit';
+import { kitSelect, prisma } from '@/lib/prisma';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const id = params.id;
+type getKitParams = { params: { id: string } };
 
-  const kit =
-    /*
-  await prisma.kit.findUnique({
-    where: { id },
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      tags: true,
-      thumbnailImage: true,
-      rewardImage: true,
-      uploader: true,
-      stamps: true,
-    },
-  });
-  */
-    {
-      id: '1',
-      title: 'Test Kit',
-      description: 'This is a test kit.',
-      tags: ['test', 'kit'],
-      thumbnailImage: 'https://picsum.photos/360',
-      rewardImage: 'https://picsum.photos/360?random=5',
-      uploader: {
-        id: '1',
-        profileImage: 'https://picsum.photos/100',
-        nickname: 'Test User',
-      },
-      stamps: Array.from({ length: 6 }, (_, i) => ({
-        id: i.toString(),
-        image: 'https://picsum.photos/360?random=' + i,
-      })),
-    } satisfies KitResult;
+export async function GET(_: Request, { params }: getKitParams) {
+  const { id } = params;
 
-  return NextResponse.json({ data: kit }, { status: kit ? 200 : 404 });
+  try {
+    const kit = await prisma.kit.findUnique({
+      where: { id },
+      select: kitSelect,
+    });
+
+    if (!kit) {
+      return NextResponse.json({ error: '해당 키트를 찾을 수 없습니다.' }, { status: 404 });
+    }
+
+    return NextResponse.json({ data: kit }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: '서버 에러가 발생했습니다.' }, { status: 500 });
+  }
 }
