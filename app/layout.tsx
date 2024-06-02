@@ -20,7 +20,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className, 'w-[100vw] flex flex-col items-center')}>
-        <header className="border-b px-4 py-2 w-full top-0 sticky bg-background z-10 flex">
+        <header className="border-b px-4 py-2 w-full top-0 sticky bg-background z-10">
           <SessionProvider>
             <NavBar />
           </SessionProvider>
