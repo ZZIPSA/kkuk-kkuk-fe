@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
-import { Input, Variants } from "./Input";
+import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
+import { TextInput, Variants } from './Input';
 
 const meta = {
-  title: "Example/Input",
-  component: Input,
-  parameters: { layout: "centered" },
-  tags: ["autodocs"],
+  title: 'Example/Input',
+  component: TextInput,
+  parameters: { layout: 'centered' },
+  tags: ['autodocs'],
   args: { onClick: fn() },
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof TextInput>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-    label: "Input",
+    label: 'Input',
   },
 };
 
@@ -27,7 +27,7 @@ export const Default: Story = {
  */
 export const NotVerified: Story = {
   args: {
-    label: "Not Verified",
+    label: 'Not Verified',
     isNotVerified: true,
   },
 };
@@ -38,7 +38,7 @@ export const NotVerified: Story = {
 export const Required: Story = {
   args: {
     variant: Variants.required,
-    label: "Required",
+    label: 'Required',
   },
 };
 
@@ -48,6 +48,6 @@ export const Required: Story = {
 export const Disabled: Story = {
   args: {
     variant: Variants.disabled,
-    label: "Disabled",
+    label: 'Disabled',
   },
 };
