@@ -11,7 +11,7 @@ export default function NavBar() {
   const path = usePathname();
   const headerUserMenuItems = getHeaderUserMenuItems(user); // 테스트용
   return (
-    <NavigationMenu className="max-w-full w-full justify-between">
+    <NavigationMenu className="max-w-[360px] mx-auto justify-between">
       <NavigationMenuList>
         {headerLogoItems.map(({ href, Inner }) => (
           <NavBarItem href={href} Inner={Inner} key={href} />
