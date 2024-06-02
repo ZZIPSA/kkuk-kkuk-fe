@@ -1,5 +1,6 @@
 'use server';
 
+import { auth } from '@/auth';
 import { blurImage, convertToWebP } from '@/lib/sharp';
 
 // TODO: 유틸로 뺴기
@@ -64,16 +65,20 @@ async function processAndUpload(file: string, applyBlur: boolean, index: number)
  * @returns Presigned URL
  */
 async function getPresignedUrl(fileName: string): Promise<string> {
+  const session = await auth();
   const response = await fetch(`${process.env.API_URL}/api/s3/presign`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      // FIXME: actions에서 API요청을 하는 경우 헤더 설정이 필요해지는 에러 수정
+      Cookie: `authjs.session-token=${session.sessionToken}`,
     },
     body: JSON.stringify({ fileName, fileType: 'webp' }),
   });
 
   if (!response.ok) {
-    throw new Error('Failed to get presigned URL');
+    // NOTE: 필요시 에러코드 추가
+    throw new Error('미리 서명된 URL을 생성하지 못했습니다.');
   }
 
   const { data: presignedUrl } = await response.json();
@@ -97,6 +102,7 @@ async function uploadWebp(webpFile: Buffer, presignedUrl: string): Promise<void>
   });
 
   if (!response.ok) {
-    throw new Error('Failed to upload file');
+    // NOTE: 필요시 에러코드 추가
+    throw new Error('파일을 업로드하지 못했습니다.');
   }
 }
