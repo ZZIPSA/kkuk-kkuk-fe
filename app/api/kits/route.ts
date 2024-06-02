@@ -55,7 +55,7 @@ export async function POST(request: Request) {
         title,
         description,
         stamps: {
-          create: newKitUrls.map((url) => ({ image: url })),
+          create: newKitUrls.slice(0, 6).map((url) => ({ image: url })),
         },
         rewardImage: newKitUrls[5],
         thumbnailImage: newKitUrls[0],
