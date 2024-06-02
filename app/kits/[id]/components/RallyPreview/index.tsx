@@ -1,5 +1,5 @@
 import { RallyPreviewStamp } from '@/types/Stamp';
-import { RallyStamp, RallyStampVariants } from '@/components/RallyStamp';
+import { RallyStamp, StampStatus, StampKind } from '@/components/RallyStamp';
 
 type RallyPreviewProps = { stamps: RallyPreviewStamp[] };
 
@@ -13,10 +13,12 @@ export default function RallyPreview({ stamps }: RallyPreviewProps) {
             .map((e, i) => ({
               ...e,
               order: i,
-              variant: i == 0 ? RallyStampVariants.checked : i == 1 ? RallyStampVariants.default : RallyStampVariants.monochrome,
+              status: i === 0 ? StampStatus.checked : i === 1 ? StampStatus.checkable : StampStatus.uncheckable,
+              kind: i === 6 ? StampKind.reward : StampKind.default,
+              owned: false,
             }))
-            .map(({ id, image, variant, order }) => (
-              <RallyStamp key={id} id={id} image={image} variant={variant} order={order} />
+            .map(({ id, image, status, kind, owned, order }) => (
+              <RallyStamp key={id} id={id} image={image} status={status} kind={kind} owned={owned} order={order} />
             ))}
         </div>
       </div>
