@@ -7,18 +7,18 @@ import { BLURRED_IMAGE_INDEX, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const page = searchParams.get('page');
+    const cursor = searchParams.get('cursor');
     const pageSize = searchParams.get('pageSize');
 
-    if (page && pageSize) {
-      const { kits, meta } = await getPagedKits(parseInt(page, 10), parseInt(pageSize, 10));
+    if (pageSize) {
+      const { kits, meta } = await getPagedKits(parseInt(pageSize, 10), cursor);
       return NextResponse.json({ data: kits, meta });
     } else {
       const { kits, totalKits } = await getAllKits();
       return NextResponse.json({ data: kits, meta: { totalKits } });
     }
   } catch (error) {
-    return handleServerError(error);
+    return NextResponse.json({ error: '서버 에러가 발생했습니다.' }, { status: 500 });
   }
 }
 
@@ -68,27 +68,30 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ data: kit });
   } catch (error) {
-    return NextResponse.json({ error: '키트를 생성하지 못했습니다.' }, { status: 500 });
+    return NextResponse.json({ error: '서버 에러가 발생했습니다.' }, { status: 500 });
   }
 }
 
-async function getPagedKits(page: number, pageSize: number) {
-  const skip = (page - 1) * pageSize;
+async function getPagedKits(pageSize: number, cursor: string | null) {
   const take = pageSize;
-
   const kits = await prisma.kit.findMany({
-    skip,
     take,
+    skip: cursor ? 1 : 0,
+    cursor: cursor ? { id: cursor } : undefined,
+    orderBy: {
+      id: 'asc',
+    },
     select: kitSelect,
   });
 
   const totalKits = await prisma.kit.count();
   const totalPages = Math.ceil(totalKits / pageSize);
+  const nextCursor = kits.length === take ? kits[take - 1].id : null;
 
   return {
     kits,
     meta: {
-      page,
+      nextCursor,
       pageSize,
       totalKits,
       totalPages,
@@ -101,9 +104,4 @@ async function getAllKits() {
   const totalKits = await prisma.kit.count();
 
   return { kits, totalKits };
-}
-
-function handleServerError(error: unknown) {
-  console.error(error);
-  return NextResponse.json({ error: '서버 에러가 발생했습니다.' }, { status: 500 });
 }
