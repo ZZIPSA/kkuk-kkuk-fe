@@ -45,3 +45,4 @@ const getStampableConditions = ({ owned, status, stampCount, total, isStampedTod
   stampCount < total,
   !isStampedToday,
 ];
+export const getStampable = (props: StampableConditionsProps) => getStampableConditions(props).every(Boolean);
