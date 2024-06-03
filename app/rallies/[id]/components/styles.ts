@@ -17,6 +17,7 @@ export const rallyStampsStyles = {
 export const rallyFooterStyles = {
   footer: 'mt-auto flex flex-col gap-2',
   shareButton: 'w-full bg-background text-grey-400 border border-grey-100',
+  shareButtonDisabled: 'opacity-0 cursor-default',
   stampButton: {
     default: 'w-full',
     primary: 'bg-primary',

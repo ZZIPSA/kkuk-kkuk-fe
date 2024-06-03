@@ -27,7 +27,13 @@ export function RallyFooter({ owned, variant, stampButtonContent }: RallyFooterP
   };
   return (
     <footer className={rallyFooterStyles.footer}>
-      {owned && <Button className={rallyFooterStyles.shareButton}>친구에게 공유하기</Button>}
+      <Button
+        className={cn(rallyFooterStyles.shareButton, {
+          [rallyFooterStyles.shareButtonDisabled]: !owned,
+        })}
+      >
+        친구에게 공유하기
+      </Button>
       <Button
         disabled={is.disabled}
         className={cn(rallyFooterStyles.stampButton.default, {
