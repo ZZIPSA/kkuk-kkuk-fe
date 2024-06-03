@@ -43,7 +43,7 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
   const stampButtonContent = getStampButtonContent(stampableProps);
 
   return (
-    <main className="px-4 py-6 bg-grey-50 flex flex-col gap-6">
+    <main className="px-4 py-6 w-full bg-grey-50 flex flex-col gap-6">
       <RallyInfo title={title} percentage={percentage} createdAt={createdAt} updatedAt={updatedAt} status={status} deadline={deadline} />
       <RallyStamps stamps={stamps} total={total} stampCount={stampCount} owned={owned} isStampedToday={isStampedToday} />
       <RallyFooter owned={owned} variant={stampButtonVariant} stampButtonContent={stampButtonContent} />
