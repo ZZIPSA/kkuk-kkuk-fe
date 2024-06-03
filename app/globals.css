@@ -78,3 +78,7 @@
 main {
   @apply min-w-[360px] max-w-[720px];
 }
+nav {
+  /* 360 - 16 * 2 = 328, 720 - 16 * 2 = 688 */
+  @apply min-w-[328px] max-w-[688px];
+}
