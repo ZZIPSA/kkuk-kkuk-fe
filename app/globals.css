@@ -76,5 +76,5 @@
 }
 
 main {
-  @apply w-[360px];
+  @apply min-w-[360px] max-w-[720px];
 }
