@@ -7,12 +7,13 @@ interface RallyStampsProps {
   total: number;
   stampCount: number;
   owned: boolean;
+  isStampedToday: boolean;
 }
 
-export default function RallyStamps({ stamps, total, stampCount, owned }: RallyStampsProps) {
 const getStampStatusUnstamped = (i: number, stampCount: number) =>
   i < stampCount ? StampStatus.checked : i === stampCount ? StampStatus.checkable : StampStatus.uncheckable;
 const getStampStatusStamped = (i: number, stampCount: number) => (i <= stampCount ? StampStatus.checked : StampStatus.uncheckable);
+export default function RallyStamps({ stamps, total, stampCount, owned, isStampedToday }: RallyStampsProps) {
   return (
     <article className={rallyStampsStyles.container}>
       <h2 className={rallyStampsStyles.title}>스탬프 랠리</h2>
