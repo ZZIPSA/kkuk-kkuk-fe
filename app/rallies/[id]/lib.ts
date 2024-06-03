@@ -1,4 +1,4 @@
-import { RallyInfo } from '@/types/Rally';
+import { RallyInfo, RallyStatus } from '@/types/Rally';
 
 // TODO: 테스트용 상수 제거
 export const dummy = {
@@ -31,3 +31,17 @@ export const dummy = {
     updatedAt: null,
   },
 } satisfies { data: RallyInfo };
+
+interface StampableConditionsProps {
+  owned: boolean;
+  status: RallyStatus;
+  stampCount: number;
+  total: number;
+  isStampedToday: boolean;
+}
+const getStampableConditions = ({ owned, status, stampCount, total, isStampedToday }: StampableConditionsProps) => [
+  owned,
+  status === RallyStatus.active,
+  stampCount < total,
+  !isStampedToday,
+];
