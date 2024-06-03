@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { SessionProvider } from 'next-auth/react';
+import { cn } from '@/lib/utils';
 import NavBar from './components/NavBar';
 import './globals.css';
-import { SessionProvider } from 'next-auth/react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +19,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn(inter.className, 'w-[100vw] flex flex-col items-center')}>
         <header className="border-b px-4 py-2 w-full top-0 sticky bg-background z-10">
           <SessionProvider>
             <NavBar />
