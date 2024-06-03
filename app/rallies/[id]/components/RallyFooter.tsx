@@ -2,6 +2,7 @@ import { BasicButton as Button } from '@/components/ui/button';
 import { Stamp } from '@/lib/icons';
 import { cn } from '@/lib/utils';
 import { rallyFooterStyles } from './styles';
+import { StampButtonContent } from '../lib';
 
 enum RallyStampButtonVariant {
   Stampable = 'stampable',
@@ -15,9 +16,10 @@ export const getButtonVariant = (isStampable: boolean, isRewardable: boolean) =>
 interface RallyFooterProps {
   owned: boolean;
   variant: RallyStampButtonVariant;
+  stampButtonContent: StampButtonContent;
 }
 
-export function RallyFooter({ owned, variant }: RallyFooterProps) {
+export function RallyFooter({ owned, variant, stampButtonContent }: RallyFooterProps) {
   const is = {
     stampable: variant === RallyStampButtonVariant.Stampable,
     reward: variant === RallyStampButtonVariant.Reward,
@@ -41,7 +43,7 @@ export function RallyFooter({ owned, variant }: RallyFooterProps) {
             [rallyFooterStyles.stampIcon.grey]: is.disabled,
           })}
         />
-        스탬프 찍기
+        {stampButtonContent}
       </Button>
     </footer>
   );
