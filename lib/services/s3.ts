@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, CopyObjectCommand, DeleteObjectCommand, GetObjectCommand, GetObjectCommandOutput } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, CopyObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { ACCESS_KEY_ID, BASE_KEY, BUCKET_NAME, REGION, SECRET_ACCESS_KEY } from '../constants';
 
@@ -21,7 +21,7 @@ export class S3Manager {
    * @param targetKey 복사할 객체의 S3 key
    * @param newKey 복사된 객체의 S3 key
    */
-  async copyObject(targetKey: string, newKey: string) {
+  private async copyObject(targetKey: string, newKey: string) {
     // TODO: 커맨드 생성 및 실행 함수 분리
     const copyCommand = new CopyObjectCommand({
       CopySource: `${BUCKET_NAME}/${targetKey}`,
@@ -41,7 +41,7 @@ export class S3Manager {
    * @param targetKey 이동할 객체의 S3 key
    * @param destinationKey 객체가 이동될 목표 S3 key
    */
-  async moveObject(targetKey: string, destinationKey: string): Promise<string> {
+  private async moveObject(targetKey: string, destinationKey: string): Promise<string> {
     const deleteCommand = new DeleteObjectCommand({
       Bucket: BUCKET_NAME,
       Key: targetKey,
@@ -51,10 +51,27 @@ export class S3Manager {
       await this.copyObject(targetKey, destinationKey);
       await this.client.send(deleteCommand);
 
-      const objectUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${destinationKey}`;
+      const objectUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${BASE_KEY}/${destinationKey}`;
       return objectUrl;
     } catch (err) {
       throw new Error('Error moving object');
+    }
+  }
+
+  /**
+   * S3의 URL에서 key만 추출해서 반환
+   *
+   * @param url S3의 URL
+   * @returns 추출된 key
+   */
+  extractS3Key(url: string): string {
+    const regex = /https:\/\/(?:[a-z0-9-]+\.)?s3\.[a-z0-9-]+\.amazonaws\.com\/([^?]+)/;
+    const match = url.match(regex);
+
+    if (match && match[1]) {
+      return match[1];
+    } else {
+      throw new Error('Invalid S3 URL');
     }
   }
 
@@ -79,15 +96,20 @@ export class S3Manager {
       throw new Error('Error generating presigned URL');
     }
   }
-
-  extractS3Key(url: string): string {
-    const regex = /https:\/\/(?:[a-z0-9-]+\.)?s3\.[a-z0-9-]+\.amazonaws\.com\/([^?]+)/;
-    const match = url.match(regex);
-
-    if (match && match[1]) {
-      return match[1];
-    } else {
-      throw new Error('Invalid S3 URL');
-    }
+  /**
+   * S3에서 이미지를 영구 저장소로 이동
+   *
+   * @param imageUrls 이동할 이미지 URL 배열
+   * @param uploaderId 업로더 ID
+   * @param newKitId 새로운 키트 ID
+   * @returns 새로운 이미지 URL 배열
+   */
+  async moveToLongTermStorage(imageUrls: string[], uploaderId: string, newKitId: string) {
+    return Promise.all(
+      imageUrls.map(async (url: string, index: number) => {
+        const targetKey = this.extractS3Key(url);
+        return this.moveObject(targetKey, `${uploaderId}/${newKitId}/${index}`);
+      }),
+    );
   }
 }

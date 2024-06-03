@@ -21,7 +21,7 @@ export default async function KitsPage() {
   const kits = await fetchKits();
 
   return (
-    <main className="w-full p-4 pt-6 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4 lg:gap-4">
+    <main className="p-4 pt-6 grid grid-cols-2 gap-2">
       <h1 className="text-xl font-bold text-foreground col-span-full">등록된 키트</h1>
       {kits?.map(({ id, title, thumbnailImage, tags, uploader }) => (
         <Link href={`/kits/${id}`} passHref>

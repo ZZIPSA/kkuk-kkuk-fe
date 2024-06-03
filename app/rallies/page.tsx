@@ -16,7 +16,7 @@ export default async function RalliesPage() {
             _count: { stamps },
           },
         }) => (
-          <Link key={id} href={`/rally/${id}`}>
+          <Link key={id} href={`/rallies/${id}`}>
             <RallyCard stampCount={stampCount} thumbnailImage={thumbnailImage} title={title} stamps={stamps} />
           </Link>
         ),

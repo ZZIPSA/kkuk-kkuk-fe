@@ -8,6 +8,7 @@ export const kitSelect = {
   tags: true,
   thumbnailImage: true,
   rewardImage: true,
+  blurredImage: true,
   stamps: true,
   uploader: {
     select: userSelect,
@@ -15,6 +16,7 @@ export const kitSelect = {
   createdAt: true,
   updatedAt: true,
 } satisfies Prisma.KitSelect;
+
 export const kitCardSelect = {
   id: true,
   title: true,
@@ -22,6 +24,7 @@ export const kitCardSelect = {
   tags: true,
   uploader: { select: { name: true, image: true } },
 } satisfies Prisma.KitSelect;
+
 export const rallySelect = {
   id: true,
   title: true,
