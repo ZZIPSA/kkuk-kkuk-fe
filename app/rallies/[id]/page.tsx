@@ -1,6 +1,6 @@
 // import { notFound } from 'next/navigation';
 // import { getMember } from '@/auth';
-import { dummy } from './lib';
+import { dummy, getTempValue } from './lib';
 import RallyInfo from './components/RallyInfo';
 import RallyStamps from './components/RallyStamps';
 import { RallyFooter } from './components/RallyFooter';
@@ -25,10 +25,9 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
     // description, // TODO: 상세 설명을 표시 칸 추가
     // starter, // TODO: 로직 중 isStampable 계산 시 사용 예정
   } = rally;
+  // TODO: 레이아웃 테스트용 임시 변수로 ID 첫자리를 전날까지 찍은 스탬프 개수, 둘째자리를 오늘 스탬프 여부, 셋째자리를 소유 여부로 사용
+  const { stampCount, owned, isStampedToday } = getTempValue(id);
   const total = stamps.length;
-  const stampCount = Number(id.at(0)); // TODO: 레이아웃 테스트용 임시 변수로 ID 첫자리를 전날까지 찍은 스탬프 개수로 사용
-  const isStampedToday = id.at(1) === '1'; // TODO: 레이아웃 테스트용 임시 변수로 ID 둘째자리를 오늘 스탬프 여부로 사용
-  const owned = id.at(2) !== '1'; // TODO: 레이아웃 테스트용 임시 변수로 ID 셋째자리를 소유 여부로 사용 // user?.id === starter.id;
   const count = stampCount + Number(isStampedToday); // 오늘까지 찍은 스탬프 개수
   const status = count === total ? 'inactive' : 'active'; // TODO: 레이아웃 테스트용 임시 변수로 도장을 모두 채웠다면 'active', 아니면 'inactive'
   const percentage = (count / total) * 100;

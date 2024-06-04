@@ -31,3 +31,9 @@ export const dummy = {
     updatedAt: null,
   },
 } satisfies { data: RallyInfo };
+// TODO: 레이아웃 테스트용 임시 변수를 ID로부터 추출하는 함수
+export const getTempValue = (id: string) => ({
+  stampCount: Number(id.at(0)), // ID 첫자리를 전날까지 찍은 스탬프 개수로 사용
+  isStampedToday: id.at(1) === '1', // ID 둘째자리를 오늘 스탬프 여부로 사용
+  owned: id.at(2) !== '1', // ID 셋째자리를 소유 여부로 사용 // user?.id === starter.id;
+});
