@@ -2,21 +2,9 @@ import Image from 'next/image';
 import { Check, Gift } from '@/lib/icons';
 import { cn } from '@/lib/utils';
 import { RallyPreviewStamp } from '@/types/Stamp';
+import { StampInfo } from './types';
 
-export enum StampStatus {
-  checked = 'checked', // 체크된 스탬프
-  checkable = 'checkable', // 체크 가능한 스탬프
-  uncheckable = 'uncheckable', // 체크 불가능한 스탬프
-}
-export enum StampKind {
-  default = 'default', // 기본 스탬프
-  reward = 'reward', // 보상 스탬프
-}
-interface StampProps extends RallyPreviewStamp {
-  // variant?: RallyStampVariants;
-  status: StampStatus;
-  kind: StampKind;
-  owned: boolean;
+interface StampProps extends RallyPreviewStamp, StampInfo {
   order: number;
 }
 
