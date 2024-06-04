@@ -1,9 +1,9 @@
 // import { notFound } from 'next/navigation';
 // import { getMember } from '@/auth';
-import { dummy, getStampable, getFooterButtonContent } from './lib';
+import { dummy } from './lib';
 import RallyInfo from './components/RallyInfo';
 import RallyStamps from './components/RallyStamps';
-import { RallyFooter, getFooterButtonVariant } from './components/RallyFooter';
+import { RallyFooter } from './components/RallyFooter';
 
 interface RallyPageProps {
   params: { id: string };
@@ -34,17 +34,13 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
   // let deadline = new Date();
   // deadline.setDate(deadline.getDate() + 8);
   const owned = id.at(2) !== '1'; // TODO: 레이아웃 테스트용 임시 변수로 ID 넷째자리를 소유 여부로 사용 // user?.id === starter.id;
-  const stampableProps = { owned, status, stampCount, total, isStampedToday } as const;
-  const isStampable = getStampable(stampableProps);
-  const isRewardable = stampCount === total - 1;
-  const stampButtonVariant = getFooterButtonVariant(isStampable, isRewardable);
-  const stampButtonContent = getFooterButtonContent(stampableProps);
+  // const stampableProps = { owned, status, stampCount, total, isStampedToday } as const;
 
   return (
     <main className="px-4 py-6 w-full bg-grey-50 flex flex-col gap-6">
       <RallyInfo title={title} percentage={percentage} createdAt={createdAt} updatedAt={updatedAt} status={status} /* deadline={deadline} */ />
       <RallyStamps stamps={stamps} total={total} stampCount={stampCount} owned={owned} isStampedToday={isStampedToday} />
-      <RallyFooter owned={owned} variant={stampButtonVariant} content={stampButtonContent} />
+      <RallyFooter owned={owned} status={status} stampCount={stampCount} total={total} isStampedToday={isStampedToday} />
     </main>
   );
 }

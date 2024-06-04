@@ -1,8 +1,6 @@
 import { BasicButton as Button } from '@/components/ui/button';
 import { Stamp } from '@/lib/icons';
-import { cn } from '@/lib/utils';
-import { rallyFooterStyles } from './styles';
-import { RallyFooterButtonContent } from '../lib';
+import { getFooterConditions, getFooterVariant, getFooterContent, getFooterStyles } from './lib';
 import { RallyFooterInfo } from './types';
 
 interface RallyFooterProps extends RallyFooterInfo {
@@ -15,36 +13,15 @@ interface RallyFooterProps extends RallyFooterInfo {
   */
 }
 
-export function RallyFooter({ owned, variant, content }: RallyFooterProps) {
-  const is = {
-    stampable: variant === RallyFooterButtonVariant.stampable,
-    reward: variant === RallyFooterButtonVariant.reward,
-    disabled: variant === RallyFooterButtonVariant.disabled,
-  };
+export function RallyFooter(props: RallyFooterProps) {
+  const content = getFooterContent(props);
+  const is = getFooterVariant(getFooterConditions(props));
+  const styles = getFooterStyles(is);
   return (
-    <footer className={rallyFooterStyles.footer}>
-      <Button
-        className={cn(rallyFooterStyles.shareButton, {
-          [rallyFooterStyles.shareButtonDisabled]: !owned,
-        })}
-      >
-        친구에게 공유하기
-      </Button>
-      <Button
-        disabled={is.disabled}
-        className={cn(rallyFooterStyles.stampButton.default, {
-          [rallyFooterStyles.stampButton.primary]: is.stampable,
-          [rallyFooterStyles.stampButton.indigo]: is.reward,
-          [rallyFooterStyles.stampButton.grey]: is.disabled,
-        })}
-      >
-        <Stamp
-          className={cn(rallyFooterStyles.stampIcon.default, {
-            [rallyFooterStyles.stampIcon.primary]: is.stampable,
-            [rallyFooterStyles.stampIcon.indigo]: is.reward,
-            [rallyFooterStyles.stampIcon.grey]: is.disabled,
-          })}
-        />
+    <footer className={styles.footer}>
+      <Button className={styles.shareButton}>친구에게 공유하기</Button>
+      <Button disabled={is.disabled} className={styles.stampButton}>
+        {is.stampable && <Stamp className={styles.stampIcon} />}
         {content}
       </Button>
     </footer>
