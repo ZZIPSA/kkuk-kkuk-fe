@@ -1,9 +1,9 @@
 // import { notFound } from 'next/navigation';
 // import { getMember } from '@/auth';
-import { dummy, getStampable, getStampButtonContent } from './lib';
+import { dummy, getStampable, getFooterButtonContent } from './lib';
 import RallyInfo from './components/RallyInfo';
 import RallyStamps from './components/RallyStamps';
-import { RallyFooter, getButtonVariant } from './components/RallyFooter';
+import { RallyFooter, getFooterButtonVariant } from './components/RallyFooter';
 
 interface RallyPageProps {
   params: { id: string };
@@ -37,14 +37,14 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
   const stampableProps = { owned, status, stampCount, total, isStampedToday } as const;
   const isStampable = getStampable(stampableProps);
   const isRewardable = stampCount === total - 1;
-  const stampButtonVariant = getButtonVariant(isStampable, isRewardable);
-  const stampButtonContent = getStampButtonContent(stampableProps);
+  const stampButtonVariant = getFooterButtonVariant(isStampable, isRewardable);
+  const stampButtonContent = getFooterButtonContent(stampableProps);
 
   return (
     <main className="px-4 py-6 w-full bg-grey-50 flex flex-col gap-6">
       <RallyInfo title={title} percentage={percentage} createdAt={createdAt} updatedAt={updatedAt} status={status} /* deadline={deadline} */ />
       <RallyStamps stamps={stamps} total={total} stampCount={stampCount} owned={owned} isStampedToday={isStampedToday} />
-      <RallyFooter owned={owned} variant={stampButtonVariant} stampButtonContent={stampButtonContent} />
+      <RallyFooter owned={owned} variant={stampButtonVariant} content={stampButtonContent} />
     </main>
   );
 }

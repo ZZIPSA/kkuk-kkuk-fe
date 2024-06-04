@@ -2,28 +2,28 @@ import { BasicButton as Button } from '@/components/ui/button';
 import { Stamp } from '@/lib/icons';
 import { cn } from '@/lib/utils';
 import { rallyFooterStyles } from './styles';
-import { StampButtonContent } from '../lib';
+import { RallyFooterButtonContent } from '../lib';
 
-enum RallyStampButtonVariant {
-  Stampable = 'stampable',
-  Reward = 'reward',
-  Disabled = 'disabled',
+enum RallyFooterButtonVariant {
+  stampable = 'stampable',
+  reward = 'reward',
+  disabled = 'disabled',
 }
 
-export const getButtonVariant = (isStampable: boolean, isRewardable: boolean) =>
-  isStampable ? (isRewardable ? RallyStampButtonVariant.Reward : RallyStampButtonVariant.Stampable) : RallyStampButtonVariant.Disabled;
+export const getFooterButtonVariant = (isStampable: boolean, isRewardable: boolean) =>
+  isStampable ? (isRewardable ? RallyFooterButtonVariant.reward : RallyFooterButtonVariant.stampable) : RallyFooterButtonVariant.disabled;
 
 interface RallyFooterProps {
   owned: boolean;
-  variant: RallyStampButtonVariant;
-  stampButtonContent: StampButtonContent;
+  variant: RallyFooterButtonVariant;
+  content: RallyFooterButtonContent;
 }
 
-export function RallyFooter({ owned, variant, stampButtonContent }: RallyFooterProps) {
+export function RallyFooter({ owned, variant, content }: RallyFooterProps) {
   const is = {
-    stampable: variant === RallyStampButtonVariant.Stampable,
-    reward: variant === RallyStampButtonVariant.Reward,
-    disabled: variant === RallyStampButtonVariant.Disabled,
+    stampable: variant === RallyFooterButtonVariant.stampable,
+    reward: variant === RallyFooterButtonVariant.reward,
+    disabled: variant === RallyFooterButtonVariant.disabled,
   };
   return (
     <footer className={rallyFooterStyles.footer}>
@@ -49,7 +49,7 @@ export function RallyFooter({ owned, variant, stampButtonContent }: RallyFooterP
             [rallyFooterStyles.stampIcon.grey]: is.disabled,
           })}
         />
-        {stampButtonContent}
+        {content}
       </Button>
     </footer>
   );
