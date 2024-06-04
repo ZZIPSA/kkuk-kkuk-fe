@@ -22,6 +22,7 @@ export const getElementConditions = (is: ReturnType<typeof getConditions>) => ({
   filter: {
     // 필터
     grayscale: is.uncheckable,
+    pale: is.reward && (!is.owned || !is.checked),
   },
   icon: {
     // 아이콘
@@ -61,4 +62,5 @@ export const getStyles = ({ border, filter, icon }: ReturnType<typeof getElement
     [stampGiftIconStyles.indigo]: icon.gift?.indigo,
     [stampGiftIconStyles.grey]: icon.gift?.grey,
   }),
+  giftBackground: cn({ [stampGiftIconStyles.background]: icon.gift }),
 });

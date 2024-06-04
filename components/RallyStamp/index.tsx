@@ -23,6 +23,7 @@ export function RallyStamp({ image, status, kind, owned, order }: StampProps) {
   return (
     <div className={cn(styles.container, `order-${order}`)}>
       <Image fill src={image} alt="Stamp" sizes="360" className={styles.image} />
+      {is.icon.gift && <div className={styles.giftBackground} />}
       {is.icon.check && <Check className={styles.check} />}
       {is.icon.gift && <Gift className={styles.gift} />}
     </div>
