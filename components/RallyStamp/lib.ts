@@ -23,16 +23,20 @@ export const getElementConditions = (is: ReturnType<typeof getConditions>) => ({
   },
   icon: {
     // 아이콘
-    check: is.checked && {
-      // 체크된 스탬프
-      primary: is.default,
-      indigo: is.reward,
-    },
-    gift: is.reward &&
-      !(is.owned && is.checked) && {
-        // 보상 스탬프
-        indigo: !is.uncheckable,
-        grey: is.uncheckable,
-      },
+    check: is.checked
+      ? {
+          // 체크된 스탬프
+          primary: is.default,
+          indigo: is.reward,
+        }
+      : null,
+    gift:
+      is.reward && !(is.owned && is.checked)
+        ? {
+            // 보상 스탬프
+            indigo: !is.uncheckable,
+            grey: is.uncheckable,
+          }
+        : null,
   },
 });
