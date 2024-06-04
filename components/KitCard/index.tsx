@@ -11,6 +11,7 @@ export enum KitCardVariants {
   vertical = 'vertical',
   horizontal = 'horizontal',
   description = 'description',
+  StartPage = 'StartPage',
 }
 
 interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeof Card> {
@@ -62,6 +63,7 @@ export default function KitCard({
         {
           'flex flex-col h-full': variant === KitCardVariants.vertical,
           'flex justify-between gap-2 w-full': variant === KitCardVariants.horizontal,
+          'flex justify-between gap-2 w-full ': variant === KitCardVariants.StartPage,
           'grid grid-cols-2 gap-y-6 px-4 py-6': variant === KitCardVariants.description,
         },
         className,
@@ -74,6 +76,7 @@ export default function KitCard({
       <CardContent
         className={cn('p-0 flex flex-col gap-2 h-full', {
           'w-full': variant === KitCardVariants.horizontal,
+          'w-full ': variant === KitCardVariants.StartPage,
         })}
       >
         <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis text-base">{title}</CardTitle>
@@ -101,7 +104,7 @@ export default function KitCard({
             </button>
           </div>
         )}
-        {variant === KitCardVariants.horizontal && description && (
+        {(variant === KitCardVariants.horizontal || variant === KitCardVariants.StartPage) && description && (
           <CardDescription className="text-grey-300 bg-grey-50 px-4 py-2 rounded-xl">{description}</CardDescription>
         )}
       </CardContent>
