@@ -3,6 +3,7 @@ import { Check, Gift } from '@/lib/icons';
 import { cn } from '@/lib/utils';
 import { RallyPreviewStamp } from '@/types/Stamp';
 import { getConditions, getElementConditions } from './lib';
+import { stampContainerStyles, stampImageStyles, stampCheckIconStyles, stampGiftIconStyles } from './styles';
 import { StampInfo } from './types';
 
 interface StampProps extends RallyPreviewStamp, StampInfo {
@@ -22,12 +23,12 @@ export function RallyStamp({ image, status, kind, owned, order }: StampProps) {
 
   return (
     <div
-      className={cn('relative aspect-square rounded-full', `order-${order}`, {
-        'border-primary': border.primary,
-        'border-indigo-500': border.indigo,
-        'border-grey-200': border.grey,
-        'border-solid border-2': border.solid,
-        'border-dashed border': border.dashed,
+      className={cn(stampContainerStyles.default, `order-${order}`, {
+        [stampContainerStyles.primary]: border.primary,
+        [stampContainerStyles.indigo]: border.indigo,
+        [stampContainerStyles.grey]: border.grey,
+        [stampContainerStyles.solid]: border.solid,
+        [stampContainerStyles.dashed]: border.dashed,
       })}
     >
       <Image
@@ -35,23 +36,23 @@ export function RallyStamp({ image, status, kind, owned, order }: StampProps) {
         src={image}
         alt="Stamp"
         sizes="360"
-        className={cn('rounded-full w-full aspect-square object-cover bg-background', {
-          'filter grayscale': filter.grayscale,
+        className={cn(stampImageStyles.default, {
+          [stampImageStyles.grayscale]: filter.grayscale,
         })}
       />
       {icon.check && (
         <Check
-          className={cn('absolute right-0 bottom-0 size-[26%] p-1 stroke-white stroke-2 rounded-full fill-none', {
-            'bg-primary': icon.check.primary,
-            'bg-indigo-500': icon.check.indigo,
+          className={cn(stampCheckIconStyles.default, {
+            [stampCheckIconStyles.primary]: icon.check.primary,
+            [stampCheckIconStyles.indigo]: icon.check.indigo,
           })}
         />
       )}
       {icon.gift && (
         <Gift
-          className={cn('absolute right-[25%] bottom-[25%] origin-center size-[50%]', {
-            'fill-indigo-500': icon.gift.indigo,
-            'fill-grey-400': icon.gift.grey,
+          className={cn(stampGiftIconStyles.default, {
+            [stampGiftIconStyles.indigo]: icon.gift.indigo,
+            [stampGiftIconStyles.grey]: icon.gift.grey,
           })}
         />
       )}
