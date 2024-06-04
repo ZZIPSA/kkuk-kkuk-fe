@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Check, Gift } from '@/lib/icons';
 import { cn } from '@/lib/utils';
 import { RallyPreviewStamp } from '@/types/Stamp';
+import { getConditions } from './lib';
 import { StampInfo } from './types';
 
 interface StampProps extends RallyPreviewStamp, StampInfo {
@@ -16,15 +17,6 @@ export function RallyStamp({ image, status, kind, owned, order }: StampProps) {
   const rows = Math.floor(order / STAMP_BY_ROW);
   const isReverse = rows % 2 === 1;
   order += isReverse ? STAMP_BY_ROW - 1 - (order % STAMP_BY_ROW) * 2 : 0;
-  const is = {
-    // 조건문
-    checked: status === StampStatus.checked,
-    checkable: status === StampStatus.checkable,
-    uncheckable: status === StampStatus.uncheckable,
-    default: kind === StampKind.default,
-    reward: kind === StampKind.reward,
-    owned,
-  };
   const border = {
     // 테두리 색상
     primary: !is.uncheckable && !is.reward, // 체크 가능한 기본 스탬프
@@ -51,6 +43,7 @@ export function RallyStamp({ image, status, kind, owned, order }: StampProps) {
         grey: is.uncheckable,
       },
   };
+  const is = getConditions({ status, kind, owned });
 
   return (
     <div
