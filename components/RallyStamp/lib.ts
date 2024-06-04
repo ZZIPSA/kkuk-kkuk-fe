@@ -1,4 +1,6 @@
 import { StampInfo, StampKind, StampStatus } from './types';
+import { stampContainerStyles, stampImageStyles, stampCheckIconStyles, stampGiftIconStyles } from './styles';
+import { cn } from '@/lib/utils';
 
 export const getConditions = ({ status, kind, owned }: StampInfo) => ({
   checked: status === StampStatus.checked,
@@ -39,4 +41,24 @@ export const getElementConditions = (is: ReturnType<typeof getConditions>) => ({
           }
         : null,
   },
+});
+export const getStyles = ({ border, filter, icon }: ReturnType<typeof getElementConditions>) => ({
+  container: cn(stampContainerStyles.default, {
+    [stampContainerStyles.primary]: border.primary,
+    [stampContainerStyles.indigo]: border.indigo,
+    [stampContainerStyles.grey]: border.grey,
+    [stampContainerStyles.solid]: border.solid,
+    [stampContainerStyles.dashed]: border.dashed,
+  }),
+  image: cn(stampImageStyles.default, {
+    [stampImageStyles.grayscale]: filter.grayscale,
+  }),
+  check: cn(stampCheckIconStyles.default, {
+    [stampCheckIconStyles.primary]: icon.check?.primary,
+    [stampCheckIconStyles.indigo]: icon.check?.indigo,
+  }),
+  gift: cn(stampGiftIconStyles.default, {
+    [stampGiftIconStyles.indigo]: icon.gift?.indigo,
+    [stampGiftIconStyles.grey]: icon.gift?.grey,
+  }),
 });
