@@ -1,12 +1,10 @@
 import { RallyStamp, StampStatus, StampKind } from '@/components/RallyStamp';
 import { RallyPreviewStamp } from '@/types/Stamp';
 import { rallyStampsStyles } from './styles';
+import { RallyStampsInfo } from './types';
 
-interface RallyStampsProps {
+interface RallyStampsProps extends RallyStampsInfo {
   stamps: RallyPreviewStamp[];
-  total: number;
-  stampCount: number;
-  owned: boolean;
 }
 
 export default function RallyStamps({ stamps, total, stampCount, owned }: RallyStampsProps) {
