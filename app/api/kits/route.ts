@@ -24,14 +24,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   // TODO: auth, 필수 항목 검증 미들웨어 구현
-  const session = await auth();
-  const currentUser = session?.user;
-
-  if (!currentUser) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 401 });
-
-  const uploaderId = currentUser.id;
-
-  const { title, description, imageUrls, thumbnailImage, rewardImage, blurredImage, tags } = await request.json();
+  const { title, description, imageUrls, thumbnailImage, rewardImage, blurredImage, tags, userId: uploaderId } = await request.json();
   const s3 = new S3Manager();
 
   if (!title || !Array.isArray(imageUrls) || !thumbnailImage || !rewardImage || !blurredImage || !uploaderId) {

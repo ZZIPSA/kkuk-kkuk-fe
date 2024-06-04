@@ -1,6 +1,7 @@
 'use server';
 
 import { auth } from '@/auth';
+import { S3Manager } from '@/lib/services/s3';
 import { blurImage, convertToWebP } from '@/lib/sharp';
 
 // TODO: 유틸로 뺴기
@@ -66,22 +67,12 @@ async function processAndUpload(file: string, applyBlur: boolean, index: number)
  */
 async function getPresignedUrl(fileName: string): Promise<string> {
   const session = await auth();
-  const response = await fetch(`${process.env.API_URL}/api/s3/presign`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      // FIXME: actions에서 API요청을 하는 경우 헤더 설정이 필요해지는 에러 수정
-      Cookie: `authjs.session-token=${session.sessionToken}`,
-    },
-    body: JSON.stringify({ fileName, fileType: 'webp' }),
-  });
+  const currentUser = session?.user;
 
-  if (!response.ok) {
-    // NOTE: 필요시 에러코드 추가
-    throw new Error('미리 서명된 URL을 생성하지 못했습니다.');
-  }
+  if (!currentUser?.id) throw new Error('');
 
-  const { data: presignedUrl } = await response.json();
+  const s3 = new S3Manager();
+  const presignedUrl = s3.getPresignedUrl(fileName, currentUser.id);
 
   return presignedUrl;
 }
