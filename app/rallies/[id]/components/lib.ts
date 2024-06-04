@@ -1,6 +1,8 @@
+import { cn } from '@/lib/utils';
 import { StampStatus, StampKind } from '@/components/RallyStamp';
 import { RallyStatus } from '@/types/Rally';
 import { RallyPreviewStamp } from '@/types/Stamp';
+import { rallyFooterStyles } from './styles';
 import { RallyFooterInfo, RallyStampsInfo, RewardableConditionsProps, StampableConditionsProps } from './types';
 
 const getStampStatusUnstamped = (
@@ -72,3 +74,39 @@ const getSatisfiedIndex = (props: StampableConditionsProps) => getStampableCondi
  * @returns {RallyFooterButtonContent}
  */
 export const getFooterContent = (props: StampableConditionsProps) => footerButtonContents.at(getSatisfiedIndex(props));
+
+/**
+ * 랠리를 소유하고, 완료하지 않았고, 오늘 스탬프를 찍지 않았으면 스탬프를 찍을 수 있음
+ */
+const getStampable = (props: StampableConditionsProps) => getSatisfiedIndex(props) === -1;
+/**
+ * 리워드를 찍을 수 있는 경우 (마지막 스탬프만 남겨둔 경우)
+ */
+const getRewardable = ({ stampCount, total }: RewardableConditionsProps) => stampCount === total - 1;
+export const getFooterConditions = (props: RallyFooterInfo) => ({
+  stampable: getStampable(props),
+  rewardable: getRewardable(props),
+  owned: props.owned,
+});
+export const getFooterVariant = ({ stampable, rewardable, owned }: ReturnType<typeof getFooterConditions>) => ({
+  notOwned: !owned, // 소유하지 않은 경우
+  disabled: owned && !stampable, // 스탬프를 찍을 수 없는 경우 (오늘 스탬프를 찍었거나 랠리를 완료한 경우)
+  reward: owned && stampable && rewardable,
+  stampable: owned && stampable && !rewardable, // (리워드가 아닌) 스탬프를 찍을 수 있는 경우
+});
+export const getFooterStyles = ({ stampable, reward, notOwned, disabled }: ReturnType<typeof getFooterVariant>) => ({
+  footer: rallyFooterStyles.footer,
+  shareButton: cn(rallyFooterStyles.shareButton, {
+    [rallyFooterStyles.shareButtonDisabled]: notOwned,
+  }),
+  stampButton: cn(rallyFooterStyles.stampButton.default, {
+    [rallyFooterStyles.stampButton.primary]: stampable,
+    [rallyFooterStyles.stampButton.indigo]: reward,
+    [rallyFooterStyles.stampButton.grey]: disabled,
+    [rallyFooterStyles.stampButton.primary]: notOwned,
+  }),
+  stampIcon: cn(rallyFooterStyles.stampIcon.default, {
+    [rallyFooterStyles.stampIcon.primary]: stampable,
+    [rallyFooterStyles.stampIcon.indigo]: reward,
+  }),
+});
