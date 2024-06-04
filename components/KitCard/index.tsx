@@ -56,15 +56,21 @@ export default function KitCard({
   thumbnailImage ??= DEFAULT_KIT_THUMBNAIL;
   const name = uploader?.name ?? '';
   const image = uploader?.image ?? DEFAULT_PROFILE;
+  const is = {
+    vertical: variant === KitCardVariants.vertical,
+    horizontal: variant === KitCardVariants.horizontal,
+    StartPage: variant === KitCardVariants.StartPage,
+    description: variant === KitCardVariants.description,
+  };
   return (
     <Card
       className={cn(
         'border-0 shadow-none gap-2',
         {
-          'flex flex-col h-full': variant === KitCardVariants.vertical,
-          'flex justify-between gap-2 w-full': variant === KitCardVariants.horizontal,
-          'flex justify-between gap-2 w-full ': variant === KitCardVariants.StartPage,
-          'grid grid-cols-2 gap-y-6 px-4 py-6': variant === KitCardVariants.description,
+          'flex flex-col h-full': is.vertical,
+          'flex justify-between gap-2 w-full': is.horizontal,
+          'flex justify-between gap-2 w-full ': is.StartPage,
+          'grid grid-cols-2 gap-y-6 px-4 py-6': is.description,
         },
         className,
       )}
@@ -75,8 +81,8 @@ export default function KitCard({
       </CardHeader>
       <CardContent
         className={cn('p-0 flex flex-col gap-2 h-full', {
-          'w-full': variant === KitCardVariants.horizontal,
-          'w-full ': variant === KitCardVariants.StartPage,
+          'w-full': is.horizontal,
+          'w-full ': is.StartPage,
         })}
       >
         <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis text-base">{title}</CardTitle>
@@ -85,7 +91,7 @@ export default function KitCard({
         </div>
         <div
           className={cn('p-0 flex items-center gap-2', {
-            'mt-auto': variant === KitCardVariants.vertical,
+            'mt-auto': is.vertical,
           })}
         >
           <Avatar className="items-center border border-grey-100 w-6 h-6">
@@ -94,7 +100,7 @@ export default function KitCard({
           </Avatar>
           <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-[#A69C98] text-xs">{name}</span>
         </div>
-        {variant === KitCardVariants.description && (
+        {is.description && (
           <div className="flex justify-end gap-2 mt-auto">
             <button className="border border-grey-200 bg-grey-50 rounded-full w-10 aspect-square">
               <Bookmark className="w-6 h-6 stroke-none fill-grey-100 m-auto" />
@@ -104,11 +110,11 @@ export default function KitCard({
             </button>
           </div>
         )}
-        {(variant === KitCardVariants.horizontal || variant === KitCardVariants.StartPage) && description && (
+        {(is.horizontal || is.StartPage) && description && (
           <CardDescription className="text-grey-300 bg-grey-50 px-4 py-2 rounded-xl">{description}</CardDescription>
         )}
       </CardContent>
-      {variant === KitCardVariants.description && description && (
+      {is.description && description && (
         <CardFooter className="col-span-full bg-grey-50 px-4 py-2 rounded-xl">
           <CardDescription className="text-grey-300">{description}</CardDescription>
         </CardFooter>
