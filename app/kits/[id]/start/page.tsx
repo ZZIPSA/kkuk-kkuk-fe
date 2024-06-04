@@ -8,7 +8,7 @@ export default async function RallyStartPage({ params: { id } }: { params: { id:
   const { title, description, tags, thumbnailImage, uploader } = kit;
 
   return (
-    <main className="py-6 px-4 flex flex-col gap-6">
+    <main className="w-full py-6 px-4 flex flex-col gap-6">
       <KitCard
         variant={KitCardVariants.horizontal}
         id={id}
