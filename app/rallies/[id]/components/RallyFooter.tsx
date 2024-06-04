@@ -21,7 +21,7 @@ export function RallyFooter(props: RallyFooterProps) {
     <footer className={styles.footer}>
       <Button className={styles.shareButton}>친구에게 공유하기</Button>
       <Button disabled={is.disabled} className={styles.stampButton}>
-        {is.stampable && <Stamp className={styles.stampIcon} />}
+        {(is.stampable || is.reward) && <Stamp className={styles.stampIcon} />}
         {content}
       </Button>
     </footer>
