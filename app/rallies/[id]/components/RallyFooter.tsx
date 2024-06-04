@@ -3,20 +3,16 @@ import { Stamp } from '@/lib/icons';
 import { cn } from '@/lib/utils';
 import { rallyFooterStyles } from './styles';
 import { RallyFooterButtonContent } from '../lib';
+import { RallyFooterInfo } from './types';
 
-enum RallyFooterButtonVariant {
-  stampable = 'stampable',
-  reward = 'reward',
-  disabled = 'disabled',
-}
-
-export const getFooterButtonVariant = (isStampable: boolean, isRewardable: boolean) =>
-  isStampable ? (isRewardable ? RallyFooterButtonVariant.reward : RallyFooterButtonVariant.stampable) : RallyFooterButtonVariant.disabled;
-
-interface RallyFooterProps {
+interface RallyFooterProps extends RallyFooterInfo {
+  /*
+  stampCount: number;
+  total: number;
   owned: boolean;
-  variant: RallyFooterButtonVariant;
-  content: RallyFooterButtonContent;
+  status: RallyStatus;
+  isStampedToday: boolean;
+  */
 }
 
 export function RallyFooter({ owned, variant, content }: RallyFooterProps) {
