@@ -27,13 +27,13 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
   } = rally;
   const total = stamps.length;
   const stampCount = Number(id.at(0)); // TODO: 레이아웃 테스트용 임시 변수로 ID 첫자리를 스탬프 개수로 사용
-  const status = stampCount === total ? 'inactive' : 'active'; // TODO: 레이아웃 테스트용 임시 변수로 도장을 모두 채웠거나 ID 셋째자리가 '1'이면 'inactive', '0'이면 'active'
+  const isStampedToday = id.at(1) === '1'; // TODO: 레이아웃 테스트용 임시 변수로 ID 둘째자리를 오늘 스탬프 여부로 사용
+  const status = stampCount + Number(isStampedToday) === total ? 'inactive' : 'active'; // TODO: 레이아웃 테스트용 임시 변수로 도장을 모두 채웠거나 ID 셋째자리가 '1'이면 'inactive', '0'이면 'active'
   const percentage = (stampCount / total) * 100;
   // // TODO: D-day 계산 방법 << DB 에 종료 예정일(기한) 필드 추가 필요 -> 기한 추가 시 재검토
   // let deadline = new Date();
   // deadline.setDate(deadline.getDate() + 8);
   const owned = id.at(2) !== '1'; // TODO: 레이아웃 테스트용 임시 변수로 ID 넷째자리를 소유 여부로 사용 // user?.id === starter.id;
-  const isStampedToday = id.at(1) === '1'; // TODO: 레이아웃 테스트용 임시 변수로 ID 둘째자리를 오늘 스탬프 여부로 사용
   const stampableProps = { owned, status, stampCount, total, isStampedToday } as const;
   const isStampable = getStampable(stampableProps);
   const isRewardable = stampCount === total - 1;
