@@ -1,5 +1,5 @@
 import { RallyPreviewStamp } from '@/types/Stamp';
-import { Stamp, StampVariants } from './Stamp';
+import { RallyStamp, StampStatus, StampKind } from '@/components/RallyStamp';
 
 type RallyPreviewProps = { stamps: RallyPreviewStamp[] };
 
@@ -10,9 +10,15 @@ export default function RallyPreview({ stamps }: RallyPreviewProps) {
       <div className="bg-white p-6 rounded-2xl">
         <div className="bg-rally-route bg-contain bg-center bg-no-repeat grid grid-cols-3 auto-rows-auto gap-y-6 gap-x-2">
           {stamps
-            .map((e, i) => ({ ...e, order: i, variant: i == 0 ? StampVariants.checked : i == 1 ? StampVariants.default : StampVariants.monochrome }))
-            .map(({ id, image, variant, order }) => (
-              <Stamp key={id} id={id} image={image} variant={variant} order={order} />
+            .map((e, i) => ({
+              ...e,
+              order: i,
+              status: i === 0 ? StampStatus.checked : i === 1 ? StampStatus.checkable : StampStatus.uncheckable,
+              kind: i === 6 ? StampKind.reward : StampKind.default,
+              owned: false,
+            }))
+            .map(({ id, image, status, kind, owned, order }) => (
+              <RallyStamp key={id} id={id} image={image} status={status} kind={kind} owned={owned} order={order} />
             ))}
         </div>
       </div>

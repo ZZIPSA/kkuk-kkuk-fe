@@ -86,6 +86,7 @@ const config = {
       },
       backgroundImage: {
         'rally-route': "url('/rally-route.svg')",
+        'rally-flag': "url('/rally-flag.svg')",
       },
       spacing: {
         15: '3.75rem',
