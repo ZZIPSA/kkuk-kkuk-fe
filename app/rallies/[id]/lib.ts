@@ -35,14 +35,14 @@ export const dummy = {
 interface StampableConditionsProps {
   owned: boolean;
   status: RallyStatus;
-  stampCount: number;
-  total: number;
+  // stampCount: number;
+  // total: number;
   isStampedToday: boolean;
 }
-const getStampableConditions = ({ owned, status, stampCount, total, isStampedToday }: StampableConditionsProps) => [
+const getStampableConditions = ({ owned, status, /* stampCount, total, */ isStampedToday }: StampableConditionsProps) => [
   owned,
   status === RallyStatus.active,
-  stampCount < total,
+  // stampCount < total,
   !isStampedToday,
 ];
 export const getStampable = (props: StampableConditionsProps) => getStampableConditions(props).every(Boolean);
@@ -51,15 +51,15 @@ export enum StampButtonContent {
   NotOwned = '이 키트로 랠리 시작하기',
   StampedToday = '오늘의 스탬프 클리어!',
   Success = '스탬프 랠리 완주 성공!',
-  Fail = '스탬프 랠리 실패 ㅠㅠ',
+  // Fail = '스탬프 랠리 실패 ㅠㅠ',
 }
 export const getStampButtonContent = (props: StampableConditionsProps): StampButtonContent => {
-  const [isNotOwned, isInactive, isFull, isNotStampedToday] = getStampableConditions(props).map((e) => !e);
+  const [isNotOwned, isInactive, /* isFull, */ isNotStampedToday] = getStampableConditions(props).map((e) => !e);
   switch (true) {
     case isNotOwned:
       return StampButtonContent.NotOwned;
     case isInactive:
-      return isFull ? StampButtonContent.Success : StampButtonContent.Fail;
+      return StampButtonContent.Success; // isFull ? StampButtonContent.Success : StampButtonContent.Fail;
     case isNotStampedToday:
       return StampButtonContent.StampedToday;
     // case isFail: return StampButtonContent.Fail;
