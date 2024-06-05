@@ -28,17 +28,20 @@ export default function KitCardContent({ title, tags, name, image, variant, desc
         </Avatar>
         <span className={styles.name}>{name}</span>
       </div>
-      {is.description && (
-        <div className={styles.buttons}>
-          <button className={styles.button}>
-            <Bookmark className={styles.bookmark} />
-          </button>
-          <button className={styles.button}>
-            <Heart className={styles.heart} />
-          </button>
-        </div>
-      )}
+      {is.description && <Buttons styles={styles} />}
       {is.StartPage && description && <CardDescription className={styles.description}>{description}</CardDescription>}
     </CardContent>
+  );
+}
+function Buttons({ styles }: { styles: ReturnType<typeof getContentStyles> }) {
+  return (
+    <div className={styles.buttons}>
+      <button className={styles.button}>
+        <Bookmark className={styles.bookmark} />
+      </button>
+      <button className={styles.button}>
+        <Heart className={styles.heart} />
+      </button>
+    </div>
   );
 }
