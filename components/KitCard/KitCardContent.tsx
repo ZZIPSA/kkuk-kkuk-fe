@@ -21,7 +21,7 @@ export default function KitCardContent({ title, tags, name, image, variant, desc
     <CardContent className={styles.content}>
       <CardTitle className={styles.title}>{title}</CardTitle>
       <Tags tags={tags} styles={styles} />
-      <Uploader name={name} image={image} styles={styles} />
+      {!is.StartPage && <Uploader name={name} image={image} styles={styles} />}
       {is.description && <Buttons styles={styles} />}
       {is.StartPage && description && <CardDescription className={styles.description}>{description}</CardDescription>}
     </CardContent>
