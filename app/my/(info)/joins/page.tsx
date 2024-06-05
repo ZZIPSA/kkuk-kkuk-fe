@@ -5,7 +5,7 @@ import { MyRally, RallyStatus } from '@/types/Rally';
 
 export default async function JoinsPage() {
   const { id: userId } = await ensureMember();
-  const api = `${process.env.API_URL}/api/user/${userId}/rallies`;
+  const api = `${process.env.API_URL}/api/my/rallies?userId=${userId}`;
   const { data: rallies }: { data: MyRally[] } = await fetch(api).then((res) => res.json());
 
   return (

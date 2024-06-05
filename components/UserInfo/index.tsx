@@ -14,11 +14,12 @@ interface UserInfoProps {
 
 export default async function UserInfo({ variant = UserInfoVariant.default }: UserInfoProps) {
   const { id: userId } = await ensureMember();
-  const api = `${process.env.API_URL}/api/user/${userId}`;
+  // TODO: 파람을 전송하지 않도록 수정
+  const api = `${process.env.API_URL}/api/me?userId=${userId}`;
   const {
     data: { image, name, accounts, rallies },
   }: { data: UserInfoResult } = await fetch(api).then((res) => res.json());
-  const twitterAccount = accounts.find(({ provider }) => provider === 'twitter');
+  // const twitterAccount = accounts.find(({ provider }) => provider === 'twitter');
 
   return (
     <section className="flex flex-col py-6 px-4 gap-4">
@@ -35,14 +36,16 @@ export default async function UserInfo({ variant = UserInfoVariant.default }: Us
           )}
         </span>
         {variant === UserInfoVariant.default && <h1 className="font-bold w-full">{name}</h1>}
-        {twitterAccount && (
+        {/* // NOTE: 페이즈 1에서 구현 */}
+        {/* {twitterAccount && (
           <Badge variant="secondary" className="w-fit text-xs font-normal gap-2">
             <span className="text-2xl">𝕏</span>@{twitterAccount.userId}
           </Badge>
-        )}
+        )} */}
       </div>
       {variant === UserInfoVariant.default && <RalliesCounts rallies={rallies ?? []} />}
-      {variant === UserInfoVariant.settings && <NicknameInput name={name} />}
+      {/* // TODO: name의 nullable을 허용하지 않도록 수정 */}
+      {variant === UserInfoVariant.settings && <NicknameInput name={name ?? ''} />}
     </section>
   );
 }

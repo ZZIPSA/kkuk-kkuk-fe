@@ -5,7 +5,7 @@ import { RallyStatus, MyRally } from '@/types/Rally';
 
 export default async function CompletesPage() {
   const { id: userId } = await ensureMember();
-  const api = `${process.env.API_URL}/api/user/${userId}/rallies`;
+  const api = `${process.env.API_URL}/api/my/rallies?userId=${userId}`;
   const { data: rallies }: { data: MyRally[] } = await fetch(api).then((res) => res.json());
 
   return (
