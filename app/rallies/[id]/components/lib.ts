@@ -41,7 +41,7 @@ export const addStampPropsByIndex =
 enum RallyFooterButtonContent {
   NotOwned = '이 키트로 랠리 시작하기',
   Success = '스탬프 랠리 완주 성공!',
-  StampedToday = '오늘의 스탬프 클리어!',
+  StampedToday = '오늘의 목표를 완료했어요!',
   Stampable = '스탬프 찍기',
 }
 const footerButtonContents = [
