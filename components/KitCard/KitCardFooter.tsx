@@ -1,5 +1,5 @@
 import { CardDescription, CardFooter } from '@/components/ui/card';
-import { getConditions, getStyles } from './lib';
+import { getConditions, getFooterStyles } from './lib';
 import { KitCardVariants } from './types';
 
 interface KitCardFooterProps {
@@ -7,10 +7,10 @@ interface KitCardFooterProps {
   description: string;
 }
 export default function KitCardFooter({ variant, description }: KitCardFooterProps) {
-  const styles = getStyles(getConditions(variant));
+  const styles = getFooterStyles(getConditions(variant));
   return (
     <CardFooter className={styles.footer}>
-      <CardDescription className={styles.footerDescription}>{description}</CardDescription>
+      <CardDescription className={styles.description}>{description}</CardDescription>
     </CardFooter>
   );
 }

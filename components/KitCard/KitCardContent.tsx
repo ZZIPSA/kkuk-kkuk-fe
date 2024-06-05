@@ -3,9 +3,9 @@ import { CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Tag } from '@/stories/Tag';
 import { Bookmark, Heart } from '@/lib/icons';
 import { KitCardVariants } from './types';
-import { getConditions, getStyles } from './lib';
+import { getConditions, getContentStyles } from './lib';
 
-interface KitCardContentProps  {
+interface KitCardContentProps {
   title: string;
   tags: string[];
   name: string;
@@ -14,18 +14,9 @@ interface KitCardContentProps  {
   description?: string;
 }
 
-export default function KitCardContent({
-  title,
-  tags,
-  name,
-  image,
-  variant,
-  description,
-}:
-  KitCardContentProps
-) {
+export default function KitCardContent({ title, tags, name, image, variant, description }: KitCardContentProps) {
   const is = getConditions(variant);
-  const styles = getStyles(is);
+  const styles = getContentStyles(is);
   return (
     <CardContent className={styles.content}>
       <CardTitle className={styles.title}>{title}</CardTitle>
