@@ -20,11 +20,16 @@ export default function KitCardContent({ title, tags, name, image, variant, desc
   return (
     <CardContent className={styles.content}>
       <CardTitle className={styles.title}>{title}</CardTitle>
+      <Tags tags={tags} styles={styles} />
       <Uploader name={name} image={image} styles={styles} />
       {is.description && <Buttons styles={styles} />}
       {is.StartPage && description && <CardDescription className={styles.description}>{description}</CardDescription>}
     </CardContent>
   );
+}
+
+function Tags({ tags, styles }: { tags: string[]; styles: ReturnType<typeof getContentStyles> }) {
+  return <div className={styles.tags}>{tags?.map((tag) => <Tag key={tag} label={tag} className={styles.tag} />)}</div>;
 }
 
 function Uploader({ name, image, styles }: { name: string; image: string; styles: ReturnType<typeof getContentStyles> }) {
