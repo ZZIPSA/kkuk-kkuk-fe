@@ -11,12 +11,11 @@ export default function NicknameInput({ name }: { name: string }) {
   return (
     <form>
       <TextInput label="닉네임" value={value} ref={ref} onChange={(e) => setValue(e.target.value)} />
-      <Button
-        label="수정하기"
-        variant={modified ? 'default' : 'disabled'}
-        className="fixed w-[min(calc(100%-2rem),688px)] min-w-[328px] bottom-4"
-        type="button"
-      />
+      <Button label="수정하기" variant={modified ? 'default' : 'disabled'} className={styles.modifyButton} type="button" />
     </form>
   );
 }
+
+const styles = {
+  modifyButton: 'fixed w-[min(calc(100%-2rem),688px)] min-w-[328px] bottom-4',
+};
