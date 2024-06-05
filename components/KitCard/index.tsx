@@ -69,15 +69,28 @@ export default function KitCard({
         {
           'flex flex-col h-full': is.vertical,
           'flex justify-between gap-2 w-full': is.horizontal,
-          'flex justify-between gap-2 w-full ': is.StartPage,
+          'flex justify-between gap-2 w-full flex-col': is.StartPage,
           'grid grid-cols-2 gap-y-6 px-4 py-6': is.description,
         },
         className,
       )}
       {...props}
     >
-      <CardHeader className={cn('p-0 relative aspect-square w-full shrink-0')}>
-        <Image src={thumbnailImage} alt={title} fill className="border-black/20 border rounded-md aspect-square w-full h-full object-cover" />
+      <CardHeader
+        className={cn({
+          'p-0 relative aspect-square w-full shrink-0': !is.StartPage,
+          'p-0 relative aspect-video w-full shrink-0 ': is.StartPage,
+        })}
+      >
+        <Image
+          src={thumbnailImage}
+          alt={title}
+          fill
+          className={cn({
+            'border-black/20 border rounded-md w-full h-full object-cover aspect-square': !is.StartPage,
+            'border rounded-xl object-cover': is.StartPage,
+          })}
+        />
       </CardHeader>
       <CardContent
         className={cn('p-0 flex flex-col gap-2 h-full', {
