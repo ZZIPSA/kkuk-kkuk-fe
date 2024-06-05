@@ -4,7 +4,7 @@ import { UserSettings } from './components/UserSettings';
 
 export default async function SettingsPage() {
   return (
-    <main>
+    <main className="w-full">
       <UserInfo variant={UserInfoVariant.settings} />
       <UserSettings />
     </main>
