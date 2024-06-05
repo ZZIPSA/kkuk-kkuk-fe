@@ -50,8 +50,8 @@ export default function KitCard({
   return (
     <Card className={styles.container} {...props}>
       <KitCardHeader thumbnail={thumbnail} title={title} variant={variant} />
-      <KitCardContent title={title} tags={tags} name={name} image={image} variant={variant} description={description} />
-      {is.description && description && <KitCardFooter variant={variant} description={description} />}
+      <KitCardContent title={title} tags={tags} name={name} image={image} variant={variant} />
+      {(is.description || is.StartPage) && description && <KitCardFooter variant={variant} description={description} />}
     </Card>
   );
 }
