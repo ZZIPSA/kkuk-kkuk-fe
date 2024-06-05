@@ -6,6 +6,7 @@ import { Tag } from '@/stories/Tag';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { KitCardInfo } from '@/types/Kit';
 import { Bookmark, Heart } from '@/lib/icons';
+import { kitCardContainerStyles, kitCardHeaderStyles, kitCardContentStyles, kitCardFooterStyles } from './styles';
 
 export enum KitCardVariants {
   vertical = 'vertical',
@@ -48,7 +49,6 @@ export default function KitCard({
   tags,
   uploader,
   variant = KitCardVariants.vertical,
-  className,
   description,
   ...props
 }: KitCardProps) {
@@ -62,21 +62,17 @@ export default function KitCard({
   };
   return (
     <Card
-      className={cn(
-        'border-0 shadow-none gap-2',
-        {
-          'flex flex-col h-full': is.vertical,
-          'flex justify-between gap-2 w-full flex-col': is.StartPage,
-          'grid grid-cols-2 gap-y-6 px-4 py-6': is.description,
-        },
-        className,
-      )}
+      className={cn(kitCardContainerStyles.default, {
+        [kitCardContainerStyles.vertical]: is.vertical,
+        [kitCardContainerStyles.StartPage]: is.StartPage,
+        [kitCardContainerStyles.description]: is.description,
+      })}
       {...props}
     >
       <CardHeader
-        className={cn({
-          'p-0 relative aspect-square w-full shrink-0': !is.StartPage,
-          'p-0 relative aspect-video w-full shrink-0 ': is.StartPage,
+        className={cn(kitCardHeaderStyles.default, {
+          [kitCardHeaderStyles.notStartPage]: !is.StartPage,
+          [kitCardHeaderStyles.startPage]: is.StartPage,
         })}
       >
         <Image
@@ -84,46 +80,46 @@ export default function KitCard({
           alt={title}
           fill
           className={cn({
-            'border-black/20 border rounded-md w-full h-full object-cover aspect-square': !is.StartPage,
-            'border rounded-xl object-cover': is.StartPage,
+            [kitCardHeaderStyles.thumbnail.notStartPage]: !is.StartPage,
+            [kitCardHeaderStyles.thumbnail.startPage]: is.StartPage,
           })}
         />
       </CardHeader>
       <CardContent
-        className={cn('p-0 flex flex-col gap-2 h-full', {
-          'w-full ': is.StartPage,
+        className={cn(kitCardContentStyles.default, {
+          [kitCardContentStyles.startPage]: is.StartPage,
         })}
       >
-        <CardTitle className="overflow-hidden whitespace-nowrap overflow-ellipsis text-base">{title}</CardTitle>
-        <div className="flex gap-2 overflow-x-auto w-full scrollbar-hide">
-          {tags?.map((tag) => <Tag key={tag} label={tag} className="break-keep" />)}
+        <CardTitle className={kitCardContentStyles.title.default}>{title}</CardTitle>
+        <div className={kitCardContentStyles.tags.default}>
+          {tags?.map((tag) => <Tag key={tag} label={tag} className={kitCardContentStyles.tags.tag.default} />)}
         </div>
         <div
-          className={cn('p-0 flex items-center gap-2', {
-            'mt-auto': is.vertical,
+          className={cn(kitCardContentStyles.uploader.default, {
+            [kitCardContentStyles.uploader.vertical]: is.vertical,
           })}
         >
-          <Avatar className="items-center border border-grey-100 w-6 h-6">
+          <Avatar className={kitCardContentStyles.uploader.avatar.default}>
             <AvatarImage src={image} alt={name} />
             <AvatarFallback>{name}</AvatarFallback>
           </Avatar>
-          <span className="overflow-hidden whitespace-nowrap overflow-ellipsis text-[#A69C98] text-xs">{name}</span>
+          <span className={kitCardContentStyles.uploader.name.default}>{name}</span>
         </div>
         {is.description && (
-          <div className="flex justify-end gap-2 mt-auto">
-            <button className="border border-grey-200 bg-grey-50 rounded-full w-10 aspect-square">
-              <Bookmark className="w-6 h-6 stroke-none fill-grey-100 m-auto" />
+          <div className={kitCardContentStyles.buttons.default}>
+            <button className={kitCardContentStyles.buttons.button.default}>
+              <Bookmark className={kitCardContentStyles.buttons.button.bookmark} />
             </button>
-            <button className="border border-grey-200 bg-grey-50 rounded-full w-10 aspect-square">
-              <Heart className="w-6 h-6 stroke-none fill-grey-100 m-auto" />
+            <button className={kitCardContentStyles.buttons.button.default}>
+              <Heart className={kitCardContentStyles.buttons.button.heart} />
             </button>
           </div>
         )}
-        {is.StartPage && description && <CardDescription className="text-grey-300 bg-grey-50 px-4 py-2 rounded-xl">{description}</CardDescription>}
+        {is.StartPage && description && <CardDescription className={kitCardContentStyles.description.StartPage}>{description}</CardDescription>}
       </CardContent>
       {is.description && description && (
-        <CardFooter className="col-span-full bg-grey-50 px-4 py-2 rounded-xl">
-          <CardDescription className="text-grey-300">{description}</CardDescription>
+        <CardFooter className={kitCardFooterStyles.default}>
+          <CardDescription className={kitCardFooterStyles.description.default}>{description}</CardDescription>
         </CardFooter>
       )}
     </Card>
