@@ -1,10 +1,14 @@
-import { cn } from '@/lib/utils';
+// import DeleteAccount from './DeleteAccount';
+
+import Link from 'next/link';
 
 export function UserSettings() {
   return (
     <section className={styles.default}>
       <button className={styles.button}>로그아웃</button>
-      <button className={cn(styles.button, styles.deleteButton)}>회원탈퇴</button>
+      <Link href="/my/settings/delete-account" className={styles.deleteAccount}>
+        회원탈퇴
+      </Link>
     </section>
   );
 }
@@ -12,5 +16,5 @@ export function UserSettings() {
 const styles = {
   default: 'flex flex-col w-full bg-grey-50 divide-y',
   button: 'p-4 bg-background w-full text-left',
-  deleteButton: 'text-red-500',
+  deleteAccount: 'p-4 bg-background w-full text-left text-red-500',
 };
