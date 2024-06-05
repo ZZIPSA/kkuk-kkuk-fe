@@ -96,8 +96,14 @@ export class S3Manager {
       throw new Error('Error generating presigned URL');
     }
   }
+
+  /**
+   * S3에서 객체를 취득하기 위한 서명된 URL을 반환
+   *
+   * @param key 가져올 대상 객체의 key
+   * @returns 객체를 획득할 수 있는 일시적인 URL
+   */
   async getObjectUrl(key: string): Promise<string> {
-    // const key = this.extractS3Key(objectUrl);
     const command = new GetObjectCommand({
       Bucket: BUCKET_NAME,
       Key: key,
