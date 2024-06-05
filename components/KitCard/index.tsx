@@ -7,12 +7,7 @@ import { KitCardInfo } from '@/types/Kit';
 import { Bookmark, Heart } from '@/lib/icons';
 import { kitCardContainerStyles, kitCardHeaderStyles, kitCardContentStyles, kitCardFooterStyles } from './styles';
 import { getDefault } from './lib';
-
-export enum KitCardVariants {
-  vertical = 'vertical',
-  description = 'description',
-  StartPage = 'StartPage',
-}
+import { KitCardVariants } from './types';
 
 interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeof Card> {
   /**
@@ -123,3 +118,4 @@ export default function KitCard({
     </Card>
   );
 }
+export { KitCardVariants };
