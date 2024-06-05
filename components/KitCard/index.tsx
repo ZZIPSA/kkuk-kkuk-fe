@@ -5,8 +5,7 @@ import { Tag } from '@/stories/Tag';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { KitCardInfo } from '@/types/Kit';
 import { Bookmark, Heart } from '@/lib/icons';
-import { kitCardContainerStyles, kitCardHeaderStyles, kitCardContentStyles, kitCardFooterStyles } from './styles';
-import { getConditions, getDefault } from './lib';
+import { getConditions, getDefault, getStyles } from './lib';
 import { KitCardVariants } from './types';
 
 interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeof Card> {
@@ -49,66 +48,37 @@ export default function KitCard({
 }: KitCardProps) {
   const { thumbnail, name, image } = getDefault({ thumbnailImage, ...uploader });
   const is = getConditions(variant);
+  const styles = getStyles(is);
   return (
-    <Card
-      className={cn(kitCardContainerStyles.default, {
-        [kitCardContainerStyles.vertical]: is.vertical,
-        [kitCardContainerStyles.StartPage]: is.StartPage,
-        [kitCardContainerStyles.description]: is.description,
-      })}
-      {...props}
-    >
-      <CardHeader
-        className={cn(kitCardHeaderStyles.default, {
-          [kitCardHeaderStyles.notStartPage]: !is.StartPage,
-          [kitCardHeaderStyles.startPage]: is.StartPage,
-        })}
-      >
-        <Image
-          src={thumbnail}
-          alt={title}
-          fill
-          className={cn({
-            [kitCardHeaderStyles.thumbnail.notStartPage]: !is.StartPage,
-            [kitCardHeaderStyles.thumbnail.startPage]: is.StartPage,
-          })}
-        />
+    <Card className={styles.container} {...props}>
+      <CardHeader className={styles.header}>
+        <Image src={thumbnail} alt={title} fill className={styles.thumbnail} />
       </CardHeader>
-      <CardContent
-        className={cn(kitCardContentStyles.default, {
-          [kitCardContentStyles.startPage]: is.StartPage,
-        })}
-      >
-        <CardTitle className={kitCardContentStyles.title.default}>{title}</CardTitle>
-        <div className={kitCardContentStyles.tags.default}>
-          {tags?.map((tag) => <Tag key={tag} label={tag} className={kitCardContentStyles.tags.tag.default} />)}
-        </div>
-        <div
-          className={cn(kitCardContentStyles.uploader.default, {
-            [kitCardContentStyles.uploader.vertical]: is.vertical,
-          })}
-        >
-          <Avatar className={kitCardContentStyles.uploader.avatar.default}>
+      <CardContent className={styles.content}>
+        <CardTitle className={styles.title}>{title}</CardTitle>
+        <div className={styles.tags}>{tags?.map((tag) => <Tag key={tag} label={tag} className={styles.tag} />)}</div>
+        <div className={styles.uploader}>
+          <Avatar className={styles.avatar}>
             <AvatarImage src={image} alt={name} />
             <AvatarFallback>{name}</AvatarFallback>
           </Avatar>
-          <span className={kitCardContentStyles.uploader.name.default}>{name}</span>
+          <span className={styles.name}>{name}</span>
         </div>
         {is.description && (
-          <div className={kitCardContentStyles.buttons.default}>
-            <button className={kitCardContentStyles.buttons.button.default}>
-              <Bookmark className={kitCardContentStyles.buttons.button.bookmark} />
+          <div className={styles.buttons}>
+            <button className={styles.button}>
+              <Bookmark className={styles.bookmark} />
             </button>
-            <button className={kitCardContentStyles.buttons.button.default}>
-              <Heart className={kitCardContentStyles.buttons.button.heart} />
+            <button className={styles.button}>
+              <Heart className={styles.heart} />
             </button>
           </div>
         )}
-        {is.StartPage && description && <CardDescription className={kitCardContentStyles.description.StartPage}>{description}</CardDescription>}
+        {is.StartPage && description && <CardDescription className={styles.description}>{description}</CardDescription>}
       </CardContent>
       {is.description && description && (
-        <CardFooter className={kitCardFooterStyles.default}>
-          <CardDescription className={kitCardFooterStyles.description.default}>{description}</CardDescription>
+        <CardFooter className={styles.footer}>
+          <CardDescription className={styles.footerDescription}>{description}</CardDescription>
         </CardFooter>
       )}
     </Card>
