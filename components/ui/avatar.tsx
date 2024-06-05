@@ -13,7 +13,14 @@ const Avatar = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Root>, R
 Avatar.displayName = AvatarPrimitive.Root.displayName;
 
 const AvatarImage = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Image>, React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>>(
-  ({ className, ...props }, ref) => <AvatarPrimitive.Image ref={ref} className={cn('aspect-square h-full w-full', className)} {...props} />,
+  ({ className, ...props }, ref) => (
+    <AvatarPrimitive.Image
+      ref={ref}
+      className={cn('aspect-square h-full w-full', className)}
+      {...props}
+      src={props.src?.replace('_normal', '')} // NOTE: Twitter API에서 받아온 이미지 URL에서 _normal을 제거 -> 고화질 이미지로 변경
+    />
+  ),
 );
 AvatarImage.displayName = AvatarPrimitive.Image.displayName;
 
