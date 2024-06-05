@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { DEFAULT_KIT_THUMBNAIL, DEFAULT_PROFILE } from '@/lib/constants';
 import { Tag } from '@/stories/Tag';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { KitCardInfo } from '@/types/Kit';
 import { Bookmark, Heart } from '@/lib/icons';
 import { kitCardContainerStyles, kitCardHeaderStyles, kitCardContentStyles, kitCardFooterStyles } from './styles';
+import { getDefault } from './lib';
 
 export enum KitCardVariants {
   vertical = 'vertical',
@@ -52,9 +52,7 @@ export default function KitCard({
   description,
   ...props
 }: KitCardProps) {
-  thumbnailImage ??= DEFAULT_KIT_THUMBNAIL;
-  const name = uploader?.name ?? '';
-  const image = uploader?.image ?? DEFAULT_PROFILE;
+  const { thumbnail, name, image } = getDefault({ thumbnailImage, ...uploader });
   const is = {
     vertical: variant === KitCardVariants.vertical,
     StartPage: variant === KitCardVariants.StartPage,
@@ -76,7 +74,7 @@ export default function KitCard({
         })}
       >
         <Image
-          src={thumbnailImage}
+          src={thumbnail}
           alt={title}
           fill
           className={cn({
