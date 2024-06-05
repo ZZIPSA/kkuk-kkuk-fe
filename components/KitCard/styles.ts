@@ -1,13 +1,13 @@
 export const kitCardContainerStyles = {
-  default: 'border-0 shadow-none gap-2',
-  vertical: 'flex flex-col h-full',
-  StartPage: 'flex justify-between gap-2 w-full flex-col',
+  default: 'border-0 shadow-none',
+  vertical: 'flex flex-col h-full gap-2',
+  StartPage: 'flex justify-between w-full flex-col',
   description: 'grid grid-cols-2 gap-y-6 px-4 py-6',
 };
 export const kitCardHeaderStyles = {
   default: 'p-0 relative w-full shrink-0',
   notStartPage: 'aspect-square',
-  startPage: 'aspect-video',
+  startPage: 'aspect-video mb-2',
   thumbnail: {
     notStartPage: 'border-black/20 border rounded-md w-full h-full object-cover aspect-square',
     startPage: 'border rounded-xl object-cover',
@@ -15,7 +15,7 @@ export const kitCardHeaderStyles = {
 };
 export const kitCardContentStyles = {
   default: 'p-0 flex flex-col gap-2 h-full',
-  startPage: 'w-full',
+  startPage: 'w-full mb-6',
   title: {
     default: 'overflow-hidden whitespace-nowrap overflow-ellipsis text-base',
   },
