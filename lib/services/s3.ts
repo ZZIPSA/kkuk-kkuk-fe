@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, CopyObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, CopyObjectCommand, DeleteObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { ACCESS_KEY_ID, BASE_KEY, BUCKET_NAME, REGION, SECRET_ACCESS_KEY } from '../constants';
 
@@ -95,6 +95,16 @@ export class S3Manager {
     } catch (err) {
       throw new Error('Error generating presigned URL');
     }
+  }
+  async getObjectUrl(key: string): Promise<string> {
+    // const key = this.extractS3Key(objectUrl);
+    const command = new GetObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: key,
+    });
+
+    const signedUrl = await getSignedUrl(this.client, command, { expiresIn: 3600 });
+    return signedUrl;
   }
   /**
    * S3에서 이미지를 영구 저장소로 이동
