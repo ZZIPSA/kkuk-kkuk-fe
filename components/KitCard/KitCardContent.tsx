@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { CardContent, CardDescription, CardTitle } from '@/components/ui/card';
+import { CardContent, CardTitle } from '@/components/ui/card';
 import { Tag } from '@/stories/Tag';
 import { Bookmark, Heart } from '@/lib/icons';
 import { KitCardVariants } from './types';
@@ -11,10 +11,9 @@ interface KitCardContentProps {
   name: string;
   image: string;
   variant: KitCardVariants;
-  description?: string;
 }
 
-export default function KitCardContent({ title, tags, name, image, variant, description }: KitCardContentProps) {
+export default function KitCardContent({ title, tags, name, image, variant }: KitCardContentProps) {
   const is = getConditions(variant);
   const styles = getContentStyles(is);
   return (
@@ -23,7 +22,6 @@ export default function KitCardContent({ title, tags, name, image, variant, desc
       <Tags tags={tags} styles={styles} />
       {!is.StartPage && <Uploader name={name} image={image} styles={styles} />}
       {is.description && <Buttons styles={styles} />}
-      {is.StartPage && description && <CardDescription className={styles.description}>{description}</CardDescription>}
     </CardContent>
   );
 }
