@@ -9,7 +9,6 @@ import { Bookmark, Heart } from '@/lib/icons';
 
 export enum KitCardVariants {
   vertical = 'vertical',
-  horizontal = 'horizontal',
   description = 'description',
   StartPage = 'StartPage',
 }
@@ -58,7 +57,6 @@ export default function KitCard({
   const image = uploader?.image ?? DEFAULT_PROFILE;
   const is = {
     vertical: variant === KitCardVariants.vertical,
-    horizontal: variant === KitCardVariants.horizontal,
     StartPage: variant === KitCardVariants.StartPage,
     description: variant === KitCardVariants.description,
   };
@@ -68,7 +66,6 @@ export default function KitCard({
         'border-0 shadow-none gap-2',
         {
           'flex flex-col h-full': is.vertical,
-          'flex justify-between gap-2 w-full': is.horizontal,
           'flex justify-between gap-2 w-full flex-col': is.StartPage,
           'grid grid-cols-2 gap-y-6 px-4 py-6': is.description,
         },
@@ -94,7 +91,6 @@ export default function KitCard({
       </CardHeader>
       <CardContent
         className={cn('p-0 flex flex-col gap-2 h-full', {
-          'w-full': is.horizontal,
           'w-full ': is.StartPage,
         })}
       >
@@ -123,9 +119,7 @@ export default function KitCard({
             </button>
           </div>
         )}
-        {(is.horizontal || is.StartPage) && description && (
-          <CardDescription className="text-grey-300 bg-grey-50 px-4 py-2 rounded-xl">{description}</CardDescription>
-        )}
+        {is.StartPage && description && <CardDescription className="text-grey-300 bg-grey-50 px-4 py-2 rounded-xl">{description}</CardDescription>}
       </CardContent>
       {is.description && description && (
         <CardFooter className="col-span-full bg-grey-50 px-4 py-2 rounded-xl">
