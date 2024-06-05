@@ -22,7 +22,7 @@ export default async function UserInfo({ variant = UserInfoVariant.default }: Us
   // const twitterAccount = accounts.find(({ provider }) => provider === 'twitter');
 
   return (
-    <section className="flex flex-col py-6 px-4 gap-4">
+    <section className="flex flex-col py-6 px-4 gap-4 bg-background">
       <div
         className={cn('w-full grid', {
           'grid-cols-[64px_auto] gap-x-2': variant === UserInfoVariant.default,

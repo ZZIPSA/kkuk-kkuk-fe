@@ -22,6 +22,6 @@ const items = [
   },
 ];
 const styles = {
-  default: 'pt-6 pb-[50vh] flex flex-col w-full h-full bg-grey-50 divide-y',
+  default: 'flex flex-col w-full bg-grey-50 divide-y',
   button: 'p-4 bg-background w-full text-left',
 };
