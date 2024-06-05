@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { KitCardInfo } from '@/types/Kit';
 import { Bookmark, Heart } from '@/lib/icons';
 import { kitCardContainerStyles, kitCardHeaderStyles, kitCardContentStyles, kitCardFooterStyles } from './styles';
-import { getDefault } from './lib';
+import { getConditions, getDefault } from './lib';
 import { KitCardVariants } from './types';
 
 interface KitCardProps extends KitCardInfo, React.ComponentPropsWithoutRef<typeof Card> {
@@ -48,11 +48,7 @@ export default function KitCard({
   ...props
 }: KitCardProps) {
   const { thumbnail, name, image } = getDefault({ thumbnailImage, ...uploader });
-  const is = {
-    vertical: variant === KitCardVariants.vertical,
-    StartPage: variant === KitCardVariants.StartPage,
-    description: variant === KitCardVariants.description,
-  };
+  const is = getConditions(variant);
   return (
     <Card
       className={cn(kitCardContainerStyles.default, {
