@@ -3,8 +3,8 @@ import { cn } from '@/lib/utils';
 export function UserSettings() {
   return (
     <section className={styles.default}>
-      {items.map((item, index) => (
-        <button key={index} className={cn(styles.button, item.styles)}>
+      {items.map((item) => (
+        <button key={item.label} className={cn(styles.button, item.styles)}>
           {item.label}
         </button>
       ))}
