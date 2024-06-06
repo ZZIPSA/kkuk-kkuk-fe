@@ -19,11 +19,7 @@ export default function ProfileImage({ image, name, variant }: ProfileImageProps
         'size-25': variant === UserInfoVariant.settings,
       })}
     >
-      {/*
-        NOTE: Twitter API에서 받아온 이미지 URL에서 _normal을 제거 -> 고화질 이미지로 변경
-        TODO: 추후 트위터 이미지만 변경하도록 수정 or 프로필 이미지를 서버에 저장
-      */}
-      <AvatarImage src={image?.replace('_normal', '') ?? DEFAULT_PROFILE} alt={name ?? ''} />
+      <AvatarImage src={image ?? DEFAULT_PROFILE} alt={name ?? ''} />
       <AvatarFallback>{name}</AvatarFallback>
     </Avatar>
   );
