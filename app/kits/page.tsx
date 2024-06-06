@@ -3,7 +3,7 @@ import KitCard from '@/components/KitCard';
 import { KitCardInfo } from '@/types/Kit';
 
 async function fetchKits(): Promise<KitCardInfo[]> {
-  const response = await fetch('http://localhost:3000/api/kits', {
+  const response = await fetch(`${process.env.API_URL}/api/kits`, {
     cache: 'no-store',
   });
 

@@ -12,7 +12,7 @@ const Description: FormFields = ({ control }) => (
         <FormLabel>설명</FormLabel>
         <FormControl>
           <Textarea
-            placeholder="Tell us a little bit about yourself"
+            placeholder="키트에 대한 설명을 입력해주세요."
             className={cn({
               'border-red-500': !!fieldState.error,
             })}
