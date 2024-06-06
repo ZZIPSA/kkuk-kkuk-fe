@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, CopyObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, CopyObjectCommand, DeleteObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { ACCESS_KEY_ID, BASE_KEY, BUCKET_NAME, REGION, SECRET_ACCESS_KEY } from '../constants';
 
@@ -95,6 +95,22 @@ export class S3Manager {
     } catch (err) {
       throw new Error('Error generating presigned URL');
     }
+  }
+
+  /**
+   * S3에서 객체를 취득하기 위한 서명된 URL을 반환
+   *
+   * @param key 가져올 대상 객체의 key
+   * @returns 객체를 획득할 수 있는 일시적인 URL
+   */
+  async getObjectUrl(key: string): Promise<string> {
+    const command = new GetObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: key,
+    });
+
+    const signedUrl = await getSignedUrl(this.client, command, { expiresIn: 3600 });
+    return signedUrl;
   }
   /**
    * S3에서 이미지를 영구 저장소로 이동
