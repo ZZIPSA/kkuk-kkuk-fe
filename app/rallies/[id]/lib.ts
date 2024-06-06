@@ -15,16 +15,15 @@ export const dummy = {
       tags: ['6일_챌린지'],
       thumbnailImage: 'https://picsum.photos/360',
       rewardImage: 'https://picsum.photos/360',
-      stamps: Array(6)
-        .fill(null)
-        .map(
-          (_, i) =>
-            ({
-              id: `stamp-${i}`,
-              kitId: '0000002',
-              image: `https://picsum.photos/360?random=${i}`,
-            }) satisfies Pick<StampModel, 'id' | 'image' | 'kitId'>,
-        ),
+      stamps: Array.from(
+        { length: 6 },
+        (_, i) =>
+          ({
+            id: `stamp-${i}`,
+            kitId: '0000002',
+            image: `https://picsum.photos/360?random=${i}`,
+          }) satisfies Pick<StampModel, 'id' | 'image' | 'kitId'>,
+      ),
       // uploader: { id: 'clwnjgnpl000fdnxe0xbwk5qv', email: 'user12@example.com', image: 'https://picsum.photos/360', name: 'User12' },
       // createdAt: '2024-05-26T12:51:33.034Z',
       // updatedAt: null,
