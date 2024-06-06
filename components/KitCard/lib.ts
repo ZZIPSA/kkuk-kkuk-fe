@@ -3,19 +3,16 @@ import { cn } from '@/lib/utils';
 import { KitCardVariants } from './types';
 import { kitCardContainerStyles, kitCardHeaderStyles, kitCardContentStyles, kitCardFooterStyles } from './styles';
 
-export const getKitCardDefaults = ({
-  thumbnailImage,
-  name,
-  image,
-}: {
-  thumbnailImage?: string | null;
-  name?: string | null;
-  image?: string | null;
-}) => ({
-  thumbnail: thumbnailImage ?? DEFAULT_KIT_THUMBNAIL,
+export const getDefaults = ({ thumbnailImage, name, image }: { thumbnailImage?: string | null; name?: string | null; image?: string | null }) => ({
+  ...getDefaultThumbnail({ thumbnailImage }),
+  ...getDefaultUser({ name, image }),
+});
+const getDefaultUser = ({ name, image }: { name?: string | null; image?: string | null }) => ({
   name: name ?? '',
   image: image ?? DEFAULT_PROFILE,
 });
+const getDefaultThumbnail = ({ thumbnailImage }: { thumbnailImage?: string | null }) => ({ thumbnail: thumbnailImage ?? DEFAULT_KIT_THUMBNAIL });
+
 export const getConditions = (variant: KitCardVariants) => ({
   vertical: variant === KitCardVariants.vertical,
   StartPage: variant === KitCardVariants.StartPage,

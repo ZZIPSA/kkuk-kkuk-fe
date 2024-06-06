@@ -1,6 +1,6 @@
 import { Card } from '@/components/ui/card';
 import { KitCardInfo } from '@/types/Kit';
-import { getConditions, getKitCardDefaults, getContainerStyles } from './lib';
+import { getConditions, getDefaults, getContainerStyles } from './lib';
 import { KitCardVariants } from './types';
 import KitCardFooter from './KitCardFooter';
 import KitCardContent from './KitCardContent';
@@ -44,7 +44,7 @@ export default function KitCard({
   description,
   ...props
 }: KitCardProps) {
-  const { thumbnail, name, image } = getKitCardDefaults({ thumbnailImage, ...uploader });
+  const { thumbnail, name, image } = getDefaults({ thumbnailImage, ...uploader });
   const is = getConditions(variant);
   const styles = getContainerStyles(is);
   return (
