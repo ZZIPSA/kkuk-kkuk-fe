@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    domains: ['localhost'],
     remotePatterns: [
       {
         // 더미 이미지 서버
@@ -17,9 +18,9 @@ const nextConfig = {
         pathname: '/**',
       },
       {
-        // TODO: 로컬/프로덕션 분리 필요
+        // TODO: 환경변수화
         protocol: 'https',
-        hostname: '*.s3.ap-northeast-2.amazonaws.com',
+        hostname: 'dnigeyw1tszed.cloudfront.net',
         port: '',
         pathname: '/**',
       },
