@@ -3,7 +3,15 @@ import { cn } from '@/lib/utils';
 import { KitCardVariants } from './types';
 import { kitCardContainerStyles, kitCardHeaderStyles, kitCardContentStyles, kitCardFooterStyles } from './styles';
 
-export const getDefault = ({ thumbnailImage, name, image }: { thumbnailImage?: string | null; name?: string | null; image?: string | null }) => ({
+export const getKitCardDefaults = ({
+  thumbnailImage,
+  name,
+  image,
+}: {
+  thumbnailImage?: string | null;
+  name?: string | null;
+  image?: string | null;
+}) => ({
   thumbnail: thumbnailImage ?? DEFAULT_KIT_THUMBNAIL,
   name: name ?? '',
   image: image ?? DEFAULT_PROFILE,
