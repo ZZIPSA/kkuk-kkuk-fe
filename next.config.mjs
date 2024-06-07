@@ -18,7 +18,7 @@ const nextConfig = {
         pathname: '/**',
       },
       {
-        // TODO: 환경변수화
+        // TODO:  이미지 컴포넌트 수정 후 삭제
         protocol: 'https',
         hostname: 'kkuk-kkuk-stamp-bucket.s3.ap-northeast-2.amazonaws.com',
         port: '',
