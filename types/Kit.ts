@@ -1,6 +1,6 @@
 import { KitModel, StampModel, UserModel } from './models';
 
-type KitUploader = { uploader: Pick<UserModel, 'id' | 'nickname' | 'profileImage'> };
+type KitUploader = { uploader: Pick<UserModel, 'id' | 'name' | 'image'> };
 type KitStamps = { stamps: Pick<StampModel, 'id' | 'image'>[] };
 export type KitResult = Pick<KitModel, 'id' | 'title' | 'description' | 'tags' | 'thumbnailImage' | 'rewardImage'> & KitUploader & KitStamps;
 
