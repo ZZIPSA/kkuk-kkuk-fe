@@ -9,3 +9,4 @@ export { default as ErrorIcon } from '@/assets/error-icon.svg';
 export { default as Picture } from '@/assets/picture.svg';
 export { default as CirclePlus } from '@/assets/circle-plus.svg';
 export { default as Gift } from '@/assets/gift.svg';
+export { default as TeamLogo } from '@/assets/team-logo.svg';

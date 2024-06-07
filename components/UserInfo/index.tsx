@@ -1,9 +1,7 @@
-import { Pencil } from 'lucide-react';
 import { ensureMember } from '@/auth';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { UserInfoResult } from '@/types/User';
-import ProfileImage from './ProfileImage';
+import { ProfileImage, ProfileEditButton } from './ProfileImage';
 import RalliesCounts from './RalliesCounts';
 import { UserInfoVariant } from './variants';
 import NicknameInput from './NicknameInput';
@@ -22,7 +20,7 @@ export default async function UserInfo({ variant = UserInfoVariant.default }: Us
   // const twitterAccount = accounts.find(({ provider }) => provider === 'twitter');
 
   return (
-    <section className="flex flex-col py-6 px-4 gap-4">
+    <section className="flex flex-col py-6 px-4 gap-4 bg-background">
       <div
         className={cn('w-full grid', {
           'grid-cols-[64px_auto] gap-x-2': variant === UserInfoVariant.default,
@@ -31,9 +29,7 @@ export default async function UserInfo({ variant = UserInfoVariant.default }: Us
       >
         <span className="row-span-2 relative">
           <ProfileImage image={image} name={name} variant={variant} />
-          {variant === UserInfoVariant.settings && (
-            <Pencil className="absolute bottom-0.5 right-0.5 w-6 h-6 p-0.5 rounded-full bg-foreground fill-background" />
-          )}
+          {variant === UserInfoVariant.settings && <ProfileEditButton />}
         </span>
         {variant === UserInfoVariant.default && <h1 className="font-bold w-full">{name}</h1>}
         {/* // NOTE: 페이즈 1에서 구현 */}
