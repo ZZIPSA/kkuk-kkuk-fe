@@ -37,6 +37,16 @@ export default function NewKitForm() {
         <Description control={form.control} />
         <Button label={'Submit'} type="submit" />
       </form>
+
+      {/* TODO: 배포 시 제거 */}
+      <button
+        onClick={() => setId((id) => (id ? '' : 'success'))}
+        className="fixed bottom-4 right-4 w-fit bg-teal-400 text-white rounded-xl py-4 z-[51]"
+      >
+        {id ? 'close' : 'open'} modal
+      </button>
+      {/* TODO: 배포 시 제거 */}
+
       <SuccessModal id={id} />
     </Form>
   );
