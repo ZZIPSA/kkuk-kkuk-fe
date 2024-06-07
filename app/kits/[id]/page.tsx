@@ -1,10 +1,12 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import KitCard, { KitCardVariants } from '@/components/KitCard';
 import RallyPreview from './components/RallyPreview';
 import StampsPreview from './components/StampsPreview';
 
 export default async function KitPage({ params: { id } }: { params: { id: string } }) {
+  // id 가 7자리 미만이면 0으로 채워서 7자리로 만들어 리다이렉트
+  if (id.length < 7) return redirect(`/kits/${id.padStart(7, '0')}`);
   const { data: kit } = await fetch(`${process.env.API_URL}/api/kits/${id}`).then((res) => res.json());
   if (!kit) return notFound();
   const { title, description, tags, thumbnailImage, uploader, stamps } = kit;
