@@ -32,7 +32,7 @@ export const kitCardContentStyles = {
       default: 'items-center border border-grey-100 w-6 h-6',
     },
     name: {
-      default: 'overflow-hidden whitespace-nowrap overflow-ellipsis text-grey-200 text-xs',
+      default: 'whitespace-nowrap overflow-ellipsis text-grey-200 text-xs',
     },
   },
   buttons: {
