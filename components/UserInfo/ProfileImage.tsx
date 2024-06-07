@@ -1,7 +1,8 @@
 'use client';
 
+import { Pencil } from 'lucide-react';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { DEFAULT_PROFILE } from '@/lib/constants';
+import { DEFAULT_PROFILE, MAKING_MESSAGE } from '@/lib/constants';
 import { UserModel } from '@/types/models';
 import { AvatarFallback } from '@radix-ui/react-avatar';
 import { UserInfoVariant } from './variants';
@@ -11,7 +12,7 @@ interface ProfileImageProps extends Pick<UserModel, 'image' | 'name'> {
   variant: UserInfoVariant;
 }
 
-export default function ProfileImage({ image, name, variant }: ProfileImageProps) {
+export function ProfileImage({ image, name, variant }: ProfileImageProps) {
   return (
     <Avatar
       className={cn('border', {
@@ -22,5 +23,14 @@ export default function ProfileImage({ image, name, variant }: ProfileImageProps
       <AvatarImage src={image ?? DEFAULT_PROFILE} alt={name ?? ''} />
       <AvatarFallback>{name}</AvatarFallback>
     </Avatar>
+  );
+}
+
+export function ProfileEditButton() {
+  return (
+    <Pencil
+      onClick={() => alert(MAKING_MESSAGE)}
+      className="absolute bottom-0.5 right-0.5 w-6 h-6 p-0.5 rounded-full bg-foreground fill-background"
+    />
   );
 }
