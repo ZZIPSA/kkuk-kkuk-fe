@@ -8,12 +8,12 @@ interface RallyStampsProps extends RallyStampsInfo {
   stamps: RallyPreviewStamp[];
 }
 
-export default function RallyStamps({ stamps, total, stampCount, owned }: RallyStampsProps) {
+export default function RallyStamps({ stamps, total, stampCount, owned, isStampedToday }: RallyStampsProps) {
   return (
     <article className={rallyStampsStyles.container}>
       <h2 className={rallyStampsStyles.title}>스탬프 랠리</h2>
       <section className={rallyStampsStyles.stamps}>
-        {stamps.map(addStampPropsByIndex({ owned, stampCount, total })).map(({ id, image, status, kind, owned, order }) => (
+        {stamps.map(addStampPropsByIndex({ owned, stampCount, total, isStampedToday })).map(({ id, image, status, kind, owned, order }) => (
           <RallyStamp key={id} id={id} image={image} status={status} kind={kind} owned={owned} order={order} />
         ))}
       </section>
