@@ -20,6 +20,13 @@ const nextConfig = {
       {
         // TODO: 환경변수화
         protocol: 'https',
+        hostname: 'kkuk-kkuk-stamp-bucket.s3.ap-northeast-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        // TODO: 환경변수화
+        protocol: 'https',
         hostname: 'dnigeyw1tszed.cloudfront.net',
         port: '',
         pathname: '/**',

@@ -95,6 +95,8 @@ const UploadPage = () => {
 
   return (
     <div>
+
+      <h1>키트 업로드 테스트 페이지</h1>
       <h1>Upload Kit</h1>
       <input type="text" placeholder="Kit Title" value={kitTitle} onChange={(e) => setKitTitle(e.target.value)} />
       <textarea placeholder="Kit Description" value={kitDescription} onChange={(e) => setKitDescription(e.target.value)} />
