@@ -37,7 +37,7 @@ interface TagProps extends ButtonBadgeProps {
  */
 export const Tag = ({ use = Uses.default, label, className, ...props }: TagProps) => {
   return (
-    <ButtonBadge className={cn('font-extralight break-keep text-nowrap', classNames[use], className)} variant={variants[use]} {...props}>
+    <ButtonBadge className={cn('font-normal break-keep text-nowrap', classNames[use], className)} variant={variants[use]} {...props}>
       {`#${label}`}
     </ButtonBadge>
   );

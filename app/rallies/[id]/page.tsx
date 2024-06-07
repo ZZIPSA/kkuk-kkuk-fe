@@ -1,9 +1,9 @@
 // import { notFound } from 'next/navigation';
 // import { getMember } from '@/auth';
-import { dummy } from './lib';
+import { dummy, getRallyInfo, getTempValue } from './lib';
 import RallyInfo from './components/RallyInfo';
 import RallyStamps from './components/RallyStamps';
-import { RallyFooter, getButtonVariant } from './components/RallyFooter';
+import { RallyFooter } from './components/RallyFooter';
 
 interface RallyPageProps {
   params: { id: string };
@@ -17,29 +17,23 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
   // const user = await getMember(); // TODO: 로직 중 isStampable 계산 시 사용 예정
   const {
     title,
-    stampCount,
+    // stampCount, TODO: 로직 완료 후 주석 해제
     createdAt,
     updatedAt,
     kit: { stamps },
-    status, // TODO: 활성화 / 비활성화 보다는 진행 / 완료 / 실패로 나누는게 어떤지 검토 -> 기한 추가 시 재검토
+    // status, // TODO: 로직 완료 후 주석 해제 // TODO: 활성화 / 비활성화 보다는 진행 / 완료 / 실패로 나누는게 어떤지 검토 -> 기한 추가 시 재검토
     // description, // TODO: 상세 설명을 표시 칸 추가
     // starter, // TODO: 로직 중 isStampable 계산 시 사용 예정
   } = rally;
-  const total = stamps.length;
-  const percentage = (stampCount / total) * 100;
-  // // TODO: D-day 계산 방법 << DB 에 종료 예정일(기한) 필드 추가 필요 -> 기한 추가 시 재검토
-  // let deadline = new Date();
-  // deadline.setDate(deadline.getDate() + 8);
-  const owned = true; // user?.id === starter.id;
-  // const isUpdatedToday = false;
-  const isStampable = true; // owned && status === 'active' && (isUpdatedToday || stampCount < total);
-  const isRewardable = stampCount === total - 1;
-  const stampButtonVariant = getButtonVariant(isStampable, isRewardable);
+  // TODO: 레이아웃 테스트용 임시 변수로 ID 첫자리를 전날까지 찍은 스탬프 개수, 둘째자리를 오늘 스탬프 여부, 셋째자리를 소유 여부로 사용
+  const { stampCount, owned, isStampedToday } = getTempValue(id);
+  const { total, count, status, percentage } = getRallyInfo({ stamps, stampCount, isStampedToday });
+
   return (
-    <main className="px-4 py-6 bg-grey-50 flex flex-col gap-6">
+    <main className="px-4 py-6 w-full bg-grey-50 flex flex-col gap-6">
       <RallyInfo title={title} percentage={percentage} createdAt={createdAt} updatedAt={updatedAt} status={status} /* deadline={deadline} */ />
-      <RallyStamps stamps={stamps} total={total} stampCount={stampCount} owned={owned} />
-      <RallyFooter owned={owned} variant={stampButtonVariant} />
+      <RallyStamps owned={owned} stamps={stamps} stampCount={count} total={total} isStampedToday={isStampedToday} />
+      <RallyFooter owned={owned} status={status} stampCount={count} total={total} isStampedToday={isStampedToday} />
     </main>
   );
 }

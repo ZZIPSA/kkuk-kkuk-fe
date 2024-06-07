@@ -1,47 +1,28 @@
 import { BasicButton as Button } from '@/components/ui/button';
 import { Stamp } from '@/lib/icons';
-import { cn } from '@/lib/utils';
-import { rallyFooterStyles } from './styles';
+import { getFooterConditions, getFooterVariant, getFooterContent, getFooterStyles } from './lib';
+import { RallyFooterInfo } from './types';
 
-enum RallyStampButtonVariant {
-  Stampable = 'stampable',
-  Reward = 'reward',
-  Disabled = 'disabled',
-}
-
-export const getButtonVariant = (isStampable: boolean, isRewardable: boolean) =>
-  isStampable ? (isRewardable ? RallyStampButtonVariant.Reward : RallyStampButtonVariant.Stampable) : RallyStampButtonVariant.Disabled;
-
-interface RallyFooterProps {
+interface RallyFooterProps extends RallyFooterInfo {
+  /*
+  stampCount: number;
+  total: number;
   owned: boolean;
-  variant: RallyStampButtonVariant;
+  status: RallyStatus;
+  isStampedToday: boolean;
+  */
 }
 
-export function RallyFooter({ owned, variant }: RallyFooterProps) {
-  const is = {
-    stampable: variant === RallyStampButtonVariant.Stampable,
-    reward: variant === RallyStampButtonVariant.Reward,
-    disabled: variant === RallyStampButtonVariant.Disabled,
-  };
+export function RallyFooter(props: RallyFooterProps) {
+  const content = getFooterContent(props);
+  const is = getFooterVariant(getFooterConditions(props));
+  const styles = getFooterStyles(is);
   return (
-    <footer className={rallyFooterStyles.footer}>
-      {owned && <Button className={rallyFooterStyles.shareButton}>친구에게 공유하기</Button>}
-      <Button
-        disabled={is.disabled}
-        className={cn(rallyFooterStyles.stampButton.default, {
-          [rallyFooterStyles.stampButton.primary]: is.stampable,
-          [rallyFooterStyles.stampButton.indigo]: is.reward,
-          [rallyFooterStyles.stampButton.grey]: is.disabled,
-        })}
-      >
-        <Stamp
-          className={cn(rallyFooterStyles.stampIcon.default, {
-            [rallyFooterStyles.stampIcon.primary]: is.stampable,
-            [rallyFooterStyles.stampIcon.indigo]: is.reward,
-            [rallyFooterStyles.stampIcon.grey]: is.disabled,
-          })}
-        />
-        스탬프 찍기
+    <footer className={styles.footer}>
+      <Button className={styles.shareButton}>친구에게 공유하기</Button>
+      <Button disabled={is.disabled} className={styles.stampButton}>
+        {(is.stampable || is.reward) && <Stamp className={styles.stampIcon} />}
+        {content}
       </Button>
     </footer>
   );
