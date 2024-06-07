@@ -10,36 +10,47 @@ export default function SuccessModal({ id }: { id: string }) {
       <section className={styles.section}>
         <Paw width={72} height={72} />
         <p>
-          <h2 className="pb-2 text-xl font-bold text-foreground">키트가 만들어졌어요!</h2>
+          <h2 className={styles.title}>키트가 만들어졌어요!</h2>
           이제 친구와 스탬프 랠리가 가능합니다!
         </p>
         <hr className={styles.hr} />
-        <div className={styles.grid}>
-          <span className={styles.span}>SNS로 키트 공유</span>
-          <Link
-            href={`https://twitter.com/intent/tweet?text=${AUTO_TWEET}&hashtags=${'꾹꾹,kookkook'}&url=${encodeURI(DOMAIN + '/kits/' + id)}`}
-            className={styles.twitter}
-          >
-            𝕏
-          </Link>
-          <button onClick={() => navigator.clipboard.writeText(DOMAIN + '/kits/' + id)} className={styles.button}>
-            <LinkIcon width={24} height={24} className="m-auto" />
-          </button>
-          <Link href="/" className={styles.link}>
-            홈으로
-          </Link>
-          <Link href={`/kits/${id}`} className={styles.link2}>
-            키트 보러가기
-          </Link>
-        </div>
+        <Buttons id={id} />
       </section>
     </dialog>
   );
 }
 
+function Buttons({ id }: { id: string }) {
+  return (
+    <div className={styles.grid}>
+      <span className={styles.span}>SNS로 키트 공유</span>
+      <Link href={getTwitterShareLink(id)} className={styles.twitter}>
+        {/* 트위터 공유 버튼 */}
+        𝕏
+      </Link>
+      <button onClick={copyToClipboard(id)} className={styles.button}>
+        {/* 링크 복사 버튼 */}
+        <LinkIcon width={24} height={24} className="m-auto" />
+      </button>
+      <Link href="/" className={styles.link}>
+        {/* 홈페이지로 이동 */}
+        홈으로
+      </Link>
+      <Link href={`/kits/${id}`} className={styles.link2}>
+        {/* 키트 페이지로 이동 */}
+        키트 보러가기
+      </Link>
+    </div>
+  );
+}
+
+const getTwitterShareLink = (id: string) =>
+  `https://twitter.com/intent/tweet?text=${AUTO_TWEET}&hashtags=${'꾹꾹,kookkook'}&url=${encodeURI(DOMAIN + '/kits/' + id)}`;
+const copyToClipboard = (id: string) => () => navigator.clipboard.writeText(DOMAIN + '/kits/' + id);
 const styles = {
   dialog: 'fixed top-0 left-0 w-full h-full bg-foreground/20 text-foreground backdrop-blur-sm z-50 ease-in flex justify-center items-center',
   section: 'w-[328px] bg-background rounded-xl p-6 flex flex-col gap-6 items-center justify-stretch text-center text-sm text-foreground/60',
+  title: 'pb-2 text-xl font-bold text-foreground',
   hr: 'border-0.5 w-full',
   grid: 'grid grid-cols-2 gap-y-4 gap-x-2 w-full text-center',
   span: 'col-span-2',
