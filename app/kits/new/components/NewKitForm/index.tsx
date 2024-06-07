@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -14,6 +15,7 @@ import Description from './Description';
 import Tags from './Tags';
 
 export default function NewKitForm() {
+  const [id, setId] = useState<string>('');
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
   });
@@ -21,6 +23,7 @@ export default function NewKitForm() {
   function onSubmit(data: FormValues) {
     // TODO: Handle form submission
     console.log(data);
+    setId('success');
   }
   const stampsRef = form.register('stamps');
 
