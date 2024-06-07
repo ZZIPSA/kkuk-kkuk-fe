@@ -16,7 +16,7 @@ import SuccessModal from './SuccessModal';
 import Tags from './Tags';
 
 export default function NewKitForm() {
-  const [id, setId] = useState<string>('');
+  const [kitId, setKitId] = useState<string>('');
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
   });
@@ -24,7 +24,7 @@ export default function NewKitForm() {
   function onSubmit(data: FormValues) {
     // TODO: Handle form submission
     console.log(data);
-    setId('success');
+    setKitId('success');
   }
   const stampsRef = form.register('stamps');
 
@@ -40,14 +40,14 @@ export default function NewKitForm() {
 
       {/* TODO: 배포 시 제거 */}
       <button
-        onClick={() => setId((id) => (id ? '' : 'success'))}
+        onClick={() => setKitId((id) => (id ? '' : 'success'))}
         className="fixed bottom-4 right-4 w-fit bg-teal-400 text-white rounded-xl py-4 z-[51]"
       >
-        {id ? 'close' : 'open'} modal
+        {kitId ? 'close' : 'open'} modal
       </button>
       {/* TODO: 배포 시 제거 */}
 
-      <SuccessModal id={id} />
+      <SuccessModal kitId={kitId} />
     </Form>
   );
 }

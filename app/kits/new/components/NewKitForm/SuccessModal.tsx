@@ -3,8 +3,8 @@ import { LinkIcon } from 'lucide-react';
 import { AUTO_TWEET, DOMAIN } from '@/lib/constants';
 import { Paw } from '@/lib/icons';
 
-export default function SuccessModal({ id }: { id: string }) {
-  if (!id) return null;
+export default function SuccessModal({ kitId: kitId }: { kitId: string }) {
+  if (!kitId) return null;
   return (
     <dialog className={styles.dialog}>
       <section className={styles.section}>
@@ -14,21 +14,21 @@ export default function SuccessModal({ id }: { id: string }) {
           이제 친구와 스탬프 랠리가 가능합니다!
         </p>
         <hr className={styles.hr} />
-        <Buttons id={id} />
+        <Buttons kitId={kitId} />
       </section>
     </dialog>
   );
 }
 
-function Buttons({ id }: { id: string }) {
+function Buttons({ kitId }: { kitId: string }) {
   return (
     <div className={styles.grid}>
       <span className={styles.span}>SNS로 키트 공유</span>
-      <Link href={getTwitterShareLink(id)} className={styles.twitter}>
+      <Link href={getTwitterShareLink(kitId)} className={styles.twitter}>
         {/* 트위터 공유 버튼 */}
         𝕏
       </Link>
-      <button onClick={copyToClipboard(id)} className={styles.button}>
+      <button onClick={copyToClipboard(kitId)} className={styles.button}>
         {/* 링크 복사 버튼 */}
         <LinkIcon width={24} height={24} className="m-auto" />
       </button>
@@ -36,7 +36,7 @@ function Buttons({ id }: { id: string }) {
         {/* 홈페이지로 이동 */}
         홈으로
       </Link>
-      <Link href={`/kits/${id}`} className={styles.link2}>
+      <Link href={`/kits/${kitId}`} className={styles.link2}>
         {/* 키트 페이지로 이동 */}
         키트 보러가기
       </Link>
