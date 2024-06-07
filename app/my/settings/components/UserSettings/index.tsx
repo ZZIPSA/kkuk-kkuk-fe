@@ -1,19 +1,16 @@
-'use client';
+// 'use client';
 
-import { useRouter } from 'next/navigation';
-import { MAKING_MESSAGE } from '@/lib/constants';
-import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 export function UserSettings() {
-  const router = useRouter();
   return (
     <section className={styles.default}>
-      <button className={styles.button} onClick={() => router.push('/api/auth/signout')}>
+      <Link href="/api/auth/signout" className={styles.button}>
         로그아웃
-      </button>
-      <button className={cn(styles.button, styles.delete)} onClick={() => alert(MAKING_MESSAGE)}>
+      </Link>
+      <Link href="/my/settings/delete-account" className={styles.deleteAccount}>
         회원탈퇴
-      </button>
+      </Link>
     </section>
   );
 }
@@ -21,5 +18,5 @@ export function UserSettings() {
 const styles = {
   default: 'flex flex-col w-full bg-grey-50 divide-y',
   button: 'p-4 bg-background w-full text-left',
-  delete: 'text-red-500',
+  deleteAccount: 'p-4 bg-background w-full text-left text-red-500',
 };
