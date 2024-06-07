@@ -12,6 +12,7 @@ import { FormSchema } from './schema';
 import Stamps from './Stamps';
 import Title from './Title';
 import Description from './Description';
+import SuccessModal from './SuccessModal';
 import Tags from './Tags';
 
 export default function NewKitForm() {
@@ -36,6 +37,7 @@ export default function NewKitForm() {
         <Description control={form.control} />
         <Button label={'Submit'} type="submit" />
       </form>
+      <SuccessModal id={id} />
     </Form>
   );
 }
