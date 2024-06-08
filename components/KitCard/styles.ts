@@ -2,7 +2,7 @@ export const kitCardContainerStyles = {
   default: 'border-0 shadow-none',
   vertical: 'flex flex-col h-full gap-2',
   StartPage: 'flex justify-between w-full flex-col',
-  description: 'grid grid-cols-2 gap-y-6 px-4 py-6',
+  description: 'grid grid-cols-2 gap-x-2 gap-y-6 px-4 py-6',
 };
 export const kitCardHeaderStyles = {
   default: 'p-0 relative w-full shrink-0',
