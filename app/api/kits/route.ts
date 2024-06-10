@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { kitSelect, prisma } from '@/lib/prisma';
 import { S3Manager } from '@/lib/services/s3';
-import { BLURRED_IMAGE_INDEX, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '@/lib/constants';
+import { BASE_KEY, BLURRED_IMAGE_INDEX, BUCKET_NAME, REGION, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '@/lib/constants';
 
 export async function GET(request: Request) {
   try {
@@ -25,8 +25,8 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   // TODO: auth, 필수 항목 검증 미들웨어 구현
   const session = await auth();
-  const user = session?.user
-  const userId = user?.id
+  const user = session?.user;
+  const userId = user?.id;
   const { title, description, imageUrls, thumbnailImage, rewardImage, blurredImage, tags } = await request.json();
   const s3 = new S3Manager();
 
@@ -44,21 +44,24 @@ export async function POST(request: Request) {
   const newKitId = (lastKitId + 1).toString().padStart(7, '0');
 
   try {
-    const newKitUrls = await s3.moveToLongTermStorage([...imageUrls, blurredImage], userId, newKitId);
-
+    const newStampObjectKeys = await s3.moveToLongTermStorage([...imageUrls, blurredImage], newKitId);
     const kit = await prisma.kit.create({
       data: {
         id: newKitId,
         title,
         description,
         stamps: {
-          create: newKitUrls.slice(0, 6).map((url) => ({ image: url })),
+          create: newStampObjectKeys
+            .slice(0, 6)
+            // TODO: 머지 후 image 항목 삭제, url 직접 삽입 방식 삭제
+            .map((objectKey) => ({ image: `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${BASE_KEY}/${objectKey}`, objectKey })),
         },
-        rewardImage: newKitUrls[REWARD_IMAGE_INDEX],
-        thumbnailImage: newKitUrls[THUMBNAIL_IMAGE_INDEX],
-        blurredImage: newKitUrls[BLURRED_IMAGE_INDEX],
+        // TODO: 머지 후 url 삭제, newStampObjectKeys[REWARD_IMAGE_INDEX] 등으로 키 값만 저장하도록 변경
+        rewardImage: `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${BASE_KEY}/${newStampObjectKeys[REWARD_IMAGE_INDEX]}`,
+        thumbnailImage: `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${BASE_KEY}/${newStampObjectKeys[THUMBNAIL_IMAGE_INDEX]}`,
+        blurredImage: `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${BASE_KEY}/${newStampObjectKeys[BLURRED_IMAGE_INDEX]}`,
         tags,
-        uploaderId:userId,
+        uploaderId: userId,
       },
     });
 
