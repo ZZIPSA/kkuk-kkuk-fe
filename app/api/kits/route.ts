@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { kitSelect, prisma } from '@/lib/prisma';
 import { S3Manager } from '@/lib/services/s3';
-import { BASE_KEY, BLURRED_IMAGE_INDEX, BUCKET_NAME, REGION, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '@/lib/constants';
+import { BLURRED_IMAGE_INDEX, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '@/lib/constants';
 
 export async function GET(request: Request) {
   try {
