@@ -2,6 +2,16 @@ import { PrismaClient, RallyStatus } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+const dummyStamps: { [key: number]: string } = {
+  0: 'local/0000000/2003481.png',
+  1: 'local/0000000/2995633.png',
+  2: 'local/0000000/3884885.png',
+  3: 'local/0000000/4509624.png',
+  4: 'local/0000000/4892735.png',
+  5: 'local/0000000/6530894.png',
+  6: 'local/0000000/6530894.png',
+};
+
 function generateRandomTag() {
   const possibleTags = [
     '뫄뫄장르',
@@ -84,6 +94,7 @@ async function main() {
         stamps: {
           create: Array.from({ length: 6 }, (_, stampIndex) => ({
             image: 'https://picsum.photos/360',
+            objectKey: dummyStamps[stampIndex],
           })),
         },
       },

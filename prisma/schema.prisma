@@ -107,10 +107,11 @@ model Kit {
 }
 
 model Stamp {
-  id    String @id @default(cuid())
-  kitId String
-  image String
-  kit   Kit    @relation(fields: [kitId], references: [id])
+  id        String @id @default(cuid())
+  kitId     String
+  objectKey String
+  image     String
+  kit       Kit    @relation(fields: [kitId], references: [id])
 }
 
 model Rally {
