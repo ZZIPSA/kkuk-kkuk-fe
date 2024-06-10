@@ -93,7 +93,6 @@ async function main() {
         uploaderId: users[Math.floor(Math.random() * users.length)].id,
         stamps: {
           create: Array.from({ length: 6 }, (_, stampIndex) => ({
-            image: dummyStamps[stampIndex],
             objectKey: dummyStamps[stampIndex],
           })),
         },

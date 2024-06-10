@@ -110,7 +110,6 @@ model Stamp {
   id        String @id @default(cuid())
   kitId     String
   objectKey String
-  image     String
   kit       Kit    @relation(fields: [kitId], references: [id])
 }
 
