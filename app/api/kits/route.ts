@@ -57,9 +57,9 @@ export async function POST(request: Request) {
             .map((objectKey) => ({ image: `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${BASE_KEY}/${objectKey}`, objectKey })),
         },
         // TODO: 머지 후 url 삭제, newStampObjectKeys[REWARD_IMAGE_INDEX] 등으로 키 값만 저장하도록 변경
-        rewardImage: `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${BASE_KEY}/${newStampObjectKeys[REWARD_IMAGE_INDEX]}`,
-        thumbnailImage: `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${BASE_KEY}/${newStampObjectKeys[THUMBNAIL_IMAGE_INDEX]}`,
-        blurredImage: `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${BASE_KEY}/${newStampObjectKeys[BLURRED_IMAGE_INDEX]}`,
+        rewardImage: newStampObjectKeys[REWARD_IMAGE_INDEX],
+        thumbnailImage: newStampObjectKeys[THUMBNAIL_IMAGE_INDEX],
+        blurredImage: newStampObjectKeys[BLURRED_IMAGE_INDEX],
         tags,
         uploaderId: userId,
       },

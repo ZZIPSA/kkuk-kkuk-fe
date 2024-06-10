@@ -2,11 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { S3Manager } from '@/lib/services/s3';
 
 type GetProxyParams = {
-  params: { path: string[] };
+  params: { key: string };
 };
 export async function GET(req: NextRequest, { params }: GetProxyParams) {
-  const { path } = params;
-  const key = path.join('/');
+  const { key } = params;
   const s3 = new S3Manager();
   const signedUrl = await s3.getObjectUrl(key);
 

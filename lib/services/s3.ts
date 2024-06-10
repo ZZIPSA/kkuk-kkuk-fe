@@ -22,7 +22,6 @@ export class S3Manager {
    * @param newKey 복사된 객체의 S3 key
    */
   private async copyObject(targetKey: string, newKey: string) {
-    // TODO: 커맨드 생성 및 실행 함수 분리
     const copyCommand = new CopyObjectCommand({
       CopySource: `${BUCKET_NAME}/${targetKey}`,
       Bucket: BUCKET_NAME,
@@ -113,10 +112,11 @@ export class S3Manager {
   async getObjectUrl(key: string): Promise<string> {
     const command = new GetObjectCommand({
       Bucket: BUCKET_NAME,
-      Key: key,
+      Key: `${BASE_KEY}/${key}`,
     });
 
     const signedUrl = await getSignedUrl(this.client, command, { expiresIn: 3600 });
+
     return signedUrl;
   }
   /**
@@ -127,14 +127,14 @@ export class S3Manager {
    * @param newKitId 새로운 키트 ID
    * @returns 새로운 이미지 URL 배열
    */
-  async moveToLongTermStorage(imageUrls: string[], newKitId: string) {
+  async moveToLongTermStorage(imageUrls: string[], newKitId: string): Promise<string[]> {
     return Promise.all(
       imageUrls.map(async (url: string) => {
         const targetKey = this.extractS3Key(url);
         const stampId = this.extractCuid(targetKey);
         const newObjectKey = `${newKitId}/${stampId}`;
 
-        this.moveObject(targetKey, newObjectKey);
+        await this.moveObject(targetKey, newObjectKey);
 
         return newObjectKey;
       }),
