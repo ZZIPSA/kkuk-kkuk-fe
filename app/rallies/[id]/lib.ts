@@ -22,7 +22,8 @@ export const dummy = {
             id: `stamp-${i}`,
             kitId: '0000002',
             image: `https://picsum.photos/360?random=${i}`,
-          }) satisfies Pick<StampModel, 'id' | 'image' | 'kitId'>,
+            objectKey: `https://picsum.photos/360?random=${i}`,
+          }) satisfies Pick<StampModel, 'id' | 'objectKey' | 'image' | 'kitId'>,
       ),
       // uploader: { id: 'clwnjgnpl000fdnxe0xbwk5qv', email: 'user12@example.com', image: 'https://picsum.photos/360', name: 'User12' },
       // createdAt: '2024-05-26T12:51:33.034Z',
@@ -45,7 +46,7 @@ export const getRallyInfo = ({
   stampCount,
   isStampedToday,
 }: {
-  stamps: Pick<StampModel, 'id' | 'image' | 'kitId'>[];
+  stamps: Pick<StampModel, 'id' | 'objectKey' | 'kitId'>[];
   stampCount: number;
   isStampedToday: boolean;
 }) => {
