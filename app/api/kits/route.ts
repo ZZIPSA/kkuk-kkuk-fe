@@ -51,15 +51,11 @@ export async function POST(request: Request) {
         title,
         description,
         stamps: {
-          create: newStampObjectKeys
-            .slice(0, 6)
-            // TODO: 머지 후 image 항목 삭제, url 직접 삽입 방식 삭제
-            .map((objectKey) => ({
-              objectKey,
-              id: s3.extractCuid(objectKey),
-            })),
+          create: newStampObjectKeys.slice(0, 6).map((objectKey) => ({
+            objectKey,
+            id: s3.extractCuid(objectKey),
+          })),
         },
-        // TODO: 머지 후 url 삭제, newStampObjectKeys[REWARD_IMAGE_INDEX] 등으로 키 값만 저장하도록 변경
         rewardImage: newStampObjectKeys[REWARD_IMAGE_INDEX],
         thumbnailImage: newStampObjectKeys[THUMBNAIL_IMAGE_INDEX],
         blurredImage: newStampObjectKeys[BLURRED_IMAGE_INDEX],
