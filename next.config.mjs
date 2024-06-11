@@ -1,35 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   images: {
-    domains: ['localhost'],
     remotePatterns: [
       {
-        // 더미 이미지 서버
-        protocol: 'https',
-        hostname: 'picsum.photos',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        // 더미 이미지 서버
-        protocol: 'https',
-        hostname: 'fastly.picsum.photos',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        // TODO:  이미지 컴포넌트 수정 후 삭제
-        protocol: 'https',
-        hostname: 'kkuk-kkuk-stamp-bucket.s3.ap-northeast-2.amazonaws.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        // TODO: 환경변수화
-        protocol: 'https',
-        hostname: 'dnigeyw1tszed.cloudfront.net',
-        port: '',
-        pathname: '/**',
+        protocol: 'http',
+        hostname: 'localhost',
       },
       {
         // 더미 이미지 서버

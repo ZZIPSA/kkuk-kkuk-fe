@@ -22,7 +22,6 @@ export class S3Manager {
    * @param newKey 복사된 객체의 S3 key
    */
   private async copyObject(targetKey: string, newKey: string) {
-    // TODO: 커맨드 생성 및 실행 함수 분리
     const copyCommand = new CopyObjectCommand({
       CopySource: `${BUCKET_NAME}/${targetKey}`,
       Bucket: BUCKET_NAME,
@@ -41,7 +40,7 @@ export class S3Manager {
    * @param targetKey 이동할 객체의 S3 key
    * @param destinationKey 객체가 이동될 목표 S3 key
    */
-  private async moveObject(targetKey: string, destinationKey: string): Promise<string> {
+  private async moveObject(targetKey: string, destinationKey: string) {
     const deleteCommand = new DeleteObjectCommand({
       Bucket: BUCKET_NAME,
       Key: targetKey,
@@ -50,9 +49,6 @@ export class S3Manager {
     try {
       await this.copyObject(targetKey, destinationKey);
       await this.client.send(deleteCommand);
-
-      const objectUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${BASE_KEY}/${destinationKey}`;
-      return objectUrl;
     } catch (err) {
       throw new Error('Error moving object');
     }
@@ -76,16 +72,26 @@ export class S3Manager {
   }
 
   /**
+   *
+   * @param S3 오브젝트의 키
+   * @returns stamp id
+   */
+  extractCuid(key: string): string {
+    const parts = key.split('/');
+    return parts[parts.length - 1];
+  }
+
+  /**
    * 객체에 대한 Presigned URL을 생성
    *
-   * @param fileName 유저가 올린 파일명
+   * @param key 유저가 올린 파일명
    * @param userId 유저 아이디
    * @returns S3 Presigned URL (60초간 유효)
    */
-  async getPresignedUrl(fileName: string, userId: string): Promise<string> {
+  async getPresignedUrl(key: string): Promise<string> {
     const putCommand = new PutObjectCommand({
       Bucket: BUCKET_NAME,
-      Key: `${BASE_KEY}/${userId}/tmp/${fileName}`,
+      Key: `${BASE_KEY}/tmp/${key}`,
       ContentType: 'image/webp',
     });
 
@@ -106,10 +112,11 @@ export class S3Manager {
   async getObjectUrl(key: string): Promise<string> {
     const command = new GetObjectCommand({
       Bucket: BUCKET_NAME,
-      Key: key,
+      Key: `${BASE_KEY}/${key}`,
     });
 
     const signedUrl = await getSignedUrl(this.client, command, { expiresIn: 3600 });
+
     return signedUrl;
   }
   /**
@@ -120,11 +127,16 @@ export class S3Manager {
    * @param newKitId 새로운 키트 ID
    * @returns 새로운 이미지 URL 배열
    */
-  async moveToLongTermStorage(imageUrls: string[], uploaderId: string, newKitId: string) {
+  async moveToLongTermStorage(imageUrls: string[], newKitId: string): Promise<string[]> {
     return Promise.all(
-      imageUrls.map(async (url: string, index: number) => {
+      imageUrls.map(async (url: string) => {
         const targetKey = this.extractS3Key(url);
-        return this.moveObject(targetKey, `${uploaderId}/${newKitId}/${index}`);
+        const stampId = this.extractCuid(targetKey);
+        const newObjectKey = `${newKitId}/${stampId}`;
+
+        await this.moveObject(targetKey, newObjectKey);
+
+        return newObjectKey;
       }),
     );
   }

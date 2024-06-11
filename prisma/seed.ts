@@ -2,6 +2,16 @@ import { PrismaClient, RallyStatus } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+const dummyStamps: { [key: number]: string } = {
+  0: '0000000/oR4DnVh0L-kzPRN_SpTSeG7dAE79IEoXOr-fn0usW1gj-FnjgfM07WVrlNxo54hoBSN8TN3akecyv5mIYY3Y6g.webp',
+  1: '0000000/SEACxsoJS2i1Ieyc_YuBdQEM1ZCgeeCxrt7Yt-FIp_CJhqEp-bOuKb_PIIT647EPRN9nPp9kRxGSl-qnFvixZw.webp',
+  2: '0000000/v0rC3c6NAZgwgNoUaeEU5s692CYSas3aZ_vNM76ef8hpmPPp8gir7FYdI8HJ8wp2KWdUZWWBSIRoa8BB4B1nlQ.webp',
+  3: '0000000/v0rC3c6NAZgwgNoUaeEU5s692CYSas3aZ_vNM76ef8hpmPPp8gir7FYdI8HJ8wp2KWdUZWWBSIRoa8BB4B1nlQ.webp',
+  4: '0000000/v0rC3c6NAZgwgNoUaeEU5s692CYSas3aZ_vNM76ef8hpmPPp8gir7FYdI8HJ8wp2KWdUZWWBSIRoa8BB4B1nlQ.webp',
+  5: '0000000/v0rC3c6NAZgwgNoUaeEU5s692CYSas3aZ_vNM76ef8hpmPPp8gir7FYdI8HJ8wp2KWdUZWWBSIRoa8BB4B1nlQ.webp',
+  6: '0000000/W0PzPa72o5SQPEnxAQSlfLJqlR-f_3GNuimqX9utrXTXiX1x7vaE3j-U-IfdZ5FHSSu7twBIU7YnNCblGlsKLQ.webp',
+};
+
 function generateRandomTag() {
   const possibleTags = [
     '뫄뫄장르',
@@ -76,14 +86,14 @@ async function main() {
         id: String(index + 1).padStart(7, '0'),
         title: `키트 ${index + 1}`,
         description: `${index + 1}번 키트의 설명입니다.`,
-        thumbnailImage: 'https://picsum.photos/360',
-        rewardImage: 'https://picsum.photos/360',
-        blurredImage: 'https://picsum.photos/360',
+        thumbnailImage: dummyStamps[0],
+        rewardImage: dummyStamps[1],
+        blurredImage: dummyStamps[2],
         tags,
         uploaderId: users[Math.floor(Math.random() * users.length)].id,
         stamps: {
           create: Array.from({ length: 6 }, (_, stampIndex) => ({
-            image: 'https://picsum.photos/360',
+            objectKey: dummyStamps[stampIndex],
           })),
         },
       },

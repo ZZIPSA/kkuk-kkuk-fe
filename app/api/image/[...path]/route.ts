@@ -11,10 +11,9 @@ export async function GET(req: NextRequest, { params }: GetProxyParams) {
   const signedUrl = await s3.getObjectUrl(key);
 
   const response = await fetch(signedUrl);
-
   return new NextResponse(response.body, {
     headers: {
-      'Content-Type': response.headers.get('Content-Type') || 'image/webp',
+      'Content-Type': 'image/webp',
       'Cache-Control': 'public, max-age=31536000, immutable',
     },
   });
