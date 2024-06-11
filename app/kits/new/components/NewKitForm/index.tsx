@@ -17,9 +17,8 @@ import Tags from './Tags';
 
 export default function NewKitForm() {
   const [kitId, setKitId] = useState<string>('');
-  const form = useForm<FormValues>({
-    resolver: zodResolver(FormSchema),
-  });
+  const isModalOpen = !!kitId;
+  const form = useForm<FormValues>({ resolver: zodResolver(FormSchema) });
 
   function onSubmit(data: FormValues) {
     // TODO: Handle form submission
@@ -39,15 +38,17 @@ export default function NewKitForm() {
       </form>
 
       {/* TODO: 배포 시 제거 */}
-      <button
-        onClick={() => setKitId((id) => (id ? '' : 'success'))}
-        className="fixed bottom-4 right-4 w-fit bg-teal-400 text-white rounded-xl py-4 z-[51]"
-      >
-        {kitId ? 'close' : 'open'} modal
-      </button>
+      <ModalButtonForTest open={isModalOpen} onClick={() => setKitId((id) => (id ? '' : 'success'))} />
       {/* TODO: 배포 시 제거 */}
 
       <SuccessModal kitId={kitId} open={isModalOpen} />
     </Form>
   );
 }
+
+// TODO: 배포 시 제거
+const ModalButtonForTest = ({ open, onClick }: { open: boolean; onClick: () => void }) => (
+  <button onClick={onClick} className="fixed bottom-4 right-4 w-fit bg-teal-400 text-white rounded-xl py-4 z-[51]">
+    {open ? 'close' : 'open'} modal
+  </button>
+);
