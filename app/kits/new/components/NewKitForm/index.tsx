@@ -47,7 +47,7 @@ export default function NewKitForm() {
       </button>
       {/* TODO: 배포 시 제거 */}
 
-      <SuccessModal kitId={kitId} />
+      <SuccessModal kitId={kitId} open={isModalOpen} />
     </Form>
   );
 }
