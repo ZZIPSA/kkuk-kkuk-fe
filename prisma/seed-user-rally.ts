@@ -36,9 +36,10 @@ async function main() {
     data: Array.from({ length: 20 }, (_, i) => ({
       id: (Number(id) + i + 1).toString().padStart(7, '0'),
       title: `업로드 키트 ${i + 1}`,
+      blurredImage: `https://picsum.photos/360?random=${i}`,
       description: `${i + 1}번 업로드 키트 설명`,
-      thumbnailImage: `https://picsum.photos/${360 + i}`,
-      rewardImage: `https://picsum.photos/${360 + i}`,
+      thumbnailImage: `https://picsum.photos/360?random=${i}`,
+      rewardImage: `https://picsum.photos/360?random=${i}`,
       uploaderId: user.id,
     })),
   });

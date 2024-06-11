@@ -17,8 +17,8 @@ export default function RallyPreview({ stamps }: RallyPreviewProps) {
               kind: i === 6 ? StampKind.reward : StampKind.default,
               owned: false,
             }))
-            .map(({ id, image, status, kind, owned, order }) => (
-              <RallyStamp key={id} id={id} image={image} status={status} kind={kind} owned={owned} order={order} />
+            .map(({ id, objectKey, status, kind, owned, order }) => (
+              <RallyStamp key={id} id={id} objectKey={objectKey} status={status} kind={kind} owned={owned} order={order} />
             ))}
         </div>
       </div>

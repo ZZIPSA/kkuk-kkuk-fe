@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { TextInput, Variants } from './Input';
 
 const meta = {
@@ -7,7 +6,6 @@ const meta = {
   component: TextInput,
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
-  args: { onClick: fn() },
 } satisfies Meta<typeof TextInput>;
 
 export default meta;

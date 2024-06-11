@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { preuploadStamp, preuploadStampWithBlur } from '../api/kits/assets/actions';
+import { convertAndPreupload } from '../api/kits/assets/actions';
 
 // TODO: 유틸로 뺴기
 const arrayBufferToBase64 = (buffer: ArrayBuffer) => {
@@ -35,11 +35,11 @@ const UploadPage = () => {
         const base64File = arrayBufferToBase64(bufferFile);
 
         if (index === 5) {
-          const blurUrl = await preuploadStampWithBlur(base64File, index);
+          const blurUrl = await convertAndPreupload(base64File, true);
           setBlurredUrl(blurUrl);
         }
 
-        const imageUrl = await preuploadStamp(base64File, index);
+        const imageUrl = await convertAndPreupload(base64File, false);
         const newUploadedUrls = [...uploadedUrls];
         newUploadedUrls[index] = imageUrl;
         setUploadedUrls(newUploadedUrls);
@@ -95,6 +95,7 @@ const UploadPage = () => {
 
   return (
     <div>
+      <h1>키트 업로드 테스트 페이지</h1>
       <h1>Upload Kit</h1>
       <input type="text" placeholder="Kit Title" value={kitTitle} onChange={(e) => setKitTitle(e.target.value)} />
       <textarea placeholder="Kit Description" value={kitDescription} onChange={(e) => setKitDescription(e.target.value)} />

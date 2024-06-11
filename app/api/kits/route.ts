@@ -24,10 +24,13 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   // TODO: auth, 필수 항목 검증 미들웨어 구현
-  const { title, description, imageUrls, thumbnailImage, rewardImage, blurredImage, tags, userId: uploaderId } = await request.json();
+  const session = await auth();
+  const user = session?.user;
+  const userId = user?.id;
+  const { title, description, imageUrls, thumbnailImage, rewardImage, blurredImage, tags } = await request.json();
   const s3 = new S3Manager();
 
-  if (!title || !Array.isArray(imageUrls) || !thumbnailImage || !rewardImage || !blurredImage || !uploaderId) {
+  if (!title || !Array.isArray(imageUrls) || !thumbnailImage || !rewardImage || !blurredImage || !userId) {
     return NextResponse.json({ error: '필수 항목을 입력해주세요.' }, { status: 400 });
   }
 
@@ -41,21 +44,23 @@ export async function POST(request: Request) {
   const newKitId = (lastKitId + 1).toString().padStart(7, '0');
 
   try {
-    const newKitUrls = await s3.moveToLongTermStorage([...imageUrls, blurredImage], uploaderId, newKitId);
-
+    const newStampObjectKeys = await s3.moveToLongTermStorage([...imageUrls, blurredImage], newKitId);
     const kit = await prisma.kit.create({
       data: {
         id: newKitId,
         title,
         description,
         stamps: {
-          create: newKitUrls.slice(0, 6).map((url) => ({ image: url })),
+          create: newStampObjectKeys.slice(0, 6).map((objectKey) => ({
+            objectKey,
+            id: s3.extractCuid(objectKey),
+          })),
         },
-        rewardImage: newKitUrls[REWARD_IMAGE_INDEX],
-        thumbnailImage: newKitUrls[THUMBNAIL_IMAGE_INDEX],
-        blurredImage: newKitUrls[BLURRED_IMAGE_INDEX],
+        rewardImage: newStampObjectKeys[REWARD_IMAGE_INDEX],
+        thumbnailImage: newStampObjectKeys[THUMBNAIL_IMAGE_INDEX],
+        blurredImage: newStampObjectKeys[BLURRED_IMAGE_INDEX],
         tags,
-        uploaderId,
+        uploaderId: userId,
       },
     });
 

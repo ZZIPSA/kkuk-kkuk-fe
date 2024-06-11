@@ -1,8 +1,8 @@
 'use server';
 
-import { auth } from '@/auth';
 import { S3Manager } from '@/lib/services/s3';
 import { blurImage, convertToWebP } from '@/lib/sharp';
+import cuid from 'cuid';
 
 // TODO: 유틸로 뺴기
 const base64ToArrayBuffer = (base64: string): ArrayBuffer => {
@@ -16,25 +16,17 @@ const base64ToArrayBuffer = (base64: string): ArrayBuffer => {
 };
 
 /**
- * 하나의 스탬프 단위로 파일을 선업로드
  *
- * @param base64File 유저가 업로드한 스탬프 이미지 파일 (Base64 문자열)
- * @param index 파일 인덱스
- * @returns 업로드 완료된 S3 Presigned URL
+ * @param file 유저가 업로드한 스탬프 이미지 파일
+ * @param applyBlur 블러 처리를 할지 여부
+ * @returns 변환이 완료된 Buffer 파일
  */
-export async function preuploadStamp(base64File: string, index: number): Promise<string> {
-  return await processAndUpload(base64File, false, index);
-}
+async function convertFileWithOption(file: string, applyBlur: boolean): Promise<Buffer> {
+  const arrayBuffer = base64ToArrayBuffer(file);
+  const webpFile = await convertToWebP(arrayBuffer);
+  const convertedFile = applyBlur ? await blurImage(webpFile) : webpFile;
 
-/**
- * 블러 처리 및 webp 변환 후 S3에 업로드
- *
- * @param base64File 유저가 업로드한 스탬프 이미지 파일 (Base64 문자열)
- * @param index 파일 인덱스
- * @returns 업로드 완료된 S3 Presigned URL
- */
-export async function preuploadStampWithBlur(base64File: string, index: number): Promise<string> {
-  return await processAndUpload(base64File, true, index);
+  return convertedFile;
 }
 
 /**
@@ -45,14 +37,12 @@ export async function preuploadStampWithBlur(base64File: string, index: number):
  * @param index 파일 인덱스
  * @returns 업로드 완료된 S3 Presigned URL
  */
-async function processAndUpload(file: string, applyBlur: boolean, index: number): Promise<string> {
+export async function convertAndPreupload(file: string, applyBlur: boolean): Promise<string> {
   if (!file) throw new Error('올바른 파일을 업로드 해주세요.');
 
-  const arrayBuffer = base64ToArrayBuffer(file);
-  const webpFile = await convertToWebP(arrayBuffer);
-  const convertedFile = applyBlur ? await blurImage(webpFile) : webpFile;
-  const lastIndex = (applyBlur ? index + 1 : index).toString();
-  const presignedUrl = await getPresignedUrl(lastIndex);
+  const stampId = cuid();
+  const convertedFile = await convertFileWithOption(file, applyBlur);
+  const presignedUrl = await getPresignedUrl(stampId);
 
   await uploadWebp(convertedFile, presignedUrl);
 
@@ -62,17 +52,12 @@ async function processAndUpload(file: string, applyBlur: boolean, index: number)
 /**
  * S3 Presigned URL 취득
  *
- * @param fileName 업로드할 파일 이름
+ * @param key 업로드할 파일의 S3 key
  * @returns Presigned URL
  */
-async function getPresignedUrl(fileName: string): Promise<string> {
-  const session = await auth();
-  const currentUser = session?.user;
-
-  if (!currentUser?.id) throw new Error('');
-
+async function getPresignedUrl(key: string): Promise<string> {
   const s3 = new S3Manager();
-  const presignedUrl = s3.getPresignedUrl(fileName, currentUser.id);
+  const presignedUrl = s3.getPresignedUrl(key);
 
   return presignedUrl;
 }

@@ -3,14 +3,14 @@ import { kitSelect, prisma } from '@/lib/prisma';
 import { auth } from '@/auth';
 
 // TODO: MVP 이후 페이지네이션 구현
-export async function GET() {
-  const session = await auth();
-  const currentUser = session?.user;
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get('userId');
 
-  if (!currentUser) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 401 });
+  if (!userId) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 401 });
 
   const data = await prisma.kit.findMany({
-    where: { uploaderId: currentUser.id },
+    where: { uploaderId: userId },
     select: kitSelect,
   });
 
