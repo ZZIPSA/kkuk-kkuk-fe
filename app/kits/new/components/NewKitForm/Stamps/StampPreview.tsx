@@ -1,9 +1,13 @@
-import { Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 import { Trash } from '@/lib/icons';
+import { StampsField } from '../types';
 import { stampPreviewStyles, stampPreviewImageStyles, stampTrashIconStyles } from './styles';
 
-export default function StampPreview({ file, setFile }: { file: File; setFile: Dispatch<SetStateAction<File | undefined>> }) {
+interface StampPreviewProps {
+  index: number;
+  field: StampsField;
+}
+export default function StampPreview({ index, field }: StampPreviewProps) {
   return (
     <div className={stampPreviewStyles}>
       <Image src={URL.createObjectURL(file)} className={stampPreviewImageStyles} alt={file.name} fill sizes="360" priority />
