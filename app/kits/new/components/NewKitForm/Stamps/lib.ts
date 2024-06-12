@@ -13,6 +13,8 @@ import {
   stampInputLabelStyles,
 } from './styles';
 
+export const defaultValues = { stamps: Array.from({ length: 6 }, () => ({ url: '' })) };
+
 export const getStampLabelStyles = (isFirst: boolean, isLast: boolean) =>
   cn(stampInputLabelStyles, {
     [defaultStampStyles]: !(isLast || isFirst),
