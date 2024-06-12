@@ -1,4 +1,6 @@
 import { cn } from '@/lib/utils';
+import { StampsField } from '../types';
+import { preupload } from './actions';
 import {
   stampSpanStyles,
   defaultStampSpanStyles,
@@ -12,7 +14,6 @@ import {
   lastStampStyles,
   stampInputLabelStyles,
 } from './styles';
-import { StampsField } from '../types';
 
 export const defaultValues = { stamps: Array.from({ length: 6 }, () => ({ url: '' })) };
 
@@ -25,6 +26,20 @@ export const getFormData = (file: File) => {
 export const removeButtonHandler = (field: StampsField, index: number) => (e: MouseEvent) => {
   e.preventDefault();
   field.update(index, { url: '', blob: '' });
+};
+
+export const stampInputHandler = (field: StampsField, index: number) => async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0]; // 파일 추출
+  if (file) {
+    const blob = URL.createObjectURL(file); // 블롭 생성
+    field.update(index, { url: blob, blob }); // 임시로 블롭을 저장
+    try {
+      const url = await preupload(getFormData(file)); // FormData 화해서 S3에 업로드
+      field.update(index, { url, blob }); // S3 URL로 업데이트
+    } catch (error) {
+      alert(`${index + 1} 번째 파일을 업로드 하지 못했습니다.`);
+    }
+  }
 };
 
 export const getStampLabelStyles = (isFirst: boolean, isLast: boolean) =>
