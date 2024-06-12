@@ -14,21 +14,11 @@ export default async function JoinsPage() {
     <article className="px-4 py-6 grid grid-cols-2 gap-x-2 gap-y-4">
       {rallies
         .filter(({ status }) => status === RallyStatus.active)
-        .map(
-          ({
-            id,
-            stampCount,
-            kit: {
-              thumbnailImage,
-              title,
-              _count: { stamps },
-            },
-          }) => (
-            <Link key={id} href={`/rallies/${id}`}>
-              <RallyCard stampCount={stampCount} thumbnailImage={thumbnailImage} title={title} stamps={stamps} />
-            </Link>
-          ),
-        )}
+        .map(({ id, stampCount, kit: { thumbnailImage, title, stamps } }) => (
+          <Link key={id} href={`/rallies/${id}`}>
+            <RallyCard stampCount={stampCount} thumbnailImage={thumbnailImage} title={title} stamps={stamps} />
+          </Link>
+        ))}
     </article>
   );
 }
