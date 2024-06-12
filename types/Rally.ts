@@ -1,3 +1,5 @@
+import { Prisma } from '@prisma/client';
+import { rallySelect } from '@/lib/prisma';
 import { KitModel, RallyModel, UserModel } from './models';
 export { RallyStatus } from './models';
 
@@ -9,12 +11,10 @@ export type RallyInfo = Pick<RallyModel, 'id' | 'title' | 'description' | 'statu
   RallyStarter &
   RallyKit;
 
-export interface MyRally extends Pick<RallyModel, 'id' | 'status' | 'stampCount' | 'updatedAt'> {
-  kit: Pick<RallyModel['kit'], 'thumbnailImage' | 'title'> & { _count: { stamps: number } };
-}
+export type MyRally = Prisma.RallyGetPayload<{ where: { starterId: string }; select: typeof rallySelect }>;
 
 export interface JoinedRally extends MyRally {
-  kit: MyRally['kit'] & { _count: { stamps: number } };
+  kit: MyRally['kit'];
   stampCount: number;
 }
 

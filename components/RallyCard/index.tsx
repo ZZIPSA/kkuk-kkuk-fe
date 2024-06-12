@@ -5,22 +5,24 @@ import { MyRally, JoinedRally, CompletedRally } from '@/types/Rally';
 
 type RallyCardProps = Pick<MyRally['kit'], 'thumbnailImage' | 'title'> &
   Partial<Pick<CompletedRally, 'updatedAt'>> &
-  Partial<Pick<JoinedRally['kit']['_count'], 'stamps'>> &
+  Partial<Pick<JoinedRally['kit'], 'stamps'>> &
   Partial<Pick<JoinedRally, 'stampCount'>>;
 
-export default function RallyCard({ thumbnailImage: thumb, title, stamps: total, stampCount: count, updatedAt: completedAt }: RallyCardProps) {
+export default function RallyCard({ thumbnailImage: thumb, title, stamps, stampCount: count, updatedAt: completedAt }: RallyCardProps) {
   thumb ??= DEFAULT_KIT_THUMBNAIL;
+  const total = stamps?.length;
   const intl = new Intl.DateTimeFormat('ko-KR', { dateStyle: 'short' });
 
   return (
     <Card className="border-0 shadow-none flex flex-col gap-2">
-      <CardHeader className="p-0">
+      <CardHeader className="p-0 relative aspect-square">
         <Image
           src={encodeURI(`${process.env.API_URL}/api/image/${thumb}`)}
           alt={title}
-          width={100}
-          height={100}
-          className="border-black/20 border rounded-md aspect-square w-full h-full object-cover"
+          className="border-black/20 border rounded-md w-full h-full object-cover"
+          fill
+          sizes="360"
+          priority
         />
       </CardHeader>
       <CardContent className="p-0">

@@ -36,10 +36,10 @@ async function main() {
     data: Array.from({ length: 20 }, (_, i) => ({
       id: (Number(id) + i + 1).toString().padStart(7, '0'),
       title: `업로드 키트 ${i + 1}`,
-      blurredImage: `https://picsum.photos/360?random=${i}`,
+      blurredImage: '0000000/oR4DnVh0L-kzPRN_SpTSeG7dAE79IEoXOr-fn0usW1gj-FnjgfM07WVrlNxo54hoBSN8TN3akecyv5mIYY3Y6g.webp',
       description: `${i + 1}번 업로드 키트 설명`,
-      thumbnailImage: `https://picsum.photos/360?random=${i}`,
-      rewardImage: `https://picsum.photos/360?random=${i}`,
+      thumbnailImage: '0000000/oR4DnVh0L-kzPRN_SpTSeG7dAE79IEoXOr-fn0usW1gj-FnjgfM07WVrlNxo54hoBSN8TN3akecyv5mIYY3Y6g.webp',
+      rewardImage: '0000000/oR4DnVh0L-kzPRN_SpTSeG7dAE79IEoXOr-fn0usW1gj-FnjgfM07WVrlNxo54hoBSN8TN3akecyv5mIYY3Y6g.webp',
       uploaderId: user.id,
     })),
   });

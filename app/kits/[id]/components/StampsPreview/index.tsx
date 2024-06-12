@@ -15,6 +15,8 @@ export default function StampsPreview({ stamps }: StampPreviewProps) {
               fill
               alt="Stamp"
               className="rounded-lg aspect-square object-cover"
+              sizes="240"
+              priority
             />
           </div>
         ))}
