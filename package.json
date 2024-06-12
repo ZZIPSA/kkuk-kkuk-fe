@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build  && prisma generate && yarn add sharp --ignore-engines",
+    "dev:clean": "rm -rf .next/ && next dev",
+    "build": "yarn add sharp --ignore-engines && prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
