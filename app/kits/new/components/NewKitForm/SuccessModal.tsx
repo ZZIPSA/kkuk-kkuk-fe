@@ -8,10 +8,8 @@ export default function SuccessModal({ kitId, open }: { kitId: string; open: boo
   return (
     <Modal open={open}>
       <Paw width={72} height={72} />
-      <p>
-        <h2 className={styles.title}>키트가 만들어졌어요!</h2>
-        이제 친구와 스탬프 랠리가 가능합니다!
-      </p>
+      <h2 className={styles.title}>키트가 만들어졌어요!</h2>
+      <p>이제 친구와 스탬프 랠리가 가능합니다!</p>
       <hr className={styles.hr} />
       <Buttons kitId={kitId} />
     </Modal>
@@ -44,7 +42,7 @@ function Buttons({ kitId }: { kitId: string }) {
 }
 
 const styles = {
-  title: 'pb-2 text-xl font-bold text-foreground',
+  title: 'text-xl font-bold text-foreground',
   hr: 'border-0.5 w-full',
   grid: 'grid grid-cols-2 gap-y-4 gap-x-2 w-full text-center',
   span: 'col-span-2',
