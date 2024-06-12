@@ -10,4 +10,6 @@ export interface FormFields {
 
 export interface StampsField {
   ({ control, stampsRef }: { control: Control<z.infer<typeof FormSchema>>; stampsRef: UseFormRegisterReturn<'stamps'> }): JSX.Element;
+export interface FormFieldsProps {
+  control: Control<FormValues>;
 }
