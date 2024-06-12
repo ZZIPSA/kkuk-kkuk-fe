@@ -15,12 +15,13 @@ export default function StampInput({ index, total, field }: StampInputProps) {
   const [file, setFile] = useState<File>();
   const isFirst = index === 0;
   const isLast = index === total;
-  const isEmpty = file === undefined;
+  const isUploaded = field.fields[index].url;
+  const isEmpty = isUploaded === '';
 
   return (
     <label className={getStampLabelStyles(isFirst, isLast)}>
       <span className={getStampSpanStyles(isFirst, isLast, isEmpty)}>{getStampSpanContents(index, total)}</span>
-      {file !== undefined ? <StampPreview file={file} setFile={setFile} /> : <EmptyStamp index={index} total={total} />}
+      {isUploaded ? <StampPreview index={index} field={field} /> : <EmptyStamp index={index} total={total} />}
       <input type="file" accept="image/*" hidden onChange={(e) => setFile(e.target.files?.[0])} />
     </label>
   );
