@@ -1,6 +1,3 @@
-'use client';
-
-import { useState } from 'react';
 import { StampsField } from '../types';
 import { getStampLabelStyles, getStampSpanStyles, getStampSpanContents, stampInputHandler } from './lib';
 import StampPreview from './StampPreview';
@@ -12,7 +9,6 @@ interface StampInputProps {
   field: StampsField;
 }
 export default function StampInput({ index, total, field }: StampInputProps) {
-  const [file, setFile] = useState<File>();
   const isFirst = index === 0;
   const isLast = index === total;
   const isUploaded = field.fields[index].url;
