@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { ACCEPTED_IMAGE_TYPES, MAX_STAMP_SIZE } from './constants';
 
 /**
  * https://github.com/ZZIPSA/kkuk-kkuk-fe/wiki/Specs
@@ -23,19 +22,10 @@ export const FormSchema = z.object({
       .regex(/^[\w-_]+$/, { message: '태그는 밑줄(_)과 하이픈(-)만 사용할 수 있습니다.' }),
   ),
   stamps: z
-    .unknown()
-    .transform((value) => value as FileList | null | undefined)
-    .refine((files): files is FileList => (files ?? false) && true, {
-      message: '스탬프를 업로드해주세요.',
+    .object({
+      url: z.string(),
+      blob: z.string(),
     })
-    .transform((files) => Array.from(files))
-    .refine((files) => files.length === 6, {
-      message: '6개의 이미지를 업로드해주세요.',
-    })
-    .refine((files) => files.every((file) => file.size <= MAX_STAMP_SIZE), {
-      message: '150KB 이하의 파일을 업로드해주세요.',
-    })
-    .refine((files) => files.every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type)), {
-      message: '이미지 파일을 업로드해주세요.',
-    }),
+    .array()
+    .length(6),
 });
