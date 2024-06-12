@@ -49,6 +49,6 @@ export default function NewKitForm() {
 // TODO: 배포 시 제거
 const ModalButtonForTest = ({ open, onClick }: { open: boolean; onClick: () => void }) => (
   <button onClick={onClick} className="fixed bottom-4 right-4 w-fit bg-teal-400 text-white rounded-xl py-4 z-[51]">
-    {open ? 'close' : 'open'} modal
+    toggle modal
   </button>
 );
