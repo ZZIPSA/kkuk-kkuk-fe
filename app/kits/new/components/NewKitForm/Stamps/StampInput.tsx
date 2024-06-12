@@ -1,11 +1,17 @@
 'use client';
 
 import { useState } from 'react';
+import { StampsField } from '../types';
 import StampPreview from './StampPreview';
 import EmptyStamp from './EmptyStamp';
 import { getStampLabelStyles, getStampSpanStyles, getStampSpanContents } from './lib';
 
-export default function StampInput({ index, total }: { index: number; total: number }) {
+interface StampInputProps {
+  index: number;
+  total: number;
+  field: StampsField;
+}
+export default function StampInput({ index, total, field }: StampInputProps) {
   const [file, setFile] = useState<File>();
   const isFirst = index === 0;
   const isLast = index === total;
