@@ -12,22 +12,23 @@ import Stamps from './Stamps';
 import Title from './Title';
 import Description from './Description';
 import Tags from './Tags';
+import { defaultValues } from './Stamps/lib';
 
 export default function NewKitForm() {
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
+    defaultValues,
   });
 
   function onSubmit(data: FormValues) {
     // TODO: Handle form submission
     console.log(data);
   }
-  const stampsRef = form.register('stamps');
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6">
-        <Stamps control={form.control} stampsRef={stampsRef} />
+        <Stamps control={form.control} />
         <Title control={form.control} />
         <Tags control={form.control} />
         <Description control={form.control} />
