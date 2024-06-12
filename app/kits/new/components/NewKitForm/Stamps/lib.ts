@@ -15,6 +15,12 @@ import {
 
 export const defaultValues = { stamps: Array.from({ length: 6 }, () => ({ url: '' })) };
 
+export const getFormData = (file: File) => {
+  const form = new FormData();
+  form.append('file', file);
+  return form;
+};
+
 export const getStampLabelStyles = (isFirst: boolean, isLast: boolean) =>
   cn(stampInputLabelStyles, {
     [defaultStampStyles]: !(isLast || isFirst),
