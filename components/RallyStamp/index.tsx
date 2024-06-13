@@ -22,7 +22,7 @@ export function RallyStamp({ objectKey, status, kind, owned, order }: StampProps
 
   return (
     <div className={cn(styles.container, `order-${order}`)}>
-      <Image fill src={encodeURI(`${process.env.API_URL}/api/image/${objectKey}`)} alt="Stamp" sizes="360" className={styles.image} />
+      <Image fill src={encodeURI(`${process.env.API_URL}/api/image/${objectKey}`)} alt="Stamp" sizes="360" className={styles.image} priority />
       {is.icon.gift && <div className={styles.giftBackground} />}
       {is.icon.check && <Check className={styles.check} />}
       {is.icon.gift && <Gift className={styles.gift} />}

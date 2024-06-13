@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma, rallySelect } from '@/lib/prisma';
+import { MyRally } from '@/types/Rally';
 
 // TODO: MVP 이후 페이지네이션, 파람 구현
 export async function GET(request: Request) {
@@ -9,7 +10,7 @@ export async function GET(request: Request) {
   if (!userId) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 401 });
 
   try {
-    const rallies = await prisma.rally.findMany({ where: { starterId: userId }, select: rallySelect });
+    const rallies = (await prisma.rally.findMany({ where: { starterId: userId }, select: rallySelect })) satisfies MyRally[];
 
     return NextResponse.json({
       data: rallies,
