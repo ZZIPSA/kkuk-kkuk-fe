@@ -2,15 +2,15 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { Form } from '@/components/ui/form';
 import { Button } from '@/stories/Button';
 import formSchema from './schema';
+import type { FormValues } from './types';
 import TitleField from './TitleField';
 import DescriptionField from './DescriptionField';
 
 export default function RallyStartForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: '',
@@ -18,7 +18,7 @@ export default function RallyStartForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: FormValues) {
     console.log(values);
   }
   return (
