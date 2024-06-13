@@ -10,11 +10,11 @@ export default function RallyPreview({ stamps }: RallyPreviewProps) {
       <div className={styles.background}>
         <div className={styles.stamps}>
           {stamps
-            .map((e, i) => ({
+            .map((e, i, { length }) => ({
               ...e,
               order: i,
               status: i === 0 ? StampStatus.checked : i === 1 ? StampStatus.checkable : StampStatus.uncheckable,
-              kind: i === 6 ? StampKind.reward : StampKind.default,
+              kind: i === length - 1 ? StampKind.reward : StampKind.default,
               owned: false,
             }))
             .map(({ id, objectKey, status, kind, owned, order }) => (
