@@ -11,7 +11,7 @@ export const rallyInfoStyles = {
 export const rallyStampsStyles = {
   container: 'font-bold',
   title: 'pb-6',
-  stamps: 'bg-rally-route bg-contain bg-center bg-no-repeat grid grid-cols-3 auto-rows-auto gap-y-6 gap-x-2',
+  stamps: 'bg-rally-route bg-contain bg-center bg-no-repeat gap-y-6 gap-x-2 snake-3',
 };
 
 export const rallyFooterStyles = {

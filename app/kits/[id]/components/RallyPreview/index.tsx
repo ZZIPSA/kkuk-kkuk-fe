@@ -28,5 +28,5 @@ const styles = {
   container: 'bg-grey-50 border-t border-grey-200 px-4 py-6 flex flex-col gap-6',
   title: 'font-bold',
   background: 'bg-white p-6 rounded-2xl',
-  stamps: 'bg-rally-route bg-contain bg-center bg-no-repeat grid grid-cols-3 auto-rows-auto gap-y-6 gap-x-2',
+  stamps: 'bg-rally-route bg-contain bg-center bg-no-repeat gap-y-6 gap-x-2 snake-3',
 };
