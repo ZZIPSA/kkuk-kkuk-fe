@@ -8,7 +8,7 @@ export default function MenuTabs() {
   const path = usePathname();
 
   return (
-    <section className={styles}>
+    <section className={styles.container}>
       {items.map(({ label, href }) => (
         <MenuTab key={href} label={label} href={href} path={path} />
       ))}
@@ -16,4 +16,4 @@ export default function MenuTabs() {
   );
 }
 
-const styles = 'flex w-full justify-stretch border-b border-gray-200 pt-2 sticky top-0';
+const styles = { container: 'flex w-full justify-stretch border-b border-gray-200 pt-2 sticky top-0' };
