@@ -32,7 +32,7 @@ export const stampInputHandler = (field: StampsField, index: number) => async (e
   const file = e.target.files?.[0]; // 파일 추출
   if (file) {
     const blob = URL.createObjectURL(file); // 블롭 생성
-    field.update(index, { url: '', blob }); // 임시로 블롭을 저장
+    field.update(index, { url: blob, blob }); // 임시로 블롭을 저장
     try {
       const url = await preupload(getFormData(file)); // FormData 화해서 S3에 업로드
       field.update(index, { url, blob }); // S3 URL로 업데이트
