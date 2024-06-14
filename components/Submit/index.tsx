@@ -17,6 +17,5 @@ export default function Submit<FormValues extends ZodType<any, any, any>>({ chil
   );
 }
 const styles = {
-  button: 'bg-primary w-full',
-  pencilPlus: 'fill-white',
+  button: 'w-full',
 };
