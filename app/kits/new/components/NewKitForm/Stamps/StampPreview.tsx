@@ -3,6 +3,7 @@ import { Trash } from '@/lib/icons';
 import { StampsField } from '../types';
 import { removeButtonHandler } from './lib';
 import { stampPreviewStyles, stampPreviewImageStyles, stampTrashIconStyles, stampDeleteButtonStyles } from './styles';
+import { Loading as LoadingSpinner } from '@/components/ui/loading';
 
 interface StampPreviewProps {
   index: number;
@@ -23,3 +24,10 @@ export default function StampPreview({ index, field }: StampPreviewProps) {
     </div>
   );
 }
+
+export const Loading = () => (
+  <>
+    <div className="absolute size-full inset-0 bg-background/50" />
+    <LoadingSpinner className="absolute size-full stroke-background" />
+  </>
+);
