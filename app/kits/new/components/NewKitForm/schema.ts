@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ACCEPTED_IMAGE_TYPES, MAX_STAMP_SIZE } from './constants';
+import { MAXIMUM_TAGS } from '@/lib/constants';
 
 /**
  * https://github.com/ZZIPSA/kkuk-kkuk-fe/wiki/Specs
@@ -23,7 +24,8 @@ export const FormSchema = z.object({
         .max(10, { message: '태그는 10자를 넘을 수 없습니다.' })
         .regex(/^[\w-_]+$/, { message: '태그는 밑줄(_)과 하이픈(-)만 사용할 수 있습니다.' }),
     })
-    .array(),
+    .array()
+    .max(MAXIMUM_TAGS, { message: '태그는 최대 6개까지 입력할 수 있습니다.' }),
   stamps: z
     .unknown()
     .transform((value) => value as FileList | null | undefined)
