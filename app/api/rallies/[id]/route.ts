@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
-import { prisma, rallySelect } from '@/lib/prisma';
+import { prisma, rallySelect } from '@/app/api/lib/prisma';
 import { RallyStatus } from '@prisma/client';
 
 type getRallyParams = { params: { id: string } };

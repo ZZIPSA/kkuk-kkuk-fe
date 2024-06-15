@@ -71,6 +71,19 @@
   }
 }
 
+.snake-3 {
+  @apply grid grid-flow-dense;
+  & > :nth-child(6n + 6) {
+    grid-column: 1;
+  }
+  & > :nth-child(6n + 5) {
+    grid-column: 2;
+  }
+  & > :nth-child(6n + 4) {
+    grid-column: 3;
+  }
+}
+
 .required {
   @apply before:content-['*'] before:text-primary;
 }

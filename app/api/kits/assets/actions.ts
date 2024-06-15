@@ -1,5 +1,6 @@
 'use server';
 
+// TODO: 키트로직 완료 후 삭제
 import { S3Manager } from '@/lib/services/s3';
 import { blurImage, convertToWebP } from '@/lib/sharp';
 import cuid from 'cuid';

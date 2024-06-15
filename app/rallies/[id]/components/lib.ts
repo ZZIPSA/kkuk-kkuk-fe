@@ -22,7 +22,6 @@ export const addStampPropsByIndex =
   ({ owned, stampCount: count, total, isStampedToday }: RallyStampsInfo) =>
   (stamp: RallyPreviewStamp, index: number) => ({
     ...stamp,
-    order: index,
     status: getStampStatus({ isStampedToday, index, count }),
     kind: getStampKind(index, total),
     owned,

@@ -2,15 +2,15 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { Form } from '@/components/ui/form';
-import { Button } from '@/stories/Button';
 import formSchema from './schema';
+import type { FormValues } from './types';
 import TitleField from './TitleField';
 import DescriptionField from './DescriptionField';
+import SubmitButton from './Submit';
 
 export default function RallyStartForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: '',
@@ -18,7 +18,7 @@ export default function RallyStartForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: FormValues) {
     console.log(values);
   }
   return (
@@ -26,7 +26,7 @@ export default function RallyStartForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-15">
         <TitleField control={form.control} />
         <DescriptionField control={form.control} />
-        <Button label="랠리 시작하기" type="submit" className="w-full" />
+        <SubmitButton state={form.formState} />
       </form>
     </Form>
   );
