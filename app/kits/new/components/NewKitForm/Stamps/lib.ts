@@ -23,8 +23,7 @@ export const getFormData = (file: File) => {
   return form;
 };
 
-export const removeButtonHandler = (field: StampsField, index: number) => (e: MouseEvent) => {
-  e.preventDefault();
+export const removeButtonHandler = (field: StampsField, index: number) => (e: React.MouseEvent<HTMLButtonElement>) => {
   field.update(index, { url: '', blob: '' });
 };
 
