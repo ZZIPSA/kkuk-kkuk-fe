@@ -8,7 +8,7 @@ import { Form } from '@/components/ui/form';
 
 import { defaultValues } from './lib';
 import { FormValues } from './types';
-import { FormSchema } from './schema';
+import { formSchema } from './schema';
 import Description from './Description';
 import Stamps from './Stamps';
 import SuccessModal from './SuccessModal';
@@ -20,7 +20,7 @@ export default function NewKitForm() {
   const [kitId, setKitId] = useState<string>('');
   const isModalOpen = !!kitId;
   const form = useForm<FormValues>({
-    resolver: zodResolver(FormSchema),
+    resolver: zodResolver(formSchema),
     mode: 'onChange',
     reValidateMode: 'onChange',
     defaultValues,

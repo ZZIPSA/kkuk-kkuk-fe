@@ -8,7 +8,7 @@ import { MAXIMUM_TAGS } from '@/lib/constants';
  *  설명 : 공백포함 0~200자
  *  태그 : 공백미포함 2~10자 / 공백불가 / 밑줄(_), 하이픈(-)만 사용가능 / 최대 6개?까지
  */
-export const FormSchema = z.object({
+export const formSchema = z.object({
   title: z
     .string()
     .min(1, { message: '이름을 입력해주세요.' })
