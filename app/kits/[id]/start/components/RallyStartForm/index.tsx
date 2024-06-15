@@ -7,7 +7,7 @@ import formSchema from './schema';
 import type { FormValues } from './types';
 import TitleField from './TitleField';
 import DescriptionField from './DescriptionField';
-import Submit from './Submit';
+import SubmitButton from './Submit';
 
 export default function RallyStartForm() {
   const form = useForm<FormValues>({
@@ -26,7 +26,7 @@ export default function RallyStartForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-15">
         <TitleField control={form.control} />
         <DescriptionField control={form.control} />
-        <Submit state={form.formState} />
+        <SubmitButton state={form.formState} />
       </form>
     </Form>
   );
