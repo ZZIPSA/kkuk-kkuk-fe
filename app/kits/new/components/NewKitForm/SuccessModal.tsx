@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { LinkIcon } from 'lucide-react';
 import { Paw } from '@/lib/icons';
 import Modal from '@/components/Modal';
-import { copyToClipboard, getTwitterShareLink } from '@/components/Modal/lib';
+import { copyButtonHandler, getTwitterShareLink } from '@/components/Modal/lib';
 
 export default function SuccessModal({ kitId, open }: { kitId: string; open: boolean }) {
   return (
@@ -25,7 +25,7 @@ function Buttons({ kitId }: { kitId: string }) {
         {/* 트위터 공유 버튼 */}
         𝕏
       </Link>
-      <button onClick={copyToClipboard(path)} className={styles.button}>
+      <button onClick={copyButtonHandler(path)} className={styles.button}>
         {/* 링크 복사 버튼 */}
         <LinkIcon width={24} height={24} className="m-auto" />
       </button>
