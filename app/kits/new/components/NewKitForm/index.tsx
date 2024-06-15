@@ -14,6 +14,7 @@ import Tags from './Tags';
 import Submit from './Submit';
 import Title from './Title';
 import { FormValues } from './types';
+import { defaultValues } from './Stamps/lib';
 
 export default function NewKitForm() {
   const [kitId, setKitId] = useState<string>('');
@@ -22,6 +23,7 @@ export default function NewKitForm() {
     resolver: zodResolver(FormSchema),
     mode: 'onChange',
     reValidateMode: 'onChange',
+    defaultValues,
   });
 
   function onSubmit(data: FormValues) {
@@ -29,12 +31,11 @@ export default function NewKitForm() {
     console.log(data);
     setKitId('success');
   }
-  const stampsRef = form.register('stamps');
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6">
-        <Stamps control={form.control} stampsRef={stampsRef} />
+        <Stamps control={form.control} />
         <Title control={form.control} />
         <Tags control={form.control} />
         <Description control={form.control} />

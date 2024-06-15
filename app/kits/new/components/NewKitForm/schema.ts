@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { ACCEPTED_IMAGE_TYPES, MAX_STAMP_SIZE } from './constants';
 import { MAXIMUM_TAGS } from '@/lib/constants';
 
 /**
@@ -28,19 +27,10 @@ export const FormSchema = z.object({
     .max(MAXIMUM_TAGS, { message: '태그는 최대 6개까지 입력할 수 있습니다.' })
     .optional(),
   stamps: z
-    .unknown()
-    .transform((value) => value as FileList | null | undefined)
-    .refine((files): files is FileList => (files ?? false) && true, {
-      message: '스탬프를 업로드해주세요.',
+    .object({
+      url: z.string(),
+      blob: z.string(),
     })
-    .transform((files) => Array.from(files))
-    .refine((files) => files.length === 6, {
-      message: '6개의 이미지를 업로드해주세요.',
-    })
-    .refine((files) => files.every((file) => file.size <= MAX_STAMP_SIZE), {
-      message: '150KB 이하의 파일을 업로드해주세요.',
-    })
-    .refine((files) => files.every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type)), {
-      message: '이미지 파일을 업로드해주세요.',
-    }),
+    .array()
+    .length(6),
 });
