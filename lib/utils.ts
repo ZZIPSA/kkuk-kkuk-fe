@@ -7,5 +7,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function addDomain(path: string) {
-  return DOMAIN + path.startsWith('/') ? path : `/${path}`;
+  const domain = DOMAIN ?? window.location.origin;
+  return `${domain}${path.startsWith('/') ? path : `/${path}`}`;
 }
