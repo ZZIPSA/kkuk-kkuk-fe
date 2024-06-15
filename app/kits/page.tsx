@@ -13,7 +13,7 @@ async function fetchKits(): Promise<KitCardInfo[]> {
 
   const json = await response.json();
   const { data } = json;
-
+  console.log('kits', data);
   return data;
 }
 

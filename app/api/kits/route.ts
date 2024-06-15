@@ -18,6 +18,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ data: kits, meta: { totalKits } });
     }
   } catch (error) {
+    console.log('kits api error: ', error);
     return NextResponse.json({ error: '서버 에러가 발생했습니다.' }, { status: 500 });
   }
 }
