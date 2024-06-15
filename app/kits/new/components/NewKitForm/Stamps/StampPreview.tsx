@@ -19,6 +19,7 @@ export default function StampPreview({ index, field }: StampPreviewProps) {
       <button onClick={removeButtonHandler(field, index)} className={stampDeleteButtonStyles}>
         <Trash className={stampTrashIconStyles} />
       </button>
+      {isLoading && <Loading />}
     </div>
   );
 }
