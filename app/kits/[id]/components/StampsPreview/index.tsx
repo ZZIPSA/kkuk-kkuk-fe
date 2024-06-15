@@ -26,5 +26,5 @@ const styles = {
   stamps: 'gap-2 snake-3',
   stamp: 'w-full aspect-square relative',
   image: 'rounded-lg aspect-square object-cover',
-  gift: 'absolute origin-center size-full p-[25%] fill-grey-400',
+  gift: 'absolute origin-center size-full p-[25%] fill-grey-400 bg-background/50 rounded-lg',
 };
