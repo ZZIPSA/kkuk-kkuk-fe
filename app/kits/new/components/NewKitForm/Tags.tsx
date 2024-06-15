@@ -14,7 +14,7 @@ export default function Tags({ control }: FormFieldProps) {
       name="tags"
       render={() => (
         <FormItem>
-          <FormLabel aria-required>태그</FormLabel>
+          <FormLabel>태그</FormLabel>
           <FormControl>
             <Input type="text" className={styles.input} pattern="\S{2,10}" minLength={2} maxLength={10} onKeyDown={handleTagsKeyDown(field)} />
           </FormControl>
