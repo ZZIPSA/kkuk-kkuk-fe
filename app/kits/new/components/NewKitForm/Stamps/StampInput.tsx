@@ -11,13 +11,12 @@ interface StampInputProps {
 export default function StampInput({ index, total, field }: StampInputProps) {
   const isFirst = index === 0;
   const isLast = index === total;
-  const isUploaded = field.fields[index].url;
-  const isEmpty = isUploaded === '';
+  const isFilled = field.fields[index].blob !== '';
 
   return (
-    <label className={getStampLabelStyles(isFirst, isLast)}>
-      <span className={getStampSpanStyles(isFirst, isLast, isEmpty)}>{getStampSpanContents(index, total)}</span>
-      {isUploaded ? <StampPreview index={index} field={field} /> : <EmptyStamp index={index} total={total} />}
+    <label className={getStampLabelStyles(isFirst, isLast)} onClick={(e) => isFilled && e.preventDefault()}>
+      <span className={getStampSpanStyles(isFirst, isLast, isFilled)}>{getStampSpanContents(index, total)}</span>
+      {isFilled ? <StampPreview index={index} field={field} /> : <EmptyStamp index={index} total={total} />}
       <input type="file" accept="image/*" hidden onChange={stampInputHandler(field, index)} />
     </label>
   );
