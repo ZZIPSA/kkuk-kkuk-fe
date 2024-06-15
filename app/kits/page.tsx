@@ -8,6 +8,7 @@ async function fetchKits(): Promise<KitCardInfo[]> {
   });
 
   if (!response.ok) {
+    console.log(response);
     throw new Error('Failed to fetch kits');
   }
 
