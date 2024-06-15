@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { kitSelect, prisma } from '@/lib/prisma';
+import { kitSelect, prisma } from '@/app/api/lib/prisma';
 
 type getKitParams = { params: { id: string } };
 
