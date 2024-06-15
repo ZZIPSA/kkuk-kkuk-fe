@@ -1,6 +1,8 @@
 import { MAXIMUM_TAGS } from '@/lib/constants';
 import { TagsField } from './types';
 
+export const defaultValues = { stamps: Array.from({ length: 6 }, () => ({ url: '', blob: '' })) };
+
 export const handleTagsKeyDown = (field: TagsField) => (e: React.KeyboardEvent<HTMLInputElement>) => {
   e.currentTarget.setCustomValidity(''); // 입력 시 유효성 초기화
   if (e.key === 'Enter') {

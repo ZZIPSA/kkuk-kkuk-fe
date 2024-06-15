@@ -14,7 +14,7 @@ import Tags from './Tags';
 import Submit from './Submit';
 import Title from './Title';
 import { FormValues } from './types';
-import { defaultValues } from './Stamps/lib';
+import { defaultValues } from './lib';
 
 export default function NewKitForm() {
   const [kitId, setKitId] = useState<string>('');
