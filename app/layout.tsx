@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
 import { cn } from '@/lib/utils';
-import NavBar from './components/NavBar';
+import NavBar from '@/components/NavBar';
 import './globals.css';
 import { Toaster } from '@/components/ui/sonner';
 

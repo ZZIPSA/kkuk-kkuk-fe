@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { rallySelect } from '@/lib/prisma';
+import { rallySelect } from '@/app/api/lib/prisma';
 import { KitModel, RallyModel, UserModel } from './models';
 export { RallyStatus } from './models';
 

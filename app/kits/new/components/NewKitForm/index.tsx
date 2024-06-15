@@ -5,13 +5,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Form } from '@/components/ui/form';
-import { PencilPlus } from '@/lib/icons';
 
 import Description from './Description';
 import { FormSchema } from './schema';
 import Stamps from './Stamps';
 import SuccessModal from './SuccessModal';
 import Tags from './Tags';
+import Submit from './Submit';
 import Title from './Title';
 import { FormValues } from './types';
 
@@ -38,9 +38,7 @@ export default function NewKitForm() {
         <Title control={form.control} />
         <Tags control={form.control} />
         <Description control={form.control} />
-        <button type="submit" className="w-full py-4 bg-primary text-white rounded-xl">
-          <PencilPlus className="size-6 fill-white inline" /> 키트 만들기
-        </button>
+        <Submit state={form.formState} />
       </form>
 
       <SuccessModal kitId={kitId} open={isModalOpen} />
