@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma, rallySelect } from '@/lib/prisma';
+import { prisma, rallySelect } from '@/app/api/lib/prisma';
 import { MyRally } from '@/types/Rally';
 
 // TODO: MVP 이후 페이지네이션, 파람 구현
