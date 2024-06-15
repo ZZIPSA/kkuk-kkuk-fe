@@ -4,6 +4,9 @@ export const MY_PAGE_PATH = '/my';
 export const TWITTER_ACCOUNT_ID = '';
 export const DATE_TO_MS = 1000 * 60 * 60 * 24;
 export const MAKING_MESSAGE = '준비 중인 기능입니다';
+export const DOMAIN = process.env.DOMAIN!;
+export const AUTO_TWEET = encodeURI('제가 만든 키트로 릴레이를 시작해보세요!');
+export const AUTO_TWEET_HASHTAGS = '꾹꾹,kookkook';
 
 // TODO: BE 상수 분리
 export const REGION = process.env.AWS_REGION!;
