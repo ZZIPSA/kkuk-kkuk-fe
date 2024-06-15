@@ -1,3 +1,4 @@
+import { MAXIMUM_TAGS } from '@/lib/constants';
 import { TagsField } from './types';
 
 export const handleTagsKeyDown = (field: TagsField) => (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -14,6 +15,8 @@ export const handleTagsKeyDown = (field: TagsField) => (e: React.KeyboardEvent<H
     if (input.validity.patternMismatch) e.currentTarget.setCustomValidity('태그는 공백 없이 2~10자로 입력해주세요.');
     // 입력된 값이 이미 추가된 태그인 경우
     if (field.fields.some((field) => field.name === tag)) e.currentTarget.setCustomValidity('이미 추가된 태그입니다.');
+    // 입력된 태그가 최대 개수를 초과한 경우
+    if (field.fields.length >= MAXIMUM_TAGS) e.currentTarget.setCustomValidity(`태그는 최대 ${MAXIMUM_TAGS}개까지 추가할 수 있습니다.`);
     // 입력된 값이 유효하지 않는 경우 검사 결과 출력
     if (input.validity.valid === false) return e.currentTarget.reportValidity();
     // 입력된 값이 유효한 경우
