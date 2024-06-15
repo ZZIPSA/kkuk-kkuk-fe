@@ -7,8 +7,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 
 import { defaultValues } from './lib';
-import { FormValues } from './types';
 import { formSchema } from './schema';
+import { CreateKitProps, FormValues } from './types';
 import Description from './Description';
 import Stamps from './Stamps';
 import SuccessModal from './SuccessModal';
@@ -26,10 +26,12 @@ export default function NewKitForm() {
     defaultValues,
   });
 
-  function onSubmit(data: FormValues) {
-    // TODO: Handle form submission
-    console.log(data);
-    setKitId('success');
+  async function onSubmit(form: FormValues) {
+    const data = {
+      ...form,
+      stamps: form.stamps.map(({ url }) => url),
+      tags: form.tags.map(({ name }) => name),
+    } satisfies CreateKitProps;
   }
 
   return (
@@ -41,7 +43,6 @@ export default function NewKitForm() {
         <Description control={form.control} />
         <Submit state={form.formState} />
       </form>
-
       <SuccessModal kitId={kitId} open={isModalOpen} />
     </Form>
   );
