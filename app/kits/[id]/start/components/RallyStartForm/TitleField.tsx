@@ -1,10 +1,8 @@
-import type { Control } from 'react-hook-form';
-import type { z } from 'zod';
-import type formSchema from './schema';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { FormFieldProps } from './types';
 
-export default function TitleField({ control }: { control: Control<z.infer<typeof formSchema>> }) {
+export default function TitleField({ control }: FormFieldProps) {
   return (
     <FormField
       control={control}

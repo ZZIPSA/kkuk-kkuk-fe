@@ -12,3 +12,4 @@ export { default as Gift } from '@/assets/gift.svg';
 export { default as TeamLogo } from '@/assets/team-logo.svg';
 export { default as SadCat } from '@/assets/sad-cat.svg';
 export { default as Paw } from '@/assets/paw.svg';
+export { default as PencilPlus } from '@/assets/pencil-plus.svg';
