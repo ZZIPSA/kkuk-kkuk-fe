@@ -10,14 +10,12 @@ interface StampPreviewProps {
   field: StampsField;
 }
 export default function StampPreview({ index, field }: StampPreviewProps) {
-  // TODO: 실제 배포시에는 blob 만 이용
-  // 현재는 S3에 올라가는 것을 확인하기 위해 url을 이용
-  const { url /* blob */ } = field.fields[index];
-  const src = url.startsWith('blob:') ? url : '/api/image/' + url.split('/').slice(4).join('/');
+  const { url, blob } = field.fields[index];
+  const isLoading = blob.length > 0 && url.length === 0;
 
   return (
     <div className={stampPreviewStyles}>
-      <Image src={src} className={stampPreviewImageStyles} alt={`${index + 1}번째 스탬프`} fill sizes="360" priority />
+      <Image src={blob} className={stampPreviewImageStyles} alt={`${index + 1}번째 스탬프`} fill sizes="360" priority />
       <button onClick={removeButtonHandler(field, index)} className={stampDeleteButtonStyles}>
         <Trash className={stampTrashIconStyles} />
       </button>
