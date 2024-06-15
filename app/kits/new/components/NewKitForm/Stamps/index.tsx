@@ -15,8 +15,7 @@ export default function Stamps({ control }: FormFieldsProps) {
           <FormLabel aria-required>스탬프 이미지 등록</FormLabel>
           <FormDescription className={cn('grid grid-cols-2 gap-4')}>
             <span className="col-span-full">
-              1일차에 등록된 이미지는 대표이미지, 6일차에 등록된 이미지는 완주용 보상 이미지로 적용됩니다. 360 x 360px 이하, 150kb 이하의 이미지를
-              등록할 수 있습니다.
+              1일차에 등록된 이미지는 대표이미지, 6일차에 등록된 이미지는 완주용 보상 이미지로 적용됩니다. 권장 사이즈는 360 x 360px 입니다.
             </span>
             {field.fields.map(({ id }, index, { length }) => (
               <StampInput key={id} index={index} total={length - 1} field={field} />
