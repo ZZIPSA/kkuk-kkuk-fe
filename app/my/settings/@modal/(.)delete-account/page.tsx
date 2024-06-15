@@ -37,13 +37,11 @@ function Description() {
 function Buttons() {
   return (
     <div className={styles.buttons}>
-      {buttons
-        .filter(({ key }) => key !== 'delete') // TODO: 기능 완성 후 delete 버튼 활성화(해당 줄 제거)
-        .map(({ key, className, label, href }) => (
-          <Link href={href} key={key} className={className}>
-            {label}
-          </Link>
-        ))}
+      {buttons.map(({ key, className, label, href }) => (
+        <Link href={href} key={key} className={className}>
+          {label}
+        </Link>
+      ))}
     </div>
   );
 }
