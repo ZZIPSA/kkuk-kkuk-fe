@@ -23,4 +23,4 @@ export const stampEmptyStampCirclePlusIconStyles = 'absolute size-5 -bottom-1 -r
 // StampPreview
 export const stampPreviewStyles = 'relative w-full h-full';
 export const stampPreviewImageStyles = 'rounded-2xl aspect-square w-full object-cover bg-background';
-export const stampTrashIconStyles = 'absolute w-8 h-8 right-0.5 bottom-0.5 cursor-pointer';
+export const stampTrashIconStyles = 'w-6 h-6 fill-grey-100';
