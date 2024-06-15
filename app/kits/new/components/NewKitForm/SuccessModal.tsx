@@ -22,19 +22,19 @@ function Buttons({ kitId }: { kitId: string }) {
     <div className={styles.grid}>
       <span className={styles.span}>SNS로 키트 공유</span>
       <Link href={getTwitterShareLink(path)} className={styles.twitter}>
-        {/* 트위터 공유 버튼 */}
+        {/* NOTE: 트위터 공유 버튼 */}
         𝕏
       </Link>
       <button onClick={copyButtonHandler(path)} className={styles.button}>
-        {/* 링크 복사 버튼 */}
+        {/* NOTE: 링크 복사 버튼 */}
         <LinkIcon width={24} height={24} className="m-auto" />
       </button>
       <Link href="/" className={styles.link}>
-        {/* 홈페이지로 이동 */}
+        {/* NOTE: 홈페이지로 이동 */}
         홈으로
       </Link>
       <Link href={path} className={styles.link2}>
-        {/* 키트 페이지로 이동 */}
+        {/* NOTE: 키트 페이지로 이동 */}
         키트 보러가기
       </Link>
     </div>
