@@ -6,15 +6,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Form } from '@/components/ui/form';
 
-import Description from './Description';
+import { defaultValues } from './lib';
+import { FormValues } from './types';
 import { FormSchema } from './schema';
+import Description from './Description';
 import Stamps from './Stamps';
 import SuccessModal from './SuccessModal';
-import Tags from './Tags';
 import Submit from './Submit';
+import Tags from './Tags';
 import Title from './Title';
-import { FormValues } from './types';
-import { defaultValues } from './lib';
 
 export default function NewKitForm() {
   const [kitId, setKitId] = useState<string>('');
