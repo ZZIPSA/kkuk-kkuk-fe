@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { kitSelect, prisma } from '@/lib/prisma';
-import { auth } from '@/auth';
 
 // TODO: MVP 이후 페이지네이션 구현
 export async function GET(request: Request) {

@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/auth';
 import { prisma, kitSelect, userSelect } from '@/lib/prisma';
 
 export async function POST(request: Request) {
