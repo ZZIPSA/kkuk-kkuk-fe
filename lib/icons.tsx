@@ -11,3 +11,4 @@ export { default as CirclePlus } from '@/assets/circle-plus.svg';
 export { default as Gift } from '@/assets/gift.svg';
 export { default as TeamLogo } from '@/assets/team-logo.svg';
 export { default as SadCat } from '@/assets/sad-cat.svg';
+export { default as Paw } from '@/assets/paw.svg';
