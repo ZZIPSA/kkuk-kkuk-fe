@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { Trash } from '@/lib/icons';
 import { StampsField } from '../types';
 import { removeButtonHandler } from './lib';
-import { stampPreviewStyles, stampPreviewImageStyles, stampTrashIconStyles } from './styles';
+import { stampPreviewStyles, stampPreviewImageStyles, stampTrashIconStyles, stampDeleteButtonStyles } from './styles';
 
 interface StampPreviewProps {
   index: number;
@@ -17,7 +17,9 @@ export default function StampPreview({ index, field }: StampPreviewProps) {
   return (
     <div className={stampPreviewStyles}>
       <Image src={src} className={stampPreviewImageStyles} alt={`${index + 1}번째 스탬프`} fill sizes="360" priority />
-      <Trash className={stampTrashIconStyles} onClick={removeButtonHandler} />
+      <button onClick={removeButtonHandler(field, index)} className={stampDeleteButtonStyles}>
+        <Trash className={stampTrashIconStyles} />
+      </button>
     </div>
   );
 }
