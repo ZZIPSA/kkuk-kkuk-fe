@@ -1,6 +1,12 @@
 import { MAXIMUM_TAGS } from '@/lib/constants';
 import { TagsField } from './types';
 
+export const extractImageId = (url: string) => url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
+export const replaceBlurred =
+  (blurred: string) =>
+  (id: string, index: number, { length }: string[]) =>
+    index === length - 1 ? blurred : id;
+
 export const defaultValues = { stamps: Array.from({ length: 6 }, () => ({ url: '', blob: '' })) };
 
 export const handleTagsKeyDown = (field: TagsField) => (e: React.KeyboardEvent<HTMLInputElement>) => {
