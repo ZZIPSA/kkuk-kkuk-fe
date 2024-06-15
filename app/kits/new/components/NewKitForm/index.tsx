@@ -37,18 +37,7 @@ export default function NewKitForm() {
         <Button label={'Submit'} type="submit" />
       </form>
 
-      {/* TODO: 배포 시 제거 */}
-      <ModalButtonForTest onClick={() => setKitId((id) => (id ? '' : 'success'))} />
-      {/* TODO: 배포 시 제거 */}
-
       <SuccessModal kitId={kitId} open={isModalOpen} />
     </Form>
   );
 }
-
-// TODO: 배포 시 제거
-const ModalButtonForTest = ({ onClick }: { onClick: () => void }) => (
-  <button onClick={onClick} className="fixed bottom-4 right-4 w-fit bg-teal-400 text-white rounded-xl py-4 z-[51]">
-    toggle modal
-  </button>
-);
