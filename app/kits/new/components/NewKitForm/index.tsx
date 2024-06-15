@@ -6,14 +6,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Form } from '@/components/ui/form';
 
-import { FormValues } from './types';
+import Description from './Description';
 import { FormSchema } from './schema';
 import Stamps from './Stamps';
-import Title from './Title';
-import Description from './Description';
 import SuccessModal from './SuccessModal';
 import Tags from './Tags';
 import Submit from './Submit';
+import Title from './Title';
+import { FormValues } from './types';
 import { defaultValues } from './Stamps/lib';
 
 export default function NewKitForm() {
@@ -21,6 +21,8 @@ export default function NewKitForm() {
   const isModalOpen = !!kitId;
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     defaultValues,
   });
 

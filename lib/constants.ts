@@ -7,6 +7,7 @@ export const MAKING_MESSAGE = '준비 중인 기능입니다';
 export const DOMAIN = process.env.DOMAIN!;
 export const AUTO_TWEET = encodeURI('제가 만든 키트로 릴레이를 시작해보세요!');
 export const AUTO_TWEET_HASHTAGS = '꾹꾹,kookkook';
+export const MAXIMUM_TAGS = 6;
 export const API_URL = process.env.API_URL!;
 
 export const REGION = process.env.AWS_REGION!;
