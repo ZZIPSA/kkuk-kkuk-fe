@@ -25,7 +25,8 @@ export const FormSchema = z.object({
         .regex(/^[\w-_]+$/, { message: '태그는 밑줄(_)과 하이픈(-)만 사용할 수 있습니다.' }),
     })
     .array()
-    .max(MAXIMUM_TAGS, { message: '태그는 최대 6개까지 입력할 수 있습니다.' }),
+    .max(MAXIMUM_TAGS, { message: '태그는 최대 6개까지 입력할 수 있습니다.' })
+    .optional(),
   stamps: z
     .unknown()
     .transform((value) => value as FileList | null | undefined)
