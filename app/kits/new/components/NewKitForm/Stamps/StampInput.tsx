@@ -16,8 +16,8 @@ export default function StampInput({ index, total, field }: StampInputProps) {
   return (
     <label className={getStampLabelStyles(isFirst, isLast)} onClick={(e) => isFilled && e.preventDefault()}>
       <span className={getStampSpanStyles(isFirst, isLast, isFilled)}>{getStampSpanContents(index, total)}</span>
-      {isFilled ? <StampPreview index={index} field={field} /> : <EmptyStamp index={index} total={total} />}
       <input type="file" accept="image/*" hidden onChange={stampInputHandler(field, index)} />
+      {isFilled ? <StampPreview index={index} field={field} /> : <EmptyStamp index={index} total={total} />}
     </label>
   );
 }
