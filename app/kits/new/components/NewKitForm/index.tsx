@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Form } from '@/components/ui/form';
 
+import { createKit } from './actions';
 import { defaultValues } from './lib';
 import { formSchema } from './schema';
 import { CreateKitProps, FormValues } from './types';
@@ -32,6 +33,8 @@ export default function NewKitForm() {
       stamps: form.stamps.map(({ url }) => url),
       tags: form.tags.map(({ name }) => name),
     } satisfies CreateKitProps;
+    const id = await createKit(data);
+    setKitId(id);
   }
 
   return (
