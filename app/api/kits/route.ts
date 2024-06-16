@@ -77,7 +77,7 @@ export async function POST(request: Request) {
 
   try {
     const s3 = new S3Manager();
-    const newStampObjectKeys = await s3.moveToLongTermStorage([...imageUrls, blurredImage], newKitId);
+    const newKeys = await s3.moveToLongTermStorage([...imageUrls, blurredImage], id);
     const kit = await prisma.kit.create({
       data: {
         id: newKitId,
