@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
 
 export const userSelect = { id: true, email: true, image: true, name: true } satisfies Prisma.UserSelect;
+export const stampSelect = { id: true, kitId: true, objectKey: true } satisfies Prisma.StampSelect;
 export const kitSelect = {
   id: true,
   title: true,
@@ -9,7 +10,7 @@ export const kitSelect = {
   thumbnailImage: true,
   rewardImage: true,
   blurredImage: true,
-  stamps: true,
+  stamps: { select: stampSelect },
   uploader: {
     select: userSelect,
   },
