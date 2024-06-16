@@ -22,6 +22,40 @@ export async function GET(request: Request) {
   }
 }
 
+async function getPagedKits(pageSize: number, cursor: string | null) {
+  const take = pageSize;
+  const kits = await prisma.kit.findMany({
+    take,
+    skip: cursor ? 1 : 0,
+    cursor: cursor ? { id: cursor } : undefined,
+    orderBy: {
+      id: 'asc',
+    },
+    select: kitSelect,
+  });
+
+  const totalKits = await prisma.kit.count();
+  const totalPages = Math.ceil(totalKits / pageSize);
+  const nextCursor = kits.length === take ? kits[take - 1].id : null;
+
+  return {
+    kits,
+    meta: {
+      nextCursor,
+      pageSize,
+      totalKits,
+      totalPages,
+    },
+  };
+}
+
+async function getAllKits() {
+  const kits = await prisma.kit.findMany({ select: kitSelect });
+  const totalKits = await prisma.kit.count();
+
+  return { kits, totalKits };
+}
+
 export async function POST(request: Request) {
   // TODO: auth, 필수 항목 검증 미들웨어 구현
   const session = await auth();
@@ -68,38 +102,4 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json({ error: '서버 에러가 발생했습니다.' }, { status: 500 });
   }
-}
-
-async function getPagedKits(pageSize: number, cursor: string | null) {
-  const take = pageSize;
-  const kits = await prisma.kit.findMany({
-    take,
-    skip: cursor ? 1 : 0,
-    cursor: cursor ? { id: cursor } : undefined,
-    orderBy: {
-      id: 'asc',
-    },
-    select: kitSelect,
-  });
-
-  const totalKits = await prisma.kit.count();
-  const totalPages = Math.ceil(totalKits / pageSize);
-  const nextCursor = kits.length === take ? kits[take - 1].id : null;
-
-  return {
-    kits,
-    meta: {
-      nextCursor,
-      pageSize,
-      totalKits,
-      totalPages,
-    },
-  };
-}
-
-async function getAllKits() {
-  const kits = await prisma.kit.findMany({ select: kitSelect });
-  const totalKits = await prisma.kit.count();
-
-  return { kits, totalKits };
 }
