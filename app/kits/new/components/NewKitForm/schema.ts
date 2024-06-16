@@ -21,7 +21,7 @@ export const formSchema = z.object({
         .string()
         .min(2, { message: '태그는 최소 2자 이상이어야 합니다.' })
         .max(10, { message: '태그는 10자를 넘을 수 없습니다.' })
-        .regex(/^[\w-_]+$/, { message: '태그는 밑줄(_)과 하이픈(-)만 사용할 수 있습니다.' }),
+        .regex(/\S{2,10}/, { message: '태그는 밑줄(_)과 하이픈(-)만 사용할 수 있습니다.' }),
     })
     .array()
     .max(MAXIMUM_TAGS, { message: '태그는 최대 6개까지 입력할 수 있습니다.' }),
