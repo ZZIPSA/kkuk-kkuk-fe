@@ -71,15 +71,8 @@ export async function POST(request: Request) {
   if (!title || !Array.isArray(imageUrls) || !uploaderId) {
     return NextResponse.json({ error: '필수 항목을 입력해주세요.' }, { status: 400 });
   }
+  const id = await getKitId();
 
-  const lastKit = await prisma.kit.findMany({
-    orderBy: {
-      id: 'desc',
-    },
-    take: 1,
-  });
-  const lastKitId = parseInt(lastKit[0].id, 10);
-  const newKitId = (lastKitId + 1).toString().padStart(7, '0');
 
   try {
     const newStampObjectKeys = await s3.moveToLongTermStorage([...imageUrls, blurredImage], newKitId);
