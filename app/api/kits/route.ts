@@ -68,7 +68,7 @@ export async function POST(request: Request) {
   const uploaderId = user?.id;
   const { title, description, stamps: imageUrls, tags } = (await request.json()) satisfies CreateKitProps;
 
-  if (!title || !Array.isArray(imageUrls) || !thumbnailImage || !rewardImage || !blurredImage || !userId) {
+  if (!title || !Array.isArray(imageUrls) || !uploaderId) {
     return NextResponse.json({ error: '필수 항목을 입력해주세요.' }, { status: 400 });
   }
 
