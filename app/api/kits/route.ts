@@ -103,3 +103,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: '서버 에러가 발생했습니다.' }, { status: 500 });
   }
 }
+
+async function getKitId() {
+  const lastKit = await prisma.kit.findFirst({ orderBy: { id: 'desc' }, select: { id: true } });
+  const lastId = lastKit?.id || '0';
+  const kitId = String(Number(lastId) + 1).padStart(7, '0');
+  return kitId;
+}
+
+async function getBlurredImageURL(id: string) {
+  const key = `tmp/${id}`;
+  const s3 = new S3Manager();
+  const signedUrl = await s3.getObjectUrl(key);
+  const buffer = await fetch(signedUrl).then((res) => res.arrayBuffer());
+  const blurredBuffer = await blurImage(buffer);
+  const blurredUrl = await getPresignedUrl(cuid());
+  await uploadWebp(blurredBuffer, blurredUrl);
+  return blurredUrl;
+}
+
+async function blurImage(buffer: Buffer | Uint8Array | ArrayBuffer) {
+  return sharp(buffer).blur(20).toBuffer();
+}
