@@ -3,6 +3,7 @@ import { auth } from '@/auth';
 import { kitSelect, prisma } from '@/app/api/lib/prisma';
 import { S3Manager } from '@/lib/services/s3';
 import { BLURRED_IMAGE_INDEX, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
+import { CreateKitProps } from '@/types/Kit';
 
 export async function GET(request: Request) {
   try {
@@ -60,9 +61,9 @@ export async function POST(request: Request) {
   // TODO: auth, 필수 항목 검증 미들웨어 구현
   const session = await auth();
   const user = session?.user;
-  const { title, description, imageUrls, thumbnailImage, rewardImage, blurredImage, tags } = await request.json();
   const s3 = new S3Manager();
   const uploaderId = user?.id;
+  const { title, description, stamps: imageUrls, tags } = (await request.json()) satisfies CreateKitProps;
 
   if (!title || !Array.isArray(imageUrls) || !thumbnailImage || !rewardImage || !blurredImage || !userId) {
     return NextResponse.json({ error: '필수 항목을 입력해주세요.' }, { status: 400 });
