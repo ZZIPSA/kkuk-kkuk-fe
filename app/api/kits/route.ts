@@ -5,7 +5,7 @@ import { auth } from '@/auth';
 import { kitSelect, prisma } from '@/app/api/lib/prisma';
 import { extractImageId, getPresignedUrl, uploadWebp } from '@/app/api/lib/utils';
 import { S3Manager } from '@/lib/services/s3';
-import { BLURRED_IMAGE_INDEX, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
+import { THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
 import { CreateKitProps } from '@/types/Kit';
 
 export async function GET(request: Request) {
@@ -84,24 +84,18 @@ export async function POST(request: Request) {
         .filter((_, i) => i !== urlsLength - 2) // rewardImage 제외
         .map((objectKey) => ({ id: objectKey.substring(objectKey.lastIndexOf('/') + 1), objectKey })),
     };
-    const kit = await prisma.kit.create({
-      data: {
-        id: newKitId,
-        title,
-        description,
-        stamps: {
-          create: newStampObjectKeys.slice(0, 6).map((objectKey) => ({
-            objectKey,
-            id: s3.extractCuid(objectKey),
-          })),
-        },
-        rewardImage: newStampObjectKeys[REWARD_IMAGE_INDEX],
-        thumbnailImage: newStampObjectKeys[THUMBNAIL_IMAGE_INDEX],
-        blurredImage: newStampObjectKeys[BLURRED_IMAGE_INDEX],
-        tags,
-        uploaderId: userId,
-      },
-    });
+    const data = {
+      id,
+      title,
+      description,
+      stamps,
+      rewardImage: newKeys[urlsLength - 2],
+      thumbnailImage: newKeys[THUMBNAIL_IMAGE_INDEX],
+      blurredImage: newKeys[urlsLength - 1],
+      tags,
+      uploaderId,
+    };
+    const kit = await prisma.kit.create({ data, select: { id: true } });
 
     return NextResponse.json({ data: kit });
   } catch (error) {
