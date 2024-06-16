@@ -78,6 +78,12 @@ export async function POST(request: Request) {
   try {
     const s3 = new S3Manager();
     const newKeys = await s3.moveToLongTermStorage([...imageUrls, blurredImage], id);
+    const urlsLength = newKeys.length;
+    const stamps = {
+      create: newKeys
+        .filter((_, i) => i !== urlsLength - 2) // rewardImage 제외
+        .map((objectKey) => ({ id: objectKey.substring(objectKey.lastIndexOf('/') + 1), objectKey })),
+    };
     const kit = await prisma.kit.create({
       data: {
         id: newKitId,
