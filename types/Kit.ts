@@ -9,3 +9,6 @@ type KitCardUploader = { uploader: Pick<UserModel, 'image' | 'name'> };
 
 export type KitCardInfo = Pick<KitModel, 'id' | 'title' | 'thumbnailImage' | 'tags'> & KitCardUploader;
 export type KitCreate = Prisma.KitCreateArgs['data'];
+export interface CreateKitProps extends Pick<KitCreate, 'title' | 'description' | 'tags'> {
+  stamps: string[];
+}
