@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import sharp from 'sharp';
 import { auth } from '@/auth';
 import { kitSelect, prisma } from '@/app/api/lib/prisma';
-import { getPresignedUrl, uploadWebp } from '@/app/api/lib/utils';
+import { extractImageId, getPresignedUrl, uploadWebp } from '@/app/api/lib/utils';
 import { S3Manager } from '@/lib/services/s3';
 import { BLURRED_IMAGE_INDEX, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
 import { CreateKitProps } from '@/types/Kit';
@@ -73,6 +73,8 @@ export async function POST(request: Request) {
   }
   const id = await getKitId();
 
+  const rewardId = extractImageId(imageUrls.at(-1)!);
+  const blurredImage = await getBlurredImageURL(rewardId);
 
   try {
     const newStampObjectKeys = await s3.moveToLongTermStorage([...imageUrls, blurredImage], newKitId);
