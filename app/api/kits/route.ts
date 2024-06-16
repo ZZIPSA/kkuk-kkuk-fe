@@ -64,7 +64,6 @@ export async function POST(request: Request) {
   // TODO: auth, 필수 항목 검증 미들웨어 구현
   const session = await auth();
   const user = session?.user;
-  const s3 = new S3Manager();
   const uploaderId = user?.id;
   const { title, description, stamps: imageUrls, tags } = (await request.json()) satisfies CreateKitProps;
 
@@ -77,6 +76,7 @@ export async function POST(request: Request) {
   const blurredImage = await getBlurredImageURL(rewardId);
 
   try {
+    const s3 = new S3Manager();
     const newStampObjectKeys = await s3.moveToLongTermStorage([...imageUrls, blurredImage], newKitId);
     const kit = await prisma.kit.create({
       data: {
