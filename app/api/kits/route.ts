@@ -60,9 +60,9 @@ export async function POST(request: Request) {
   // TODO: auth, 필수 항목 검증 미들웨어 구현
   const session = await auth();
   const user = session?.user;
-  const userId = user?.id;
   const { title, description, imageUrls, thumbnailImage, rewardImage, blurredImage, tags } = await request.json();
   const s3 = new S3Manager();
+  const uploaderId = user?.id;
 
   if (!title || !Array.isArray(imageUrls) || !thumbnailImage || !rewardImage || !blurredImage || !userId) {
     return NextResponse.json({ error: '필수 항목을 입력해주세요.' }, { status: 400 });
