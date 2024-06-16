@@ -5,11 +5,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Form } from '@/components/ui/form';
+import { CreateKitProps } from '@/types/Kit';
 
-import { createKit } from './actions';
 import { defaultValues } from './lib';
 import { formSchema } from './schema';
-import { CreateKitProps, FormValues } from './types';
+import { FormValues } from './types';
 import Description from './Description';
 import Stamps from './Stamps';
 import SuccessModal from './SuccessModal';
@@ -28,12 +28,13 @@ export default function NewKitForm() {
   });
 
   async function onSubmit(form: FormValues) {
-    const data = {
+    const body = {
       ...form,
       stamps: form.stamps.map(({ url }) => url),
       tags: form.tags.map(({ name }) => name),
     } satisfies CreateKitProps;
-    const id = await createKit(data);
+    const { data } = await fetch('/api/kits', { method: 'POST', body: JSON.stringify(body) }).then((res) => res.json());
+    const { id } = data;
     setKitId(id);
   }
 
