@@ -100,6 +100,12 @@ export async function POST(request: Request) {
   }
 }
 
+/**
+ * 가장 마지막 Kit의 id를 가져와 새로운 Kit의 id를 생성합니다.
+ * Kit 가 없을 경우 0000001을 반환합니다.
+ *
+ * @returns kitId
+ */
 async function getKitId() {
   const lastKit = await prisma.kit.findFirst({ orderBy: { id: 'desc' }, select: { id: true } });
   const lastId = lastKit?.id || '0';
@@ -107,10 +113,15 @@ async function getKitId() {
   return kitId;
 }
 
+/**
+ * 리워드 이미지 ID를 받아 블러 처리된 이미지 URL을 반환합니다.
+ *
+ * @param id 리워드 이미지 ID
+ * @returns 블러 처리된 이미지 URL
+ */
 async function getBlurredImageURL(id: string) {
-  const key = `tmp/${id}`;
   const s3 = new S3Manager();
-  const signedUrl = await s3.getObjectUrl(key);
+  const signedUrl = await s3.getObjectUrl(`tmp/${id}`);
   const buffer = await fetch(signedUrl).then((res) => res.arrayBuffer());
   const blurredBuffer = await blurImage(buffer);
   const blurredUrl = await getPresignedUrl(cuid());
