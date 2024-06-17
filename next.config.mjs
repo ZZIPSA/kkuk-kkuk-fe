@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production';
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -18,6 +19,12 @@ const nextConfig = {
         // 더미 이미지 서버
         protocol: 'https',
         hostname: 'fastly.picsum.photos',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: isProd ? 'kook-kook.com' : process.env.IMAGE_HOSTNAME,
         port: '',
         pathname: '/**',
       },
