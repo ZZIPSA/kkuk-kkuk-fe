@@ -80,19 +80,21 @@ export async function POST(request: Request) {
     const s3 = new S3Manager();
     // s3 에서 이미지를 long-term storage로 이동
     const newKeys = await s3.moveToLongTermStorage([...imageUrls, blurredImage], id);
-    const stamps = getStampsCreate(newKeys);
-    const data = {
-      id,
-      title,
-      description,
-      stamps,
-      rewardImage: newKeys.at(-2)!,
-      thumbnailImage: newKeys[THUMBNAIL_IMAGE_INDEX],
-      blurredImage: newKeys.at(-1)!,
-      tags,
-      uploaderId,
-    };
-    const kit = await prisma.kit.create({ data, select: { id: true } });
+    // 키트 생성
+    const kit = await prisma.kit.create({
+      data: {
+        id,
+        title,
+        description,
+        stamps: getStampsCreate(newKeys),
+        rewardImage: newKeys.at(-2)!,
+        thumbnailImage: newKeys[THUMBNAIL_IMAGE_INDEX],
+        blurredImage: newKeys.at(-1)!,
+        tags,
+        uploaderId,
+      },
+      select: { id: true },
+    });
 
     return NextResponse.json({ data: kit });
   } catch (error) {
