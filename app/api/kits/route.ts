@@ -86,9 +86,9 @@ export async function POST(request: Request) {
       title,
       description,
       stamps,
-      rewardImage: newKeys[urlsLength - 2],
+      rewardImage: newKeys.at(-2)!,
       thumbnailImage: newKeys[THUMBNAIL_IMAGE_INDEX],
-      blurredImage: newKeys[urlsLength - 1],
+      blurredImage: newKeys.at(-1)!,
       tags,
       uploaderId,
     };
