@@ -7,6 +7,7 @@ import { extractImageIdFromUrl, getPresignedUrl, getStampsCreate, uploadWebp } f
 import { S3Manager } from '@/lib/services/s3';
 import { THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
 import { CreateKitProps } from '@/types/Kit';
+import { blurImage } from '@/lib/sharp';
 
 export async function GET(request: Request) {
   try {
