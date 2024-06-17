@@ -1,6 +1,5 @@
 import cuid from 'cuid';
 import { NextResponse } from 'next/server';
-import sharp from 'sharp';
 import { auth } from '@/auth';
 import { kitSelect, prisma } from '@/app/api/lib/prisma';
 import { extractImageIdFromUrl, getPresignedUrl, getStampsCreate, uploadWebp } from '@/app/api/lib/utils';
@@ -128,8 +127,4 @@ async function getBlurredImageURL(id: string) {
   const blurredUrl = await getPresignedUrl(cuid());
   await uploadWebp(blurredBuffer, blurredUrl);
   return blurredUrl;
-}
-
-async function blurImage(buffer: Buffer | Uint8Array | ArrayBuffer) {
-  return sharp(buffer).blur(20).toBuffer();
 }

@@ -1,7 +1,5 @@
 import { S3Manager } from '@/lib/services/s3';
-import sharp from 'sharp';
 
-export const blurImage = (buffer: Buffer | Uint8Array | ArrayBuffer) => sharp(buffer).blur(20).toBuffer();
 export const extractImageIdFromUrl = (url: string) => url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
 export const getStampsCreate = (keys: string[]) => ({
   create: keys
