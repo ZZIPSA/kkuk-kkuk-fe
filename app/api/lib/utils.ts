@@ -1,7 +1,16 @@
 import { S3Manager } from '@/lib/services/s3';
+import sharp from 'sharp';
 
-export const joinSlash = (a: string) => (b: string) => `${a}/${b}`;
-export const extractImageId = (url: string) => url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
+export const blurImage = (buffer: Buffer | Uint8Array | ArrayBuffer) => sharp(buffer).blur(20).toBuffer();
+export const extractImageIdFromUrl = (url: string) => url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
+export const getStampsCreate = (keys: string[]) => ({
+  create: keys
+    .filter(filterReward) // rewardImage 제외
+    .map(getStampCreateFromKey),
+});
+const filterReward = (_: string, i: number, { length }: string[]) => i !== length - 2;
+const getStampCreateFromKey = (objectKey: string) => ({ id: extractImageIdFromKey(objectKey), objectKey });
+const extractImageIdFromKey = (key: string) => key.substring(key.lastIndexOf('/') + 1);
 
 /**
  * S3 Presigned URL 취득
