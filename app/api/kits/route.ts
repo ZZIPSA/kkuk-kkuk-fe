@@ -72,7 +72,8 @@ export async function POST(request: Request) {
   }
   const id = await getKitId();
 
-  const rewardId = extractImageId(imageUrls.at(-1)!);
+  // 리워드 이미지 id 로 블러 이미지 생성
+  const rewardId = extractImageIdFromUrl(imageUrls.at(-1)!);
   const blurredImage = await getBlurredImageURL(rewardId);
 
   try {
