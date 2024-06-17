@@ -1,5 +1,3 @@
-import { S3Manager } from '@/lib/services/s3';
-
 export const extractImageIdFromUrl = (url: string) => url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
 export const getStampsCreate = (keys: string[]) => ({
   create: keys
@@ -9,19 +7,6 @@ export const getStampsCreate = (keys: string[]) => ({
 const filterReward = (_: string, i: number, { length }: string[]) => i !== length - 2;
 const getStampCreateFromKey = (objectKey: string) => ({ id: extractImageIdFromKey(objectKey), objectKey });
 const extractImageIdFromKey = (key: string) => key.substring(key.lastIndexOf('/') + 1);
-
-/**
- * S3 Presigned URL 취득
- *
- * @param key 업로드할 파일의 S3 key
- * @returns Presigned URL
- */
-export async function getPresignedUrl(key: string): Promise<string> {
-  const s3 = new S3Manager();
-  const presignedUrl = s3.getPresignedUrl(key);
-
-  return presignedUrl;
-}
 
 /**
  * 파일을 S3에 업로드

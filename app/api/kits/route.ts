@@ -2,7 +2,7 @@ import cuid from 'cuid';
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { kitSelect, prisma } from '@/app/api/lib/prisma';
-import { extractImageIdFromUrl, getPresignedUrl, getStampsCreate, uploadWebp } from '@/app/api/lib/utils';
+import { extractImageIdFromUrl, getStampsCreate, uploadWebp } from '@/app/api/lib/utils';
 import { S3Manager } from '@/lib/services/s3';
 import { THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
 import { CreateKitProps } from '@/types/Kit';
@@ -126,7 +126,7 @@ async function getBlurredImageURL(id: string) {
   const signedUrl = await s3.getObjectUrl(`tmp/${id}`);
   const buffer = await fetch(signedUrl).then((res) => res.arrayBuffer());
   const blurredBuffer = await blurImage(buffer);
-  const blurredUrl = await getPresignedUrl(cuid());
+  const blurredUrl = await s3.getPresignedUrl(cuid());
   await uploadWebp(blurredBuffer, blurredUrl);
   return blurredUrl;
 }
