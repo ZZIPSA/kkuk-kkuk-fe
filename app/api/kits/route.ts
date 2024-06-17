@@ -78,13 +78,9 @@ export async function POST(request: Request) {
 
   try {
     const s3 = new S3Manager();
+    // s3 에서 이미지를 long-term storage로 이동
     const newKeys = await s3.moveToLongTermStorage([...imageUrls, blurredImage], id);
-    const urlsLength = newKeys.length;
-    const stamps = {
-      create: newKeys
-        .filter((_, i) => i !== urlsLength - 2) // rewardImage 제외
-        .map((objectKey) => ({ id: objectKey.substring(objectKey.lastIndexOf('/') + 1), objectKey })),
-    };
+    const stamps = getStampsCreate(newKeys);
     const data = {
       id,
       title,
