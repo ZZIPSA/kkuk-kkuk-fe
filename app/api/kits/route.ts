@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import sharp from 'sharp';
 import { auth } from '@/auth';
 import { kitSelect, prisma } from '@/app/api/lib/prisma';
-import { extractImageId, getPresignedUrl, uploadWebp } from '@/app/api/lib/utils';
+import { extractImageIdFromUrl, getPresignedUrl, getStampsCreate, uploadWebp } from '@/app/api/lib/utils';
 import { S3Manager } from '@/lib/services/s3';
 import { THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
 import { CreateKitProps } from '@/types/Kit';
