@@ -35,8 +35,8 @@ export const handleTagsKeyDown = (field: TagsField) => (e: React.KeyboardEvent<H
 };
 
 export const handleFormSubmit = (setKitId: React.Dispatch<React.SetStateAction<string>>) => async (form: FormValues) =>
-  setKitId((await getCreatedKitData(form)).data.id);
-const getCreatedKitData = (form: FormValues) => fetch('/api/kits', { method: 'POST', body: createKitBody(form) }).then((res) => res.json());
+  setKitId((await createKit(form)).data.id);
+const createKit = (form: FormValues) => fetch('/api/kits', { method: 'POST', body: createKitBody(form) }).then((res) => res.json());
 const createKitBody = (form: FormValues): string =>
   JSON.stringify({
     ...form,
