@@ -1,10 +1,10 @@
 export const extractImageIdFromUrl = (url: string) => url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
 export const getStampsCreate = (keys: string[]) => ({
   create: keys
-    .filter(filterReward) // rewardImage 제외
+    .filter(removeReward) // rewardImage 제외
     .map(getStampCreateFromKey),
 });
-const filterReward = (_: string, i: number, { length }: string[]) => i !== length - 2;
+const removeReward = (_: string, i: number, { length }: string[]) => i !== length - 2;
 const getStampCreateFromKey = (objectKey: string) => ({ id: extractImageIdFromKey(objectKey), objectKey });
 const extractImageIdFromKey = (key: string) => key.substring(key.lastIndexOf('/') + 1);
 
