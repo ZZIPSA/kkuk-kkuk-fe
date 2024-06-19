@@ -1,7 +1,6 @@
 import { MAXIMUM_TAGS } from '@/lib/constants';
 import { FormValues, TagsField } from './types';
 import { CreateKitProps } from '@/types/Kit';
-import { set } from 'zod';
 
 export const extractImageId = (url: string) => url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
 export const replaceBlurred =
