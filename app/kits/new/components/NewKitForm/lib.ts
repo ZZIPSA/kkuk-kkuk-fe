@@ -1,5 +1,7 @@
 import { MAXIMUM_TAGS } from '@/lib/constants';
-import { TagsField } from './types';
+import { FormValues, TagsField } from './types';
+import { CreateKitProps } from '@/types/Kit';
+import { set } from 'zod';
 
 export const extractImageId = (url: string) => url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
 export const replaceBlurred =
@@ -32,3 +34,13 @@ export const handleTagsKeyDown = (field: TagsField) => (e: React.KeyboardEvent<H
     input.value = ''; // 입력된 값 초기화
   }
 };
+
+export const handleFormSubmit = (setKitId: React.Dispatch<React.SetStateAction<string>>) => async (form: FormValues) =>
+  setKitId((await getCreatedKitData(form)).data.id);
+const getCreatedKitData = (form: FormValues) => fetch('/api/kits', { method: 'POST', body: createKitBody(form) }).then((res) => res.json());
+const createKitBody = (form: FormValues): string =>
+  JSON.stringify({
+    ...form,
+    stamps: form.stamps.map(({ url }) => url),
+    tags: form.tags.map(({ name }) => name),
+  } satisfies CreateKitProps);

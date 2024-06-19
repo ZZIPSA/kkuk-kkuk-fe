@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { CreateKitProps } from '@/types/Kit';
 
-import { defaultValues } from './lib';
+import { defaultValues, handleFormSubmit } from './lib';
 import { formSchema } from './schema';
 import { FormValues } from './types';
 import Description from './Description';
@@ -27,16 +27,7 @@ export default function NewKitForm() {
     defaultValues,
   });
 
-  async function onSubmit(form: FormValues) {
-    const body = {
-      ...form,
-      stamps: form.stamps.map(({ url }) => url),
-      tags: form.tags.map(({ name }) => name),
-    } satisfies CreateKitProps;
-    const { data } = await fetch('/api/kits', { method: 'POST', body: JSON.stringify(body) }).then((res) => res.json());
-    const { id } = data;
-    setKitId(id);
-  }
+  const onSubmit = handleFormSubmit(setKitId);
 
   return (
     <Form {...form}>
