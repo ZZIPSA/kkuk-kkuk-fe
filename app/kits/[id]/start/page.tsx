@@ -1,8 +1,11 @@
 import { notFound } from 'next/navigation';
 import KitCard, { KitCardVariants } from '@/components/KitCard';
 import RallyStartForm from './components/RallyStartForm';
+import { ensureMember } from '@/auth';
 
 export default async function RallyStartPage({ params: { id } }: { params: { id: string } }) {
+  const { id: userId } = await ensureMember();
+  if (!userId) return;
   const { data: kit } = await fetch(`${process.env.API_URL}/api/kits/${id}`).then((res) => res.json());
   if (!kit) return notFound();
   const { title, description, tags, thumbnailImage, uploader } = kit;
@@ -18,7 +21,7 @@ export default async function RallyStartPage({ params: { id } }: { params: { id:
         thumbnailImage={thumbnailImage}
         uploader={uploader}
       />
-      <RallyStartForm />
+      <RallyStartForm starterId={userId} kitId={id} />
     </main>
   );
 }
