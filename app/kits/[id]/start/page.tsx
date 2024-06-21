@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
+import { ensureMember } from '@/auth';
 import KitCard, { KitCardVariants } from '@/components/KitCard';
 import RallyStartForm from './components/RallyStartForm';
-import { ensureMember } from '@/auth';
 
 export default async function RallyStartPage({ params: { id } }: { params: { id: string } }) {
   const { id: userId } = await ensureMember();

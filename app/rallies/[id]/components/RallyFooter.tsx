@@ -1,10 +1,10 @@
 'use client';
 
+import { usePathname, useRouter } from 'next/navigation';
 import { BasicButton as Button } from '@/components/ui/button';
 import { Stamp } from '@/lib/icons';
 import { getFooterConditions, getFooterVariant, getFooterContent, getFooterStyles } from './lib';
 import { RallyFooterInfo } from './types';
-import { usePathname, useRouter } from 'next/navigation';
 
 interface RallyFooterProps extends RallyFooterInfo {
   /*
