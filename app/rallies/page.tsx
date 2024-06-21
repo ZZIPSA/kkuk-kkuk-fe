@@ -3,6 +3,10 @@ import { ensureMember } from '@/auth';
 import RallyCard from '@/components/RallyCard';
 import { JoinedRally } from '@/types/Rally';
 
+export const metadata: Metadata = {
+  title: '나의 랠리',
+};
+
 export default async function RalliesPage() {
   const userId = (await ensureMember()).id;
   const { data: rallies }: { data: JoinedRally[] } = await fetch(`${process.env.API_URL}/api/my/rallies?userId=${userId}`).then((res) => res.json());
