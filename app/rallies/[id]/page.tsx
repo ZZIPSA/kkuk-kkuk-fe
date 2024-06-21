@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getMember } from '@/auth';
 import { getRallyInfo } from './lib';
@@ -7,6 +8,18 @@ import { RallyFooter } from './components/RallyFooter';
 
 interface RallyPageProps {
   params: { id: string };
+}
+
+export async function generateMetadata({ params: { id } }: RallyPageProps): Promise<Metadata> {
+  const {
+    data: {
+      title,
+      starter: { name },
+    },
+  } = await fetch(`${process.env.API_URL}/api/rallies/${id}`).then((res) => res.json());
+  return {
+    title: `${name}님의 ${title} 랠리`,
+  };
 }
 
 export default async function RallyPage({ params: { id } }: RallyPageProps) {
