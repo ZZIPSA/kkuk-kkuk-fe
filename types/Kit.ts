@@ -1,3 +1,5 @@
+import { kitSelect } from '@/app/api/lib/prisma';
+import { Prisma } from '@prisma/client';
 import { KitModel, StampModel, UserModel } from './models';
 
 type KitUploader = { uploader: Pick<UserModel, 'id' | 'name' | 'image'> };
@@ -7,3 +9,7 @@ export type KitResult = Pick<KitModel, 'id' | 'title' | 'description' | 'tags' |
 type KitCardUploader = { uploader: Pick<UserModel, 'image' | 'name'> };
 
 export type KitCardInfo = Pick<KitModel, 'id' | 'title' | 'thumbnailImage' | 'tags'> & KitCardUploader;
+export type KitData = Prisma.KitGetPayload<{
+  where: { id: string };
+  select: typeof kitSelect;
+}>;
