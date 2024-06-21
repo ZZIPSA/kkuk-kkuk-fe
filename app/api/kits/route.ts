@@ -70,7 +70,7 @@ export async function POST(request: Request) {
   if (!title || !Array.isArray(imageUrls) || !uploaderId) {
     return NextResponse.json({ error: '필수 항목을 입력해주세요.' }, { status: 400 });
   }
-  const id = await getKitId();
+  const id = await getNewKitId();
 
   // 리워드 이미지 id 로 블러 이미지 생성
   const rewardId = extractImageIdFromUrl(imageUrls.at(-1)!);
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
  *
  * @returns kitId
  */
-async function getKitId() {
+async function getNewKitId() {
   const lastKit = await prisma.kit.findFirst({ orderBy: { id: 'desc' }, select: { id: true } });
   const lastId = lastKit?.id || '0';
   const kitId = String(Number(lastId) + 1).padStart(7, '0');
