@@ -1,8 +1,13 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { ensureMember } from '@/auth';
 import RallyCard from '@/components/RallyCard';
 import EmptyContent from '../components/EmptyContent';
 import { RallyStatus, MyRally } from '@/types/Rally';
+
+export const metadata: Metadata = {
+  title: '완료한 랠리',
+};
 
 export default async function CompletesPage() {
   const { id: userId } = await ensureMember();
