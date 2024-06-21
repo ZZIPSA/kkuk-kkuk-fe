@@ -3,9 +3,11 @@ import KitCard, { KitCardVariants } from '@/components/KitCard';
 import RallyPreview from './components/RallyPreview';
 import StampsPreview from './components/StampsPreview';
 import { getKitData } from './lib';
-import { DOMAIN } from '@/lib/constants';
+import { KitPageInfo } from './types';
 
-export default async function KitPage({ params: { id } }: { params: { id: string } }) {
+interface KitPageProps extends KitPageInfo {}
+
+export default async function KitPage({ params: { id } }: KitPageProps) {
   const { data: kit } = await getKitData(id);
   const { title, description, tags, thumbnailImage, uploader, stamps } = kit;
 
