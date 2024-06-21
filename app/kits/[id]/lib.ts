@@ -7,3 +7,9 @@ export const getKitData = (id: string): Promise<{ data: KitData }> =>
     : fetch(`${process.env.API_URL}/api/kits/${id}`)
         .then((res) => res.json())
         .catch(() => notFound());
+
+export const openGraphSizes = {
+  image: 320,
+  gap: 24,
+  padding: 48,
+};
