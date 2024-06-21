@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { prisma, rallySelect } from '@/app/api/lib/prisma';
-import { RallyStatus } from '@prisma/client';
+import { MAX_STMAP_LENGTH } from '@/app/api/lib/constants';
+import { getRallyStatus } from '@/app/api/lib/utils';
 
-type getRallyParams = { params: { id: string } };
-type patchRallyParams = { params: { id: string } };
+type GetRallyParams = { params: { id: string } };
+type PatchRallyParams = { params: { id: string } };
+type PostRallyParams = { params: { id: string } };
 
-export async function GET(_: Request, { params }: getRallyParams) {
+export async function GET(_: Request, { params }: GetRallyParams) {
   const { id } = params;
 
   const rally = await prisma.rally.findUnique({
@@ -19,7 +21,8 @@ export async function GET(_: Request, { params }: getRallyParams) {
   return NextResponse.json({ data: rally });
 }
 
-export async function PATCH(request: Request, { params }: patchRallyParams) {
+// TODO: 향후 랠리 연장용 API로 수정
+export async function PATCH(request: Request, { params }: PatchRallyParams) {
   const session = await auth();
   const currentUser = session?.user;
 
@@ -47,7 +50,29 @@ export async function PATCH(request: Request, { params }: patchRallyParams) {
   }
 }
 
-// TODO: 별도 파일로 분리
-function getRallyStatus(stampCount: number): RallyStatus {
-  return stampCount === 6 ? RallyStatus.inactive : RallyStatus.active;
+export async function POST(request: Request, { params }: PostRallyParams) {
+  const { id: rallyId } = params;
+
+  if (!rallyId) {
+    return NextResponse.json({ error: '필수항목을 입력해주세요.' }, { status: 400 });
+  }
+
+  try {
+    const rally = await prisma.rally.findUnique({
+      where: { id: rallyId },
+    });
+
+    if (!rally) return NextResponse.json({ error: '해당 랠리를 찾을 수 없습니다.' }, { status: 404 });
+    if (rally.stampCount >= MAX_STMAP_LENGTH) return NextResponse.json({ error: '더 이상 스탬프를 찍을 수 없습니다.' }, { status: 400 });
+
+    const updatedStampCount = rally.stampCount + 1;
+    const updatedRally = await prisma.rally.update({
+      where: { id: rallyId },
+      data: { stampCount: updatedStampCount, status: getRallyStatus(updatedStampCount) },
+    });
+
+    return NextResponse.json(updatedRally);
+  } catch (error) {
+    return NextResponse.json({ error: '서버 에러가 발생했습니다.' }, { status: 500 });
+  }
 }
