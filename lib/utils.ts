@@ -10,3 +10,4 @@ export function addDomain(path: string) {
   const domain = DOMAIN ?? window.location.origin;
   return `${domain}${path.startsWith('/') ? path : `/${path}`}`;
 }
+export const addPx = (num: number) => `${num}px`;
