@@ -1,7 +1,12 @@
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import KitCard, { KitCardVariants } from '@/components/KitCard';
 import RallyStartForm from './components/RallyStartForm';
 import { KitPageInfo } from '../types';
+
+export const metadata: Metadata = {
+  title: `로 랠리 시작하기`,
+};
 
 export default async function RallyStartPage({ params: { id } }: KitPageInfo) {
   const { data: kit } = await fetch(`${process.env.API_URL}/api/kits/${id}`).then((res) => res.json());
