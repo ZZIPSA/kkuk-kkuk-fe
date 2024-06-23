@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { kitSelect, prisma, rallySelect, userSelect } from '@/app/api/lib/prisma';
+import { prisma, kitSelect, rallySelect, userSelect } from '@/app/api/lib/prisma';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
