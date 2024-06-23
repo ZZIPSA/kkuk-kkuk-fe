@@ -4,7 +4,7 @@ import { auth } from '@/auth';
 import { kitSelect, prisma } from '@/app/api/lib/prisma';
 import { extractImageIdFromUrl, getStampsCreate, uploadWebp } from '@/app/api/lib/utils';
 import { S3Manager } from '@/lib/services/s3';
-import { THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
+import { BLURRED_IMAGE_INDEX, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
 import { CreateKitProps } from '@/types/Kit';
 import { blurImage } from '@/lib/sharp';
 
@@ -87,9 +87,9 @@ export async function POST(request: Request) {
         title,
         description,
         stamps: getStampsCreate(newKeys),
-        rewardImage: newKeys.at(-2)!,
+        rewardImage: newKeys.at(REWARD_IMAGE_INDEX)!,
         thumbnailImage: newKeys[THUMBNAIL_IMAGE_INDEX],
-        blurredImage: newKeys.at(-1)!,
+        blurredImage: newKeys.at(BLURRED_IMAGE_INDEX)!,
         tags,
         uploaderId,
       },
