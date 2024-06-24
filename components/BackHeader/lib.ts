@@ -1,4 +1,4 @@
-export const getInfo = ({ path }: { path: string }) => ({
+export const getInfoFromPath = ({ path }: { path: string }) => ({
   title: getTitle(path),
   back: getBack(path),
 });
