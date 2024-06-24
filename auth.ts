@@ -3,6 +3,12 @@ import Twitter from 'next-auth/providers/twitter';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/app/api/lib/prisma';
 
+declare module 'next-auth' {
+  interface Session {
+    user: { id: string; name: string; email: string; image: string };
+  }
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [

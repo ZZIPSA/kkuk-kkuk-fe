@@ -1,10 +1,17 @@
-import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
+import { ensureMember } from '@/auth';
 import KitCard, { KitCardVariants } from '@/components/KitCard';
 import RallyStartForm from './components/RallyStartForm';
+import { getKitData } from '../lib';
+import { KitPageInfo } from '../types';
 
-export default async function RallyStartPage({ params: { id } }: { params: { id: string } }) {
-  const { data: kit } = await fetch(`${process.env.API_URL}/api/kits/${id}`).then((res) => res.json());
-  if (!kit) return notFound();
+export const metadata: Metadata = {
+  title: { absolute: `꾹꾹 | 랠리 시작하기` },
+};
+
+export default async function RallyStartPage({ params: { id } }: KitPageInfo) {
+  const { id: userId } = await ensureMember();
+  const { data: kit } = await getKitData(id);
   const { title, description, tags, thumbnailImage, uploader } = kit;
 
   return (
@@ -13,12 +20,12 @@ export default async function RallyStartPage({ params: { id } }: { params: { id:
         variant={KitCardVariants.StartPage}
         id={id}
         title={title}
-        description={description}
+        description={description || ''}
         tags={tags}
         thumbnailImage={thumbnailImage}
         uploader={uploader}
       />
-      <RallyStartForm />
+      <RallyStartForm starterId={userId} kitId={id} />
     </main>
   );
 }
