@@ -3,6 +3,8 @@ import sharp from 'sharp';
 import { KitData } from '@/types/Kit';
 import { S3Manager } from '@/lib/services/s3';
 import { StampData } from '@/types/Stamp';
+import { addBase64Prefix, convertResponseToArrayBuffer, convertBufferToBase64 } from '@/lib/utils';
+import { cropImage320by320 } from '@/lib/sharp';
 
 export const getKitData = (id: string): Promise<{ data: KitData }> =>
   fetch(`${process.env.API_URL}/api/kits/${id}`)
@@ -38,11 +40,7 @@ const getImageAsPng = async (key: string) =>
   new S3Manager()
     .getObjectUrl(key) // objectKey 로부터 signed URL을 가져옵니다.
     .then(fetch) // 이미지를 가져옵니다.
-    .then(convertToArrayBuffer) // ArrayBuffer로 변환합니다.
+    .then(convertResponseToArrayBuffer) // ArrayBuffer로 변환합니다.
     .then(cropImage320by320) // 이미지를 320x320으로 자르고 PNG로 변환합니다.
-    .then(convertToBase64) // 이미지를 base64로 변환합니다.
+    .then(convertBufferToBase64) // 이미지를 base64로 변환합니다.
     .then(addBase64Prefix); // base64 앞에 'data:image/png;base64,' 를 추가합니다.
-const convertToArrayBuffer = (res: Response) => res.arrayBuffer();
-const cropImage320by320 = (buffer: ArrayBuffer) => sharp(buffer).resize({ width: 320, height: 320, fit: 'cover' }).toFormat('png').toBuffer();
-const convertToBase64 = (buffer: Buffer | ArrayBuffer) => buffer.toString('base64');
-const addBase64Prefix = (base64: string) => `data:image/png;base64,${base64}` as const;
