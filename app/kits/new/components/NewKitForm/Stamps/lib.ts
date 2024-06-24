@@ -15,8 +15,6 @@ import {
   stampInputLabelStyles,
 } from './styles';
 
-export const defaultValues = { stamps: Array.from({ length: 6 }, () => ({ url: '', blob: '' })) };
-
 export const getFormData = (file: File) => {
   const form = new FormData();
   form.append('file', file);

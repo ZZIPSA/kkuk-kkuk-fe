@@ -8,7 +8,7 @@ import { MAXIMUM_TAGS } from '@/lib/constants';
  *  설명 : 공백포함 0~200자
  *  태그 : 공백미포함 2~10자 / 공백불가 / 밑줄(_), 하이픈(-)만 사용가능 / 최대 6개?까지
  */
-export const FormSchema = z.object({
+export const formSchema = z.object({
   title: z
     .string()
     .min(1, { message: '이름을 입력해주세요.' })
@@ -21,11 +21,10 @@ export const FormSchema = z.object({
         .string()
         .min(2, { message: '태그는 최소 2자 이상이어야 합니다.' })
         .max(10, { message: '태그는 10자를 넘을 수 없습니다.' })
-        .regex(/^[\w-_]+$/, { message: '태그는 밑줄(_)과 하이픈(-)만 사용할 수 있습니다.' }),
+        .regex(/\S{2,10}/, { message: '태그는 밑줄(_)과 하이픈(-)만 사용할 수 있습니다.' }),
     })
     .array()
-    .max(MAXIMUM_TAGS, { message: '태그는 최대 6개까지 입력할 수 있습니다.' })
-    .optional(),
+    .max(MAXIMUM_TAGS, { message: '태그는 최대 6개까지 입력할 수 있습니다.' }),
   stamps: z
     .object({
       url: z.string(),

@@ -1,5 +1,14 @@
 import { MAXIMUM_TAGS } from '@/lib/constants';
-import { TagsField } from './types';
+import { FormValues, TagsField } from './types';
+import { CreateKitProps } from '@/types/Kit';
+
+export const extractImageId = (url: string) => url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
+export const replaceBlurred =
+  (blurred: string) =>
+  (id: string, index: number, { length }: string[]) =>
+    index === length - 1 ? blurred : id;
+
+export const defaultValues = { stamps: Array.from({ length: 6 }, () => ({ url: '', blob: '' })) };
 
 export const handleTagsKeyDown = (field: TagsField) => (e: React.KeyboardEvent<HTMLInputElement>) => {
   e.currentTarget.setCustomValidity(''); // 입력 시 유효성 초기화
@@ -24,3 +33,13 @@ export const handleTagsKeyDown = (field: TagsField) => (e: React.KeyboardEvent<H
     input.value = ''; // 입력된 값 초기화
   }
 };
+
+export const handleFormSubmit = (setKitId: React.Dispatch<React.SetStateAction<string>>) => async (form: FormValues) =>
+  setKitId((await createKit(form)).data.id);
+const createKit = (form: FormValues) => fetch('/api/kits', { method: 'POST', body: createKitBody(form) }).then((res) => res.json());
+const createKitBody = (form: FormValues): string =>
+  JSON.stringify({
+    ...form,
+    stamps: form.stamps.map(({ url }) => url),
+    tags: form.tags.map(({ name }) => name),
+  } satisfies CreateKitProps);
