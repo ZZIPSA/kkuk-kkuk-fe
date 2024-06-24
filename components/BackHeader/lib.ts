@@ -25,5 +25,8 @@ function getTitle(path: string) {
     // /rallies
     case path.match(/\/rallies/)?.[0]:
       return '진행중인 랠리';
+    // 경로가 정의되지 않은 경우
+    default:
+      return '타이틀이 지정되지 않았습니다.';
   }
 }
