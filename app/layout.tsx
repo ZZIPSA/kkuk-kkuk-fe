@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import NavBar from '@/components/NavBar';
 import './globals.css';
 import { Toaster } from '@/components/ui/sonner';
+import { DOMAIN } from '@/lib/constants';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     default: '꾹꾹',
     template: '꾹꾹 | %s',
   },
+  metadataBase: new URL(DOMAIN),
 };
 
 export default async function RootLayout({
