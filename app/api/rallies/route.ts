@@ -4,7 +4,7 @@ import { prisma, kitSelect, userSelect } from '@/app/api/lib/prisma';
 export async function POST(request: Request) {
   // TODO: auth, 필수 항목 검증 미들웨어 구현
   const body = await request.json();
-  const { title, description, kitId, userId: starterId } = body;
+  const { title, description, kitId, starterId } = body;
 
   if (!title || !kitId || !starterId) {
     return NextResponse.json({ error: '요청이 유효하지 않습니다.' }, { status: 400 });

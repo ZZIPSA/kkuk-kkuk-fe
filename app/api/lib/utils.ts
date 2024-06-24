@@ -1,3 +1,5 @@
+import { RallyStatus } from '@prisma/client';
+
 export const extractImageIdFromUrl = (url: string) => url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
 export const getStampsCreate = (keys: string[]) => ({
   create: keys
@@ -25,4 +27,8 @@ export async function uploadWebp(webp: Buffer, url: string): Promise<void> {
     // NOTE: 필요시 에러코드 추가
     throw new Error('파일을 업로드하지 못했습니다.');
   }
+}
+
+export function getRallyStatus(stampCount: number): RallyStatus {
+  return stampCount === 6 ? RallyStatus.inactive : RallyStatus.active;
 }
