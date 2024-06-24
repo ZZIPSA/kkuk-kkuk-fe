@@ -1,5 +1,4 @@
-import { notFound, redirect } from 'next/navigation';
-import sharp from 'sharp';
+import { notFound } from 'next/navigation';
 import { KitData } from '@/types/Kit';
 import { S3Manager } from '@/lib/services/s3';
 import { StampData } from '@/types/Stamp';
