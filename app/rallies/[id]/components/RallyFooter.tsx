@@ -25,6 +25,7 @@ export function RallyFooter(props: RallyFooterProps) {
     if (response.ok) {
       router.refresh();
     } else {
+      // TODO: 에러페이지 대응
       return notFound();
     }
   };
