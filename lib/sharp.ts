@@ -19,3 +19,5 @@ export async function blurImage(buffer: Buffer | Uint8Array | ArrayBuffer): Prom
 export async function convertToWebP(buffer: Buffer | Uint8Array | ArrayBuffer): Promise<Buffer> {
   return await sharp(buffer).toFormat('webp').toBuffer();
 }
+
+export const cropImage320by320 = (buffer: ArrayBuffer) => sharp(buffer).resize({ width: 320, height: 320, fit: 'cover' }).toFormat('png').toBuffer();
