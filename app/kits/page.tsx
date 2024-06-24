@@ -3,9 +3,9 @@ import Link from 'next/link';
 import KitCard from '@/components/KitCard';
 import { KitCardInfo } from '@/types/Kit';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: '키트 목록',
-} satisfies Metadata;
+};
 
 async function fetchKits(): Promise<KitCardInfo[]> {
   const response = await fetch(`${process.env.API_URL}/api/kits`, {
