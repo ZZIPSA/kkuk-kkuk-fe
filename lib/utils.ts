@@ -11,5 +11,7 @@ export function addDomain(path: string) {
   return `${domain}${path.startsWith('/') ? path : `/${path}`}`;
 }
 export const addPx = (num: number) => `${num}px`;
-
 export const joinSlash = (a: string) => (b: string) => `${a}/${b}`;
+export const convertResponseToArrayBuffer = (res: Response) => res.arrayBuffer();
+export const convertBufferToBase64 = (buffer: Buffer | ArrayBuffer) => buffer.toString('base64');
+export const addBase64Prefix = (base64: string) => `data:image/png;base64,${base64}` as const;
