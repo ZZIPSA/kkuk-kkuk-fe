@@ -6,7 +6,7 @@ import { getKitData } from '../lib';
 import { KitPageInfo } from '../types';
 
 export const metadata: Metadata = {
-  title: `로 랠리 시작하기`,
+  title: { absolute: `꾹꾹 | 랠리 시작하기` },
 };
 
 export default async function RallyStartPage({ params: { id } }: KitPageInfo) {
