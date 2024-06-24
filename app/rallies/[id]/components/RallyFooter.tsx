@@ -1,25 +1,18 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Stamp } from '@/lib/icons';
 import { getFooterConditions, getFooterVariant, getFooterContent, getFooterStyles } from './lib';
 import { RallyFooterInfo } from './types';
 
 interface RallyFooterProps extends RallyFooterInfo {
-  /*
-  stampCount: number;
-  total: number;
-  owned: boolean;
-  status: RallyStatus;
-  isStampedToday: boolean;
-  */
+  rallyId: string;
 }
 
 export function RallyFooter(props: RallyFooterProps) {
   const router = useRouter();
-  const path = usePathname();
-  const rallyId = path.split('/').at(-1);
+  const rallyId = props.rallyId;
 
   const content = getFooterContent(props);
   const is = getFooterVariant(getFooterConditions(props));
@@ -32,8 +25,7 @@ export function RallyFooter(props: RallyFooterProps) {
     if (response.ok) {
       router.refresh();
     } else {
-      // TODO: 에러 페이지로 이동
-      console.error('에러가 발생했습니다.');
+      return notFound();
     }
   };
 
