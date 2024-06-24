@@ -1,8 +1,13 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { ensureMember } from '@/auth';
 import KitCard from '@/components/KitCard';
 import EmptyContent from '../components/EmptyContent';
 import { KitCardInfo } from '@/types/Kit';
+
+export const metadata: Metadata = {
+  title: '업로드한 키트',
+};
 
 export default async function UploadsPage() {
   const { id: userId } = await ensureMember();
