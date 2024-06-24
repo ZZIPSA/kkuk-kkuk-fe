@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { kitSelect, prisma } from '@/app/api/lib/prisma';
+import { KitData } from '@/types/Kit';
 
 type getKitParams = { params: { id: string } };
 
@@ -7,10 +8,10 @@ export async function GET(_: Request, { params }: getKitParams) {
   const { id } = params;
 
   try {
-    const kit = await prisma.kit.findUnique({
+    const kit = (await prisma.kit.findUnique({
       where: { id },
       select: kitSelect,
-    });
+    })) satisfies KitData | null;
 
     if (!kit) {
       return NextResponse.json({ error: '해당 키트를 찾을 수 없습니다.' }, { status: 404 });

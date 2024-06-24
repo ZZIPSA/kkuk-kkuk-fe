@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LeftArrow } from '@/lib/icons';
-import { getInfo } from './lib';
+import { getInfoFromPath } from './lib';
 
 export default function BackHeader() {
-  const { title, back } = getInfo({ path: usePathname() });
+  const { title, back } = getInfoFromPath({ path: usePathname() });
 
   return (
     <header className="flex justify-center items-center px-4 py-2 w-full top-0 sticky bg-background z-40 font-bold">

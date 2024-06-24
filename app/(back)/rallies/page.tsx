@@ -1,7 +1,12 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { ensureMember } from '@/auth';
 import RallyCard from '@/components/RallyCard';
 import { JoinedRally } from '@/types/Rally';
+
+export const metadata: Metadata = {
+  title: '나의 랠리',
+};
 
 export default async function RalliesPage() {
   const userId = (await ensureMember()).id;
