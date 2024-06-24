@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
-export default async function MyPage() {
+export async function GET() {
   return redirect('/my/joins');
 }
