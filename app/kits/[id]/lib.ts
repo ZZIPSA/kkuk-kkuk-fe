@@ -5,11 +5,9 @@ import { S3Manager } from '@/lib/services/s3';
 import { StampData } from '@/types/Stamp';
 
 export const getKitData = (id: string): Promise<{ data: KitData }> =>
-  id.length < 7
-    ? redirect(`/kits/${id.padStart(7, '0')}`)
-    : fetch(`${process.env.API_URL}/api/kits/${id}`)
-        .then((res) => res.json())
-        .catch(() => notFound());
+  fetch(`${process.env.API_URL}/api/kits/${id}`)
+    .then((res) => res.json())
+    .catch(() => notFound());
 
 export const openGraphSizes = {
   image: 320,
