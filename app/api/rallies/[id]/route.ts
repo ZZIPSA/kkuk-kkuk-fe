@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { prisma, rallySelect } from '@/app/api/lib/prisma';
-import { RallyStatus } from '@prisma/client';
+import { BadRequestError, NotFoundRallyError, ServerError, StampLimitError, UnauthorizedError } from '@/app/api/lib/errors';
+import { getRallyStatus } from '@/app/api/lib/utils';
 
-type getRallyParams = { params: { id: string } };
-type patchRallyParams = { params: { id: string } };
+type GetRallyParams = { params: { id: string } };
+type PatchRallyParams = { params: { id: string } };
+type PostRallyParams = { params: { id: string } };
 
-export async function GET(_: Request, { params }: getRallyParams) {
+export async function GET(_: Request, { params }: GetRallyParams) {
   const { id } = params;
 
   const rally = await prisma.rally.findUnique({
@@ -14,40 +16,61 @@ export async function GET(_: Request, { params }: getRallyParams) {
     select: rallySelect,
   });
 
-  if (!rally) return NextResponse.json({ error: '해당 랠리를 찾을 수 없습니다.' }, { status: 404 });
+  if (!rally) return NotFoundRallyError;
 
   return NextResponse.json({ data: rally });
 }
 
-export async function PATCH(request: Request, { params }: patchRallyParams) {
-  const session = await auth();
-  const currentUser = session?.user;
+// TODO: 향후 랠리 연장용 API로 수정
+// export async function PATCH(request: Request, { params }: PatchRallyParams) {
+//   const session = await auth();
+//   const currentUser = session?.user;
 
-  const { id } = params;
-  const body = await request.json();
-  const { stampCount } = body;
+//   const { id } = params;
+//   const body = await request.json();
+//   const { stampCount } = body;
 
-  if (!currentUser) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 401 });
+//   if (!currentUser) return UnauthorizedError;
 
-  if (stampCount === undefined || typeof stampCount !== 'number' || stampCount < 0) {
-    return NextResponse.json({ error: '필수 항목을 입력해주세요.' }, { status: 400 });
-  }
+//   if (stampCount === undefined || typeof stampCount !== 'number' || stampCount < 0) {
+//     return BadRequestError;
+//   }
+//   try {
+//     const status = getRallyStatus(stampCount);
+//     const updatedRally = await prisma.rally.update({
+//       where: { id },
+//       data: { stampCount, status },
+//       select: rallySelect,
+//     });
+
+//     return NextResponse.json({ data: updatedRally }, { status: 200 });
+//   } catch (error) {
+//     return ServerError;
+//   }
+// }
+
+export async function PATCH(_: Request, { params }: PostRallyParams) {
+  const { id: rallyId } = params;
+
+  if (!rallyId) return BadRequestError;
 
   try {
-    const status = getRallyStatus(stampCount);
-    const updatedRally = await prisma.rally.update({
-      where: { id },
-      data: { stampCount, status },
-      select: rallySelect,
+    const rally = await prisma.rally.findUnique({
+      where: { id: rallyId },
+      include: { kit: { include: { _count: { select: { stamps: true } } } } },
     });
 
-    return NextResponse.json({ data: updatedRally }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ error: '서버 에러가 발생했습니다.' }, { status: 500 });
-  }
-}
+    if (!rally) return NotFoundRallyError;
+    if (rally.stampCount >= rally.kit._count.stamps) return StampLimitError;
 
-// TODO: 별도 파일로 분리
-function getRallyStatus(stampCount: number): RallyStatus {
-  return stampCount === 6 ? RallyStatus.inactive : RallyStatus.active;
+    const updatedStampCount = rally.stampCount + 1;
+    const updatedRally = await prisma.rally.update({
+      where: { id: rallyId },
+      data: { stampCount: updatedStampCount, status: getRallyStatus(updatedStampCount) },
+    });
+
+    return NextResponse.json(updatedRally);
+  } catch (error) {
+    return ServerError;
+  }
 }
