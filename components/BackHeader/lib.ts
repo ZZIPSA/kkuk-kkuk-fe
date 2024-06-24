@@ -1,9 +1,9 @@
 export const getInfoFromPath = ({ path }: { path: string }) => ({
   title: getTitleFromPath(path),
-  back: getBack(path),
+  back: getBackPath(path),
 });
 
-const getBack = (path: string) => path.split('/').slice(0, -1).join('/') || '/';
+const getBackPath = (path: string) => path.split('/').slice(0, -1).join('/') || '/';
 
 function getTitleFromPath(path: string) {
   // /my/settings
