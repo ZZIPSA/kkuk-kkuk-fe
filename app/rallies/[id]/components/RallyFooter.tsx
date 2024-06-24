@@ -27,7 +27,7 @@ export function RallyFooter(props: RallyFooterProps) {
 
   const onClick = async () => {
     const response = await fetch(`/api/rallies/${rallyId}`, {
-      method: 'POST',
+      method: 'PATCH',
     });
     if (response.ok) {
       router.refresh();
