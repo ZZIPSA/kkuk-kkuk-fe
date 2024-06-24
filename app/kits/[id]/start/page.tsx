@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import KitCard, { KitCardVariants } from '@/components/KitCard';
 import RallyStartForm from './components/RallyStartForm';
+import { getKitData } from '../lib';
 import { KitPageInfo } from '../types';
 
 export const metadata: Metadata = {
@@ -9,8 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RallyStartPage({ params: { id } }: KitPageInfo) {
-  const { data: kit } = await fetch(`${process.env.API_URL}/api/kits/${id}`).then((res) => res.json());
-  if (!kit) return notFound();
+  const { data: kit } = await getKitData(id);
   const { title, description, tags, thumbnailImage, uploader } = kit;
 
   return (
@@ -19,7 +18,7 @@ export default async function RallyStartPage({ params: { id } }: KitPageInfo) {
         variant={KitCardVariants.StartPage}
         id={id}
         title={title}
-        description={description}
+        description={description || ''}
         tags={tags}
         thumbnailImage={thumbnailImage}
         uploader={uploader}
