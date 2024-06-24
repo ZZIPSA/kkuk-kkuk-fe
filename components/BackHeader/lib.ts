@@ -1,11 +1,11 @@
 export const getInfoFromPath = ({ path }: { path: string }) => ({
-  title: getTitle(path),
+  title: getTitleFromPath(path),
   back: getBack(path),
 });
 
 const getBack = (path: string) => path.split('/').slice(0, -1).join('/') || '/';
 
-function getTitle(path: string) {
+function getTitleFromPath(path: string) {
   // /my/settings
   if (path.match(/\/my\/settings.*/)?.[0]) return '유저 설정';
   // /kits/new
