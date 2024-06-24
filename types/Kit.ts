@@ -13,3 +13,7 @@ export type KitData = Prisma.KitGetPayload<{
   where: { id: string };
   select: typeof kitSelect;
 }>;
+export type KitCreate = Prisma.KitCreateArgs['data'];
+export interface CreateKitProps extends Pick<KitCreate, 'title' | 'description' | 'tags'> {
+  stamps: string[];
+}

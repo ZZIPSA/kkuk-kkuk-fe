@@ -21,6 +21,13 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        // 더미 이미지 서버
+        protocol: 'https',
+        hostname: 'kook-kook.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   webpack: (config, options) => {

@@ -11,3 +11,5 @@ export function addDomain(path: string) {
   return `${domain}${path.startsWith('/') ? path : `/${path}`}`;
 }
 export const addPx = (num: number) => `${num}px`;
+
+export const joinSlash = (a: string) => (b: string) => `${a}/${b}`;

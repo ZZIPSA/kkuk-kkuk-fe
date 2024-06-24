@@ -5,32 +5,29 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Form } from '@/components/ui/form';
+import { CreateKitProps } from '@/types/Kit';
 
+import { defaultValues, handleFormSubmit } from './lib';
+import { formSchema } from './schema';
+import { FormValues } from './types';
 import Description from './Description';
-import { FormSchema } from './schema';
 import Stamps from './Stamps';
 import SuccessModal from './SuccessModal';
-import Tags from './Tags';
 import Submit from './Submit';
+import Tags from './Tags';
 import Title from './Title';
-import { FormValues } from './types';
-import { defaultValues } from './Stamps/lib';
 
 export default function NewKitForm() {
   const [kitId, setKitId] = useState<string>('');
   const isModalOpen = !!kitId;
   const form = useForm<FormValues>({
-    resolver: zodResolver(FormSchema),
+    resolver: zodResolver(formSchema),
     mode: 'onChange',
     reValidateMode: 'onChange',
     defaultValues,
   });
 
-  function onSubmit(data: FormValues) {
-    // TODO: Handle form submission
-    console.log(data);
-    setKitId('success');
-  }
+  const onSubmit = handleFormSubmit(setKitId);
 
   return (
     <Form {...form}>
@@ -41,7 +38,6 @@ export default function NewKitForm() {
         <Description control={form.control} />
         <Submit state={form.formState} />
       </form>
-
       <SuccessModal kitId={kitId} open={isModalOpen} />
     </Form>
   );
