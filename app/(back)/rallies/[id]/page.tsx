@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getMember } from '@/auth';
-import { getRallyInfo } from './lib';
+import { getRallyData, getRallyInfo } from './lib';
 import RallyInfo from './components/RallyInfo';
 import RallyStamps from './components/RallyStamps';
 import { RallyFooter } from './components/RallyFooter';
@@ -16,7 +16,7 @@ export async function generateMetadata({ params: { id } }: RallyPageProps): Prom
       title,
       starter: { name },
     },
-  } = await fetch(`${process.env.API_URL}/api/rallies/${id}`).then((res) => res.json());
+  } = await getRallyData(id);
   return {
     title: `${name}님의 ${title} 랠리`,
   };
@@ -35,7 +35,7 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
       kit: { stamps },
     },
     error,
-  } = await fetch(`${process.env.API_URL}/api/rallies/${id}`).then((res) => res.json());
+  } = await getRallyData(id);
   if (error) return notFound();
   const { owned, isStampedToday, total, count, percentage } = getRallyInfo({ stamps, stampCount, updatedAt, starterId, viewerId });
 
