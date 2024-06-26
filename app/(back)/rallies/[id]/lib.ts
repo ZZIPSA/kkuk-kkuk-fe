@@ -1,5 +1,7 @@
 import { StampModel } from '@/types/models';
 
+export const getRallyData = async (id: string) => fetch(`${process.env.API_URL}/api/rallies/${id}`).then((res) => res.json());
+
 export const getRallyInfo = ({
   stamps,
   stampCount,
