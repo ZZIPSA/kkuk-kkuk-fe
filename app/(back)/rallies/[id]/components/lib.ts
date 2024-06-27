@@ -19,7 +19,7 @@ const getStampStatus = ({ isStampedToday, index, count }: { index: number; count
         : StampStatus.uncheckable; // 둘다 아니면 다음에 찍을 스탬프 (gt)
 const getStampKind = (index: number, total: number) => (index === total - 1 ? StampKind.reward : StampKind.default);
 export const addStampPropsByIndex =
-  ({ owned, stampCount: count, total, isStampedToday }: RallyStampsInfo) =>
+  ({ owned, count, total, isStampedToday }: RallyStampsInfo) =>
   (stamp: RallyPreviewStamp, index: number) => ({
     ...stamp,
     status: getStampStatus({ isStampedToday, index, count }),
@@ -73,7 +73,7 @@ const getStampable = (props: StampableConditionsProps) => getSatisfiedIndex(prop
 /**
  * 리워드를 찍을 수 있는 경우 (마지막 스탬프만 남겨둔 경우)
  */
-const getRewardable = ({ stampCount, total }: RewardableConditionsProps) => stampCount === total - 1;
+const getRewardable = ({ count, total }: RewardableConditionsProps) => count === total - 1;
 export const getFooterConditions = (props: RallyFooterInfo) => ({
   stampable: getStampable(props),
   rewardable: getRewardable(props),

@@ -2,12 +2,12 @@ import { RallyStatus } from '@/types/Rally';
 
 export interface RallyStampsInfo {
   total: number;
-  stampCount: number;
+  count: number;
   owned: boolean;
   isStampedToday: boolean;
 }
 export interface RewardableConditionsProps {
-  stampCount: number;
+  count: number;
   total: number;
 }
 export interface StampableConditionsProps {
