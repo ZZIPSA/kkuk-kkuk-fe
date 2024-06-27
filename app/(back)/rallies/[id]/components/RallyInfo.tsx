@@ -7,8 +7,8 @@ interface RallyInfoProps {
   title: string;
   percentage: number;
   createdAt: Date;
-  updatedAt: Date | null;
   // deadline: Date;
+  updatedAt: Date;
   status: RallyStatus;
 }
 
