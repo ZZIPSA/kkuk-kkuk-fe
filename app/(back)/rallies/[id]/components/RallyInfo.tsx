@@ -1,21 +1,17 @@
 import { Progress } from '@/components/ui/progress';
 import { /* convertMsToDate, */ dateIntl } from '@/lib/date';
-import { RallyStatus } from '@/types/Rally';
+import { RallyData } from '@/types/Rally';
 import { rallyInfoStyles } from './styles';
 
-interface RallyInfoProps {
-  title: string;
+interface RallyInfoProps extends Pick<RallyData, 'title' | 'createdAt' | 'updatedAt' | 'status'> {
+  deadline: Date;
   percentage: number;
-  createdAt: Date;
-  // deadline: Date;
-  updatedAt: Date;
-  status: RallyStatus;
 }
 
-export default function RallyInfo({ title, percentage, createdAt, updatedAt, /* deadline, */ status }: RallyInfoProps) {
   // const today = new Date();
   const isActive = status === 'active';
   // const dDay = deadline.getTime() - today.getTime();
+export default function RallyInfo({ title, percentage, createdAt, updatedAt, deadline, status }: RallyInfoProps) {
 
   return (
     <section className={rallyInfoStyles.container}>
