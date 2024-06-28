@@ -58,3 +58,19 @@ export const getRallyInfo = (data: GetRallyInfoProps) =>
 const getStampedToday = ({ updatedAt, count }: GetRallyInfoProps) =>
   count > 0 && // 카운트가 0이면 보통 생성한 직후 이므로 직후의 식이 참으로 판정되는 것을 방지
   new Date().getDate() === updatedAt.getDate(); // 오늘 날짜와 업데이트된 날짜가 같은지 확인
+
+interface GetRallyInfoDatesProps extends Pick<RallyData, 'createdAt' | 'updatedAt' | 'status'> {
+  percentage: ReturnType<typeof getRallyInfo>['percentage'];
+  deadline: Date; // TODO - deadline from RallyData
+}
+export const getRallyInfoDates = (data: GetRallyInfoDatesProps) =>
+  pipe(
+    data,
+    derive('isActive')(({ status }) => status === 'active'),
+    derive('today')(() => new Date()),
+    derive('dDay')(({ isActive, deadline, today }) => (isActive ? convertMsToDate(deadline.getTime() - today.getTime()) : null)),
+    derive('since')(({ createdAt }) => displayDateYyMmDd(createdAt)),
+    derive('until')(({ isActive, deadline }) => (isActive ? displayDateYyMmDd(deadline) : null)),
+    derive('completed')(({ isActive, percentage, updatedAt }) => (!isActive && percentage === 100 ? displayDateYyMmDd(updatedAt) : null)),
+    remain(['dDay', 'since', 'until', 'completed']),
+  );
