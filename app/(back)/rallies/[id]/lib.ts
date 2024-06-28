@@ -1,9 +1,10 @@
-import { StampModel } from '@/types/models';
 import { notFound } from 'next/navigation';
 import { evolve, join, pipe, prop } from '@fxts/core';
+import { convertMsToDate, displayDateYyMmDd } from '@/lib/date';
 import { awaited, bimap, purify } from '@/lib/either';
 import { handleError } from '@/lib/error';
 import { resolveJson, validResponse } from '@/lib/response';
+import { derive, parseDate, remain } from '@/lib/utils';
 import { RallyData } from '@/types/Rally';
 
 interface FetchedRallyData extends Omit<RallyData, 'createdAt' | 'updatedAt'> {
@@ -39,23 +40,21 @@ const parseRallyDates: (fetched: FetchedRallyData) => RallyData = evolve({
   updatedAt: parseDate,
 });
 
-export const getRallyInfo = ({
-  stamps,
-  stampCount,
-  starterId,
-  viewerId,
-  updatedAt,
-}: {
-  stamps: Pick<StampModel, 'id' | 'objectKey' | 'kitId'>[];
-  stampCount: number;
-  starterId: string;
+interface GetRallyInfoProps extends Pick<RallyData, 'updatedAt' | 'createdAt'> {
+  stamps: RallyData['kit']['stamps'];
+  count: number;
+  starterId: RallyData['starter']['id'];
   viewerId?: string;
-  updatedAt: string;
-}) => {
-  const owned = starterId === viewerId;
-  const isStampedToday = new Date().getDate() === new Date(updatedAt).getDate();
-  const total = stamps.length;
-  const count = stampCount + Number(isStampedToday); // 오늘까지 찍은 스탬프 개수
-  const percentage = (count / total) * 100;
-  return { total, count, percentage, owned, isStampedToday };
-};
+}
+export const getRallyInfo = (data: GetRallyInfoProps) =>
+  pipe(
+    data,
+    derive('isStampedToday')(getStampedToday), // 오늘 스탬프를 찍었는지 확인
+    derive('owned')(({ starterId, viewerId }) => starterId === viewerId), // starterId와 viewerId가 같은지로 소유 여부 확인
+    derive('total')(({ stamps }) => stamps.length), // 전체 스탬프 개수
+    derive('percentage')(({ count, total }) => (count / total) * 100), // 완료된 스탬프 비율
+    remain(['owned', 'isStampedToday', 'total', 'percentage'] as const), // 필요한 값만 남기기
+  );
+const getStampedToday = ({ updatedAt, count }: GetRallyInfoProps) =>
+  count > 0 && // 카운트가 0이면 보통 생성한 직후 이므로 직후의 식이 참으로 판정되는 것을 방지
+  new Date().getDate() === updatedAt.getDate(); // 오늘 날짜와 업데이트된 날짜가 같은지 확인
