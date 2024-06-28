@@ -4,7 +4,7 @@ import { getMember } from '@/auth';
 import { getRallyData, getRallyInfo } from './lib';
 import RallyInfo from './components/RallyInfo';
 import RallyStamps from './components/RallyStamps';
-import { RallyFooter } from './components/RallyFooter';
+import RallyFooter from './components/RallyFooter';
 
 interface RallyPageProps {
   params: { id: string };
