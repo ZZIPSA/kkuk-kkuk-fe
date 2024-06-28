@@ -19,6 +19,7 @@ export async function POST(request: Request) {
         kitId,
         starterId,
         stampCount: 0,
+        updatedAt: new Date(),
       },
       include: {
         kit: { select: kitSelect },
@@ -30,6 +31,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ data: newRally }, { status: 201 });
   } catch (error) {
+    console.log('error', error);
     return NextResponse.json({ error: '예기치 못한 에러가 발생했습니다.' }, { status: 500 });
   }
 }
