@@ -6,17 +6,18 @@ import { rallyFooterStyles } from './styles';
 import { RallyFooterInfo, RallyStampsInfo, RewardableConditionsProps, StampableConditionsProps } from './types';
 
 const getStampStatus = ({ isStampedToday, index, count }: { index: number; count: number; isStampedToday: boolean }): StampStatus =>
+  // TODO: 스탬프
   isStampedToday
     ? // 오늘 스탬프를 찍었고
-      index <= count // 이미 찍은 스탬프보다 이르거나 같은 차례라면
-      ? StampStatus.checked // 이미 찍은 스탬프 (le)
-      : StampStatus.uncheckable // 아니면 다음에 찍을 스탬프 (gt)
-    : // 오늘 스탬프를 찍지 않았고
       index < count // 이미 찍은 스탬프보다 이른 차례라면
       ? StampStatus.checked // 이미 찍은 스탬프 (lt)
-      : index === count // 이미 찍은 스탬프와 같은 차례라면
-        ? StampStatus.checkable // 오늘의 찍을 스탬프 (eq)
-        : StampStatus.uncheckable; // 둘다 아니면 다음에 찍을 스탬프 (gt)
+      : StampStatus.uncheckable // 아니면 다음에 찍을 스탬프 (ge)
+    : // 오늘 스탬프를 찍지 않았고
+    index < count // 이미 찍은 스탬프보다 이른 차례라면
+    ? StampStatus.checked // 이미 찍은 스탬프 (lt)
+    : index === count // 이미 찍은 스탬프와 같은 차례라면
+    ? StampStatus.checkable // 오늘의 찍을 스탬프 (eq)
+    : StampStatus.uncheckable; // 둘다 아니면 다음에 찍을 스탬프 (gt)
 const getStampKind = (index: number, total: number) => (index === total - 1 ? StampKind.reward : StampKind.default);
 export const addStampPropsByIndex =
   ({ owned, count, total, isStampedToday }: RallyStampsInfo) =>
