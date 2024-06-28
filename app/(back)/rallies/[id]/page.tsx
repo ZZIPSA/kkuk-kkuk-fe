@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import { getMember } from '@/auth';
 import { getRallyData, getRallyInfo } from './lib';
 import RallyInfo from './components/RallyInfo';
@@ -11,11 +10,10 @@ interface RallyPageProps {
 }
 
 export async function generateMetadata({ params: { id } }: RallyPageProps): Promise<Metadata> {
+  console.log('generateMetadata start');
   const {
-    data: {
-      title,
-      starter: { name },
-    },
+    title,
+    starter: { name },
   } = await getRallyData(id);
   return {
     title: `${name}님의 ${title} 랠리`,
@@ -28,20 +26,18 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
   const today = new Date();
   const deadline = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 8);
   // TODO - get deadline from api
+  const data = await getRallyData(id);
   const {
-    data: {
-      title,
-      status,
-      createdAt,
-      updatedAt,
-      stampCount,
-      starter: { id: starterId },
-      kit: { stamps },
-    },
-    error,
-  } = await getRallyData(id);
-  if (error) return notFound();
-  const { owned, isStampedToday, total, count, percentage } = getRallyInfo({ stamps, stampCount, updatedAt, starterId, viewerId });
+    title,
+    status,
+    /* deadline, */
+    createdAt,
+    updatedAt,
+    stampCount: count,
+    starter: { id: starterId },
+    kit: { stamps },
+  } = data;
+  const { owned, isStampedToday, total, percentage } = getRallyInfo({ stamps, count, updatedAt, starterId, viewerId, createdAt });
 
   return (
     <main className="px-4 py-6 w-full bg-grey-50 flex flex-col gap-6">
