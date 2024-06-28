@@ -24,6 +24,10 @@ export async function generateMetadata({ params: { id } }: RallyPageProps): Prom
 
 export default async function RallyPage({ params: { id } }: RallyPageProps) {
   const viewerId = (await getMember())?.id;
+  //TODO - get deadline from api
+  const today = new Date();
+  const deadline = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 8);
+  // TODO - get deadline from api
   const {
     data: {
       title,
@@ -41,7 +45,7 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
 
   return (
     <main className="px-4 py-6 w-full bg-grey-50 flex flex-col gap-6">
-      <RallyInfo title={title} percentage={percentage} createdAt={createdAt} updatedAt={updatedAt} status={status} /* deadline={deadline} */ />
+      <RallyInfo title={title} percentage={percentage} createdAt={createdAt} updatedAt={updatedAt} status={status} deadline={deadline} />
       <RallyStamps owned={owned} stamps={stamps} count={count} total={total} isStampedToday={isStampedToday} />
       <RallyFooter owned={owned} status={status} count={count} total={total} isStampedToday={isStampedToday} rallyId={id} />
     </main>
