@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { SadCat } from '@/lib/icons';
-import { styles, buttons, hrefs } from './lib';
+import { styles, hrefs } from './lib';
+import Buttons from './Buttons';
 
 export default function DeleteAccountModal() {
   return (
@@ -31,17 +32,5 @@ function Description() {
       관리자에게 문의해주세요.
       {/* 회원 탈퇴시 참여했던 랠리 및<br /> 세트 목록은 복구 불가능해요! */}
     </p>
-  );
-}
-
-function Buttons() {
-  return (
-    <div className={styles.buttons}>
-      {buttons.map(({ key, className, label, href }) => (
-        <Link href={href} key={key} className={className}>
-          {label}
-        </Link>
-      ))}
-    </div>
   );
 }
