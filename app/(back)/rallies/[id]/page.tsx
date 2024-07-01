@@ -28,7 +28,6 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
   // TODO - get stampable from api
   const stampable = true;
   // TODO - get stampable from api
-  const data = await getRallyData(id);
   const {
     title,
     status,
@@ -39,7 +38,7 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
     stampCount: count,
     starter: { id: starterId },
     kit: { stamps },
-  } = data;
+  } = await getRallyData(id);
   const { owned, total, percentage } = getRallyInfo({ stamps, count, updatedAt, starterId, viewerId, createdAt });
 
   return (
