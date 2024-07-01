@@ -45,7 +45,7 @@ const getStampableConditions = ({ owned, status, stampable }: StampableCondition
   [
     !owned, // 소유 여부
     status === RallyStatus.inactive, // 완료 여부
-    stampable, // 오늘 스탬프 찍었는지 여부
+    !stampable, // 오늘 스탬프 찍었는지 여부
   ] as const;
 /**
  * 처음으로 만족하는 조건의 인덱스 반환
