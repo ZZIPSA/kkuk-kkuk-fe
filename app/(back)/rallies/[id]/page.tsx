@@ -10,7 +10,6 @@ interface RallyPageProps {
 }
 
 export async function generateMetadata({ params: { id } }: RallyPageProps): Promise<Metadata> {
-  console.log('generateMetadata start');
   const {
     title,
     starter: { name },
