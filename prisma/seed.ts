@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 
 const dummyStamps: { [key: number]: string } = {
   0: '0000000/oR4DnVh0L-kzPRN_SpTSeG7dAE79IEoXOr-fn0usW1gj-FnjgfM07WVrlNxo54hoBSN8TN3akecyv5mIYY3Y6g.webp',
-  1: '0000000/SEACxsoJS2i1Ieyc_YuBdQEM1ZCgeeCxrt7Yt-FIp_CJhqEp-bOuKb_PIIT647EPRN9nPp9kRxGSl-qnFvixZw.webp',
-  2: '0000000/v0rC3c6NAZgwgNoUaeEU5s692CYSas3aZ_vNM76ef8hpmPPp8gir7FYdI8HJ8wp2KWdUZWWBSIRoa8BB4B1nlQ.webp',
-  3: '0000000/v0rC3c6NAZgwgNoUaeEU5s692CYSas3aZ_vNM76ef8hpmPPp8gir7FYdI8HJ8wp2KWdUZWWBSIRoa8BB4B1nlQ.webp',
+  1: '0000000/med.png',
+  2: '0000000/3.284c1fc0..png',
+  3: '0000000/artms-dall-Cover-Art.webp',
   4: '0000000/v0rC3c6NAZgwgNoUaeEU5s692CYSas3aZ_vNM76ef8hpmPPp8gir7FYdI8HJ8wp2KWdUZWWBSIRoa8BB4B1nlQ.webp',
   5: '0000000/v0rC3c6NAZgwgNoUaeEU5s692CYSas3aZ_vNM76ef8hpmPPp8gir7FYdI8HJ8wp2KWdUZWWBSIRoa8BB4B1nlQ.webp',
   6: '0000000/W0PzPa72o5SQPEnxAQSlfLJqlR-f_3GNuimqX9utrXTXiX1x7vaE3j-U-IfdZ5FHSSu7twBIU7YnNCblGlsKLQ.webp',
@@ -14,16 +14,16 @@ const dummyStamps: { [key: number]: string } = {
 
 function generateRandomTag() {
   const possibleTags = [
-    '뫄뫄장르',
-    '🚀연성해주세요',
-    '솨솨캐릭',
-    'AxB',
-    'BL',
-    '10글자짜리어떤게임',
-    '테스트',
+    '태그테스트',
+    '🚀랠리',
+    '솨솨뫄뫄',
+    'StampRally',
+    'ab',
+    '10글자짜리게임이름',
+    '테스트TEST',
     '6일_챌린지',
     '작심삼일이두번이면끝',
-    '외않되',
+    '多言語対応ーテスト',
   ];
 
   const tagCount = Math.floor(Math.random() * 4);
@@ -35,6 +35,11 @@ function generateRandomTag() {
   }
 
   return tags;
+}
+
+export function pickRandomIndex() {
+  const randomIndex = Math.floor(Math.random() * 7);
+  return randomIndex;
 }
 
 async function main() {
@@ -81,20 +86,27 @@ async function main() {
   // 키트 및 스탬프 생성
   const kitCreationPromises = Array.from({ length: 30 }, (_, index) => {
     const tags = generateRandomTag();
+    const thumbnailIndex = pickRandomIndex();
+    const rewardIndex = pickRandomIndex();
+
     return prisma.kit.create({
       data: {
         id: String(index + 1).padStart(7, '0'),
         title: `키트 ${index + 1}`,
         description: `${index + 1}번 키트의 설명입니다.`,
-        thumbnailImage: dummyStamps[0],
-        rewardImage: dummyStamps[1],
-        blurredImage: dummyStamps[2],
+        thumbnailImage: dummyStamps[pickRandomIndex()],
+        rewardImage: dummyStamps[pickRandomIndex()],
+        blurredImage: dummyStamps[6],
         tags,
         uploaderId: users[Math.floor(Math.random() * users.length)].id,
         stamps: {
-          create: Array.from({ length: 6 }, (_, stampIndex) => ({
-            objectKey: dummyStamps[stampIndex],
-          })),
+          create: [
+            { objectKey: dummyStamps[thumbnailIndex] },
+            ...Array.from({ length: 4 }, (_, stampIndex) => ({
+              objectKey: dummyStamps[stampIndex],
+            })),
+            { objectKey: dummyStamps[rewardIndex] },
+          ],
         },
       },
       include: {

@@ -19,5 +19,5 @@ export interface JoinedRally extends MyRally {
 }
 
 export interface CompletedRally extends MyRally {
-  updatedAt: Date | null;
+  updatedAt: Date;
 }
