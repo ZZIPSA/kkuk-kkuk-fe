@@ -20,10 +20,10 @@ const getStampStatus = ({ isStampedToday, index, count }: { index: number; count
     : StampStatus.uncheckable; // 둘다 아니면 다음에 찍을 스탬프 (gt)
 const getStampKind = (index: number, total: number) => (index === total - 1 ? StampKind.reward : StampKind.default);
 export const addStampPropsByIndex =
-  ({ owned, count, total, isStampedToday }: RallyStampsInfo) =>
+  ({ owned, count, total, stampable }: RallyStampsInfo) =>
   (stamp: RallyPreviewStamp, index: number) => ({
     ...stamp,
-    status: getStampStatus({ isStampedToday, index, count }),
+    status: getStampStatus({ stampable, index, count }),
     kind: getStampKind(index, total),
     owned,
   });
@@ -46,11 +46,11 @@ const footerButtonContents = [
  * 스탬프를 찍을 수 있는 조건
  * @returns [소유 여부, 완료 여부, 오늘 스탬프 찍었는지 여부]
  */
-const getStampableConditions = ({ owned, status, isStampedToday }: StampableConditionsProps) =>
+const getStampableConditions = ({ owned, status, stampable }: StampableConditionsProps) =>
   [
     !owned, // 소유 여부
     status === RallyStatus.inactive, // 완료 여부
-    isStampedToday, // 오늘 스탬프 찍었는지 여부
+    stampable, // 오늘 스탬프 찍었는지 여부
   ] as const;
 /**
  * 처음으로 만족하는 조건의 인덱스 반환

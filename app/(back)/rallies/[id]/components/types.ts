@@ -4,7 +4,7 @@ export interface RallyStampsInfo {
   total: number;
   count: number;
   owned: boolean;
-  isStampedToday: boolean;
+  stampable: boolean;
 }
 export interface RewardableConditionsProps {
   count: number;
@@ -13,6 +13,6 @@ export interface RewardableConditionsProps {
 export interface StampableConditionsProps {
   owned: boolean;
   status: RallyStatus;
-  isStampedToday: boolean;
+  stampable: boolean;
 }
 export interface RallyFooterInfo extends RewardableConditionsProps, StampableConditionsProps {}
