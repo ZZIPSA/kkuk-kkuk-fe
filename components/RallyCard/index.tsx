@@ -17,7 +17,7 @@ export default function RallyCard({ thumbnailImage: thumb, title, stamps, stampC
     <Card className="border-0 shadow-none flex flex-col gap-2">
       <CardHeader className="p-0 relative aspect-square">
         <Image
-          src={encodeURI(`${process.env.API_URL}/api/image/${thumb}`)}
+          src={encodeURI(`/api/image/${thumb}`)}
           alt={title}
           className="border-black/20 border rounded-md w-full h-full object-cover"
           fill

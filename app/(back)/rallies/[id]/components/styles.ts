@@ -21,13 +21,13 @@ export const rallyFooterStyles = {
   stampButton: {
     default: 'w-full',
     primary: 'bg-primary',
-    indigo: 'bg-indigo-500',
+    indigo: 'bg-indigo-500 hover:bg-indigo-300 group',
     grey: 'bg-grey-100',
   },
   stampIcon: {
     default: 'w-6 h-6 mr-1 fill-white',
     primary: 'stroke-primary',
-    indigo: 'stroke-indigo-500',
+    indigo: 'stroke-indigo-500 group-hover:stroke-indigo-300',
     grey: 'stroke-grey-100',
   },
 };
