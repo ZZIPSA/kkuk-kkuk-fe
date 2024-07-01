@@ -22,14 +22,18 @@ export async function generateMetadata({ params: { id } }: RallyPageProps): Prom
 
 export default async function RallyPage({ params: { id } }: RallyPageProps) {
   const viewerId = (await getMember())?.id;
-  //TODO - get deadline from api
+  // TODO - get deadline from api
   const today = new Date();
   const deadline = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 8);
   // TODO - get deadline from api
+  // TODO - get stampable from api
+  const stampable = true;
+  // TODO - get stampable from api
   const data = await getRallyData(id);
   const {
     title,
     status,
+    /* stampable, */
     /* deadline, */
     createdAt,
     updatedAt,
@@ -37,7 +41,7 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
     starter: { id: starterId },
     kit: { stamps },
   } = data;
-  const { owned, isStampedToday, total, percentage } = getRallyInfo({ stamps, count, updatedAt, starterId, viewerId, createdAt });
+  const { owned, total, percentage } = getRallyInfo({ stamps, count, updatedAt, starterId, viewerId, createdAt });
 
   return (
     <main className="px-4 py-6 w-full bg-grey-50 flex flex-col gap-6">
