@@ -2,17 +2,17 @@ import { RallyStatus } from '@/types/Rally';
 
 export interface RallyStampsInfo {
   total: number;
-  stampCount: number;
+  count: number;
   owned: boolean;
-  isStampedToday: boolean;
+  stampable: boolean;
 }
 export interface RewardableConditionsProps {
-  stampCount: number;
+  count: number;
   total: number;
 }
 export interface StampableConditionsProps {
   owned: boolean;
   status: RallyStatus;
-  isStampedToday: boolean;
+  stampable: boolean;
 }
 export interface RallyFooterInfo extends RewardableConditionsProps, StampableConditionsProps {}

@@ -5,24 +5,20 @@ import { RallyPreviewStamp } from '@/types/Stamp';
 import { rallyFooterStyles } from './styles';
 import { RallyFooterInfo, RallyStampsInfo, RewardableConditionsProps, StampableConditionsProps } from './types';
 
-const getStampStatus = ({ isStampedToday, index, count }: { index: number; count: number; isStampedToday: boolean }): StampStatus =>
-  isStampedToday
-    ? // 오늘 스탬프를 찍었고
-      index <= count // 이미 찍은 스탬프보다 이르거나 같은 차례라면
-      ? StampStatus.checked // 이미 찍은 스탬프 (le)
-      : StampStatus.uncheckable // 아니면 다음에 찍을 스탬프 (gt)
-    : // 오늘 스탬프를 찍지 않았고
-      index < count // 이미 찍은 스탬프보다 이른 차례라면
-      ? StampStatus.checked // 이미 찍은 스탬프 (lt)
-      : index === count // 이미 찍은 스탬프와 같은 차례라면
-        ? StampStatus.checkable // 오늘의 찍을 스탬프 (eq)
-        : StampStatus.uncheckable; // 둘다 아니면 다음에 찍을 스탬프 (gt)
+const getStampStatus = ({ index, count, stampable }: { index: number; count: number; stampable: boolean }): StampStatus =>
+  index < count // 이미 찍은 스탬프보다 이른 차례라면 (lt)
+    ? StampStatus.checked // 이미 찍은 스탬프
+    : index > count // 이미 찍은 스탬프보다 늦은 차례라면 (gt)
+    ? StampStatus.uncheckable // 다음에 찍을 스탬프
+    : stampable // 오늘 스탬프를 찍을 수 있다면 (eq)
+    ? StampStatus.checkable // 오늘의 찍을 스탬프
+    : StampStatus.uncheckable; // 아니면 다음에 찍을 스탬프
 const getStampKind = (index: number, total: number) => (index === total - 1 ? StampKind.reward : StampKind.default);
 export const addStampPropsByIndex =
-  ({ owned, stampCount: count, total, isStampedToday }: RallyStampsInfo) =>
+  ({ owned, count, total, stampable }: RallyStampsInfo) =>
   (stamp: RallyPreviewStamp, index: number) => ({
     ...stamp,
-    status: getStampStatus({ isStampedToday, index, count }),
+    status: getStampStatus({ stampable, index, count }),
     kind: getStampKind(index, total),
     owned,
   });
@@ -45,11 +41,11 @@ const footerButtonContents = [
  * 스탬프를 찍을 수 있는 조건
  * @returns [소유 여부, 완료 여부, 오늘 스탬프 찍었는지 여부]
  */
-const getStampableConditions = ({ owned, status, isStampedToday }: StampableConditionsProps) =>
+const getStampableConditions = ({ owned, status, stampable }: StampableConditionsProps) =>
   [
     !owned, // 소유 여부
     status === RallyStatus.inactive, // 완료 여부
-    isStampedToday, // 오늘 스탬프 찍었는지 여부
+    !stampable, // 오늘 스탬프 찍었는지 여부
   ] as const;
 /**
  * 처음으로 만족하는 조건의 인덱스 반환
@@ -73,7 +69,7 @@ const getStampable = (props: StampableConditionsProps) => getSatisfiedIndex(prop
 /**
  * 리워드를 찍을 수 있는 경우 (마지막 스탬프만 남겨둔 경우)
  */
-const getRewardable = ({ stampCount, total }: RewardableConditionsProps) => stampCount === total - 1;
+const getRewardable = ({ count, total }: RewardableConditionsProps) => count === total - 1;
 export const getFooterConditions = (props: RallyFooterInfo) => ({
   stampable: getStampable(props),
   rewardable: getRewardable(props),

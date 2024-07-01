@@ -19,5 +19,9 @@ export interface JoinedRally extends MyRally {
 }
 
 export interface CompletedRally extends MyRally {
-  updatedAt: Date | null;
+  updatedAt: Date;
 }
+export type RallyData = Prisma.RallyGetPayload<{
+  where: { id: string };
+  select: typeof rallySelect;
+}>;

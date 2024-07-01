@@ -1,32 +1,25 @@
 import { Progress } from '@/components/ui/progress';
-import { /* convertMsToDate, */ dateIntl } from '@/lib/date';
-import { RallyStatus } from '@/types/Rally';
+import { RallyData } from '@/types/Rally';
 import { rallyInfoStyles } from './styles';
+import { getRallyInfoDates } from '../lib';
 
-interface RallyInfoProps {
-  title: string;
+interface RallyInfoProps extends Pick<RallyData, 'title' | 'createdAt' | 'updatedAt' | 'status'> {
+  deadline: Date;
   percentage: number;
-  createdAt: Date;
-  updatedAt: Date | null;
-  // deadline: Date;
-  status: RallyStatus;
 }
 
-export default function RallyInfo({ title, percentage, createdAt, updatedAt, /* deadline, */ status }: RallyInfoProps) {
-  // const today = new Date();
-  const isActive = status === 'active';
-  // const dDay = deadline.getTime() - today.getTime();
+export default function RallyInfo({ title, percentage, createdAt, updatedAt, deadline, status }: RallyInfoProps) {
+  const { dDay, since, completed } = getRallyInfoDates({ createdAt, updatedAt, deadline, status, percentage });
 
   return (
     <section className={rallyInfoStyles.container}>
       <h1 className={rallyInfoStyles.title}>{title}</h1>
       <span className={rallyInfoStyles.percentage}>{percentage.toFixed(0)}%</span>
       <Progress value={percentage} className={rallyInfoStyles.progress} />
-      {/* {isActive && <div className={rallyInfoStyles.dDay}>D-day {convertMsToDate(dDay)}</div>} */}
+      {dDay !== null && <div className={rallyInfoStyles.dDay}>D-day {dDay}</div>}
       <p className={rallyInfoStyles.date}>
-        <span className={rallyInfoStyles.startDate}>시작일: {dateIntl.format(new Date(createdAt))}</span>
-        {!isActive && // TODO: 실패 시에는 표시하지 않아야 함
-          updatedAt !== null && <span>종료일: {dateIntl.format(new Date(updatedAt))}</span>}
+        <span className={rallyInfoStyles.startDate}>시작일: {since}</span>
+        {completed && <span>완료일: {completed}</span>}
       </p>
     </section>
   );

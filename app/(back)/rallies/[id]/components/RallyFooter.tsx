@@ -10,7 +10,7 @@ interface RallyFooterProps extends RallyFooterInfo {
   rallyId: string;
 }
 
-export function RallyFooter(props: RallyFooterProps) {
+export default function RallyFooter(props: RallyFooterProps) {
   const router = useRouter();
   const rallyId = props.rallyId;
 

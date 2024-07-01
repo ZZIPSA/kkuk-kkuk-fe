@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
+import { Prisma } from '@prisma/client';
 import { auth } from '@/auth';
 import { prisma, rallySelect } from '@/app/api/lib/prisma';
 import { BadRequestError, NotFoundRallyError, ServerError, StampLimitError, UnauthorizedError } from '@/app/api/lib/errors';
 import { getRallyStatus } from '@/app/api/lib/utils';
+import { RallyData } from '@/types/Rally';
 
 type GetRallyParams = { params: { id: string } };
 type PatchRallyParams = { params: { id: string } };
@@ -11,14 +13,21 @@ type PostRallyParams = { params: { id: string } };
 export async function GET(_: Request, { params }: GetRallyParams) {
   const { id } = params;
 
-  const rally = await prisma.rally.findUnique({
-    where: { id },
-    select: rallySelect,
-  });
+  try {
+    const rally = (await prisma.rally.findUniqueOrThrow({
+      where: { id },
+      select: rallySelect,
+    })) as RallyData;
 
-  if (!rally) return NotFoundRallyError;
-
-  return NextResponse.json({ data: rally });
+    return NextResponse.json({ data: rally });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2025') return NotFoundRallyError;
+      // TODO - handle prisma error
+    }
+    console.error(error);
+    return ServerError;
+  }
 }
 
 // TODO: 향후 랠리 연장용 API로 수정
