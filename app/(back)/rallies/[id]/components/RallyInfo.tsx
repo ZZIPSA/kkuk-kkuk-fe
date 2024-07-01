@@ -9,7 +9,7 @@ interface RallyInfoProps extends Pick<RallyData, 'title' | 'createdAt' | 'update
 }
 
 export default function RallyInfo({ title, percentage, createdAt, updatedAt, deadline, status }: RallyInfoProps) {
-  const { dDay, since, until, completed } = getRallyInfoDates({ createdAt, updatedAt, deadline, status, percentage });
+  const { dDay, since, completed } = getRallyInfoDates({ createdAt, updatedAt, deadline, status, percentage });
 
   return (
     <section className={rallyInfoStyles.container}>
@@ -19,7 +19,6 @@ export default function RallyInfo({ title, percentage, createdAt, updatedAt, dea
       {dDay !== null && <div className={rallyInfoStyles.dDay}>D-day {dDay}</div>}
       <p className={rallyInfoStyles.date}>
         <span className={rallyInfoStyles.startDate}>시작일: {since}</span>
-        {until && <span>기한: {until}</span>}
         {completed && <span>완료일: {completed}</span>}
       </p>
     </section>
