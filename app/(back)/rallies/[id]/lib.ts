@@ -49,15 +49,11 @@ interface GetRallyInfoProps extends Pick<RallyData, 'updatedAt' | 'createdAt'> {
 export const getRallyInfo = (data: GetRallyInfoProps) =>
   pipe(
     data,
-    derive('isStampedToday')(getStampedToday), // 오늘 스탬프를 찍었는지 확인
     derive('owned')(({ starterId, viewerId }) => starterId === viewerId), // starterId와 viewerId가 같은지로 소유 여부 확인
     derive('total')(({ stamps }) => stamps.length), // 전체 스탬프 개수
     derive('percentage')(({ count, total }) => (count / total) * 100), // 완료된 스탬프 비율
-    remain(['owned', 'isStampedToday', 'total', 'percentage'] as const), // 필요한 값만 남기기
+    remain(['owned', 'total', 'percentage'] as const), // 필요한 값만 남기기
   );
-const getStampedToday = ({ updatedAt, count }: GetRallyInfoProps) =>
-  count > 0 && // 카운트가 0이면 보통 생성한 직후 이므로 직후의 식이 참으로 판정되는 것을 방지
-  new Date().getDate() === updatedAt.getDate(); // 오늘 날짜와 업데이트된 날짜가 같은지 확인
 
 interface GetRallyInfoDatesProps extends Pick<RallyData, 'createdAt' | 'updatedAt' | 'status'> {
   percentage: ReturnType<typeof getRallyInfo>['percentage'];
