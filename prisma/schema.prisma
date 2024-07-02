@@ -31,7 +31,7 @@ model User {
   Authenticator Authenticator[]
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime?
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
@@ -47,6 +47,7 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
+  isPublic          Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -99,7 +100,7 @@ model Kit {
   blurredImage   String
   uploaderId     String
   createdAt      DateTime  @default(now())
-  updatedAt      DateTime?
+  updatedAt      DateTime  @updatedAt
   deletedAt      DateTime?
   uploader       User      @relation(fields: [uploaderId], references: [id])
   stamps         Stamp[]
@@ -114,16 +115,21 @@ model Stamp {
 }
 
 model Rally {
-  id          String      @id @default(cuid())
-  title       String
-  description String?
-  status      RallyStatus
-  kitId       String
-  starterId   String
-  stampCount  Int         @default(0)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime?
-  deletedAt   DateTime?
-  kit         Kit         @relation(fields: [kitId], references: [id])
-  starter     User        @relation(fields: [starterId], references: [id])
+  id              String      @id @default(cuid())
+  title           String
+  description     String?
+  status          RallyStatus
+  kitId           String
+  starterId       String
+  stampCount      Int         @default(0)
+  lastStampDate   DateTime?
+  dueDate         DateTime?
+  completionDate  DateTime?
+  extendedDueDate DateTime?
+  isPublic        Boolean     @default(true)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  deletedAt       DateTime?
+  kit             Kit         @relation(fields: [kitId], references: [id])
+  starter         User        @relation(fields: [starterId], references: [id])
 }
