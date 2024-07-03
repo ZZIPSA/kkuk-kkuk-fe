@@ -7,3 +7,6 @@ export const getDateNumbers = (date: Date) => [date.getFullYear(), date.getMonth
 export const convertMsToDate = (ms: number) => Math.floor(ms / DATE_TO_MS);
 export const now = () => new Date();
 export const diffDates = (date1: Date) => (date2: Date) => Math.abs(date1.getTime() - date2.getTime());
+
+export const parseDate = (a: number | string | Date) => new Date(a);
+export const parseNullableDate = (a: number | string | Date | null) => (a ? parseDate(a) : null);
