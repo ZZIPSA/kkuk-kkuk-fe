@@ -1,12 +1,9 @@
 import { Progress } from '@/components/ui/progress';
 import { RallyData } from '@/types/Rally';
 import { rallyInfoStyles } from './styles';
-import { getRallyInfoDates } from '../lib';
+import { getRallyDates, GetRallyDatesProps } from '../lib';
 
-interface RallyInfoProps extends Pick<RallyData, 'title' | 'createdAt' | 'updatedAt' | 'status'> {
-  deadline: Date;
-  percentage: number;
-}
+interface RallyInfoProps extends Pick<RallyData, 'title' | 'createdAt' | 'updatedAt' | 'status'>, GetRallyDatesProps {}
 
 export default function RallyInfo({ title, percentage, createdAt, updatedAt, deadline, status }: RallyInfoProps) {
   const { dDay, since, completed } = getRallyInfoDates({ createdAt, updatedAt, deadline, status, percentage });
