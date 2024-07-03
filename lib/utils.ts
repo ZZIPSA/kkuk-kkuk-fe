@@ -52,8 +52,8 @@ export const set =
  * f -> a -> f(a)
  */
 export const ap =
-  <T, R>(fn: (a: T) => R) =>
-  (a: T) =>
+  <T>(a: T) =>
+  <R>(fn: (a: T) => R) =>
     fn(a);
 /**
  * f -> () -> f()
