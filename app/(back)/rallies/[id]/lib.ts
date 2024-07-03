@@ -41,7 +41,6 @@ const parseRallyDates: (fetched: FetchedRallyData) => RallyData = evolve({
 
 interface GetRallyInfoProps extends Pick<RallyData, 'updatedAt' | 'createdAt'> {
   stamps: RallyData['kit']['stamps'];
-  count: number;
   starterId: RallyData['starter']['id'];
   viewerId?: string;
 }
@@ -50,8 +49,7 @@ export const getRallyInfo = (data: GetRallyInfoProps) =>
     data,
     derive('owned')(({ starterId, viewerId }) => starterId === viewerId), // starterId와 viewerId가 같은지로 소유 여부 확인
     derive('total')(({ stamps }) => stamps.length), // 전체 스탬프 개수
-    derive('percentage')(({ count, total }) => (count / total) * 100), // 완료된 스탬프 비율
-    remain(['owned', 'total', 'percentage'] as const), // 필요한 값만 남기기
+    remain(['owned', 'total'] as const), // 필요한 값만 남기기
   );
 
 interface GetRallyInfoDatesProps extends Pick<RallyData, 'createdAt' | 'updatedAt' | 'status'> {
