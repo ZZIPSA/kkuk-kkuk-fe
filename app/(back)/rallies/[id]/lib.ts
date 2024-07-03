@@ -52,11 +52,14 @@ export const getRallyInfo = (data: GetRallyInfoProps) =>
     remain(['owned', 'total'] as const), // 필요한 값만 남기기
   );
 
-interface GetRallyInfoDatesProps extends Pick<RallyData, 'createdAt' | 'updatedAt' | 'status'> {
-  percentage: ReturnType<typeof getRallyInfo>['percentage'];
-  deadline: Date; // TODO - deadline from RallyData
+export interface GetRallyDatesProps extends Pick<RallyData, 'createdAt' | 'updatedAt' | 'status'> {
+  count: number;
+  total: number;
+  deadline: Date | null;
 }
-export const getRallyInfoDates = (data: GetRallyInfoDatesProps) =>
+interface HasDeadline extends GetRallyDatesProps {
+  deadline: Date;
+}
   pipe(
     data,
     derive('isActive')(({ status }) => status === 'active'),
