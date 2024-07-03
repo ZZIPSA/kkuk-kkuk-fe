@@ -50,6 +50,20 @@ const nextConfig = {
     });
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/kits',
+        permanent: true,
+      },
+      {
+        source: '/my',
+        destination: '/my/joins',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
