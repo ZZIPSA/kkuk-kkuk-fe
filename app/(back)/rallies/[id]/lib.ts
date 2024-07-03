@@ -33,6 +33,10 @@ const getDataProp: (json: any) => FetchedRallyData = prop('data');
 const parseRallyDates: (fetched: FetchedRallyData) => RallyData = evolve({
   createdAt: parseDate,
   updatedAt: parseDate,
+  dueDate: parseDate,
+  lastStampDate: parseDate,
+  completionDate: parseDate,
+  extendedDueDate: parseDate,
 });
 
 interface GetRallyInfoProps extends Pick<RallyData, 'updatedAt' | 'createdAt'> {
