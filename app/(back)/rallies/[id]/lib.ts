@@ -1,17 +1,12 @@
 import { notFound } from 'next/navigation';
-import { evolve, join, pipe, prop } from '@fxts/core';
-import { convertMsToDate, displayDateYyMmDd } from '@/lib/date';
-import { awaited, bimap, purify } from '@/lib/either';
+import { evolve, join, pipe, prop, tap } from '@fxts/core';
+import { convertMsToDate, displayDateYyMmDd, now, diffDates } from '@/lib/date';
+import { awaited, bimap, lift, purify, match } from '@/lib/either';
 import { handleError } from '@/lib/error';
 import { resolveJson, validResponse } from '@/lib/response';
-import { derive, parseDate, remain } from '@/lib/utils';
-import { RallyData } from '@/types/Rally';
-
-interface FetchedRallyData extends Omit<RallyData, 'createdAt' | 'updatedAt'> {
-  // JSON 데이터는 문자열이므로 날짜값은 Date로 변환해야 함
-  createdAt: string;
-  updatedAt: string;
-}
+import { eq, derive, everyEq, parseDate, remain, everyTrue, notNull } from '@/lib/utils';
+import { FetchedRallyData, RallyData, RallyStatus } from '@/types/Rally';
+import { constNull } from '@/lib/always';
 
 export const getRallyData = async (id: string) =>
   pipe(
