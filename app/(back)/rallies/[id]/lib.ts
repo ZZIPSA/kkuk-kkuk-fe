@@ -1,12 +1,12 @@
 import { notFound } from 'next/navigation';
 import { evolve, join, pipe, prop, tap } from '@fxts/core';
+import { constNull } from '@/lib/always';
 import { convertMsToDate, displayDateYyMmDd, now, diffDates } from '@/lib/date';
 import { awaited, bimap, lift, purify, match } from '@/lib/either';
 import { handleError } from '@/lib/error';
 import { resolveJson, validResponse } from '@/lib/response';
 import { eq, derive, everyEq, parseDate, remain, everyTrue, notNull } from '@/lib/utils';
 import { FetchedRallyData, RallyData, RallyStatus } from '@/types/Rally';
-import { constNull } from '@/lib/always';
 
 export const getRallyData = async (id: string) =>
   pipe(
@@ -60,13 +60,19 @@ export interface GetRallyDatesProps extends Pick<RallyData, 'createdAt' | 'updat
 interface HasDeadline extends GetRallyDatesProps {
   deadline: Date;
 }
+export const getRallyDates = (data: GetRallyDatesProps) =>
   pipe(
     data,
-    derive('isActive')(({ status }) => status === 'active'),
-    derive('today')(() => new Date()),
-    derive('dDay')(({ isActive, deadline, today }) => (isActive ? convertMsToDate(deadline.getTime() - today.getTime()) : null)),
-    derive('since')(({ createdAt }) => displayDateYyMmDd(createdAt)),
-    derive('until')(({ isActive, deadline }) => (isActive ? displayDateYyMmDd(deadline) : null)),
-    derive('completed')(({ isActive, percentage, updatedAt }) => (!isActive && percentage === 100 ? displayDateYyMmDd(updatedAt) : null)),
-    remain(['dDay', 'since', 'until', 'completed']),
+    derive('dDay')((e) => pipe(e, ableToGetDDay, match(constNull, getDeadline))),
+    derive('since')((e) => pipe(e, prop('createdAt'), displayDateYyMmDd)),
+    derive('percentage')(({ count, total }) => (count / total) * 100),
+    derive('completedAt')((e) => pipe(e, lift(isCompleted), match(constNull, convertCompletedAt))),
+    remain(['dDay', 'since', 'completedAt', 'percentage']),
   );
+
+const getDeadline = ({ deadline }: { deadline: Date }) => pipe(deadline, diffDates(now()), convertMsToDate);
+const isActive = ({ status }: GetRallyDatesProps) => pipe(status, eq(RallyStatus.active));
+const hasDeadline = ({ deadline }: GetRallyDatesProps) => pipe(deadline, notNull);
+const ableToGetDDay = lift<GetRallyDatesProps, GetRallyDatesProps, HasDeadline>(everyTrue(isActive, hasDeadline));
+const convertCompletedAt = ({ updatedAt }: GetRallyDatesProps) => displayDateYyMmDd(updatedAt);
+const isCompleted = everyEq<GetRallyDatesProps, number>(prop('count'), prop('total'));
