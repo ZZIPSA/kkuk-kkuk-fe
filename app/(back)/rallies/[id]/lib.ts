@@ -1,11 +1,11 @@
 import { notFound } from 'next/navigation';
 import { evolve, join, pipe, prop, tap } from '@fxts/core';
 import { constNull } from '@/lib/always';
-import { convertMsToDate, displayDateYyMmDd, now, diffDates } from '@/lib/date';
+import { convertMsToDate, displayDateYyMmDd, now, diffDates, parseDate, parseNullableDate } from '@/lib/date';
 import { awaited, bimap, lift, purify, match } from '@/lib/either';
 import { handleError } from '@/lib/error';
 import { resolveJson, validResponse } from '@/lib/response';
-import { eq, derive, everyEq, parseDate, remain, everyTrue, notNull } from '@/lib/utils';
+import { eq, derive, everyEq, remain, everyTrue, notNull } from '@/lib/utils';
 import { FetchedRallyData, RallyData, RallyStatus } from '@/types/Rally';
 
 export const getRallyData = async (id: string) =>
@@ -33,10 +33,10 @@ const getDataProp: (json: any) => FetchedRallyData = prop('data');
 const parseRallyDates: (fetched: FetchedRallyData) => RallyData = evolve({
   createdAt: parseDate,
   updatedAt: parseDate,
-  dueDate: parseDate,
-  lastStampDate: parseDate,
-  completionDate: parseDate,
-  extendedDueDate: parseDate,
+  dueDate: parseNullableDate,
+  lastStampDate: parseNullableDate,
+  completionDate: parseNullableDate,
+  extendedDueDate: parseNullableDate,
 });
 
 interface GetRallyInfoProps extends Pick<RallyData, 'updatedAt' | 'createdAt'> {
