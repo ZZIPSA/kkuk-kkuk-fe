@@ -55,3 +55,22 @@ export const fold =
  */
 export const awaited = async <L, R>(e: Either<PromiseLike<L>, PromiseLike<R>>): Promise<Either<Awaited<PromiseLike<L>>, Awaited<PromiseLike<R>>>> =>
   isLeft(e) ? left(await e.left) : right(await e.right);
+
+/**
+ * Either e a -> a | e
+ */
+export const pop = <L, R>(e: Either<L, R>): L | R => (isLeft(e) ? e.left : e.right);
+/**
+ * f:(e -> b), g:(a -> b) -> Either e a -> b
+ */
+export const match =
+  <L, R, T>(onLeft: (left: L) => T, onRight: (right: R) => T) =>
+  (e: Either<L, R>): T =>
+    isLeft(e) ? onLeft(e.left) : onRight(e.right);
+/**
+ * f:(a -> boolean), g:(a -> e) -> Either e a -> Either e a
+ */
+export const filter =
+  <L, R0>(pred: (r: R0) => boolean, onFalse: (r: R0) => L) =>
+  <R1 extends R0>(e: Either<L, R1>): Either<L, R1> =>
+    isLeft(e) ? e : pred(e.right) ? e : left(onFalse(e.right));
