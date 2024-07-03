@@ -18,7 +18,6 @@ export const convertBufferToBase64 = (buffer: Buffer | ArrayBuffer) => buffer.to
 export const addBase64Prefix = (base64: string) => `data:image/png;base64,${base64}` as const;
 
 export const tapLog = <T, U>(tag: string) => tap<T, U>((e) => console.log(tag, e) as any);
-export const parseDate = (a: number | string | Date) => new Date(a);
 
 export const everyTrue =
   <T>(...fns: ((e: T) => boolean)[]) =>
