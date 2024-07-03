@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { DOMAIN } from './constants';
-import { tap } from '@fxts/core';
+import { negate, tap } from '@fxts/core';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -19,6 +19,19 @@ export const addBase64Prefix = (base64: string) => `data:image/png;base64,${base
 
 export const tapLog = <T, U>(tag: string) => tap<T, U>((e) => console.log(tag, e) as any);
 export const parseDate = (a: number | string | Date) => new Date(a);
+
+export const everyTrue =
+  <T>(...fns: ((e: T) => boolean)[]) =>
+  (e: T) =>
+    fns.every(ap(e));
+export const everyEq =
+  <T, R>(...fns: ((e: T) => R)[]) =>
+  (e: T) =>
+    fns.map(ap(e)).every(eq(ap(e)(fns[0])));
+
+export const eq = (a: unknown) => (b: unknown) => a === b;
+export const isNull = eq(null);
+export const notNull = negate(isNull);
 
 /**
  * a -> b -> a & b
