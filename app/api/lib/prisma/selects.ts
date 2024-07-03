@@ -35,6 +35,11 @@ export const rallySelect = {
     select: userSelect,
   },
   stampCount: true,
+  lastStampDate: true,
+  dueDate: true,
+  completionDate: true,
+  extendedDueDate: true,
+  isPublic: true,
   createdAt: true,
   updatedAt: true,
 } satisfies Prisma.RallySelect;

@@ -13,7 +13,7 @@ export async function GET(_: Request, { params }: GetRallyParams) {
 
   const rally = await prisma.rally.findUnique({
     where: { id },
-    select: rallySelect,
+    select: { ...rallySelect, stampable: true },
   });
 
   if (!rally) return NotFoundRallyError;
