@@ -70,7 +70,7 @@ export const getRallyDates = (data: GetRallyDatesProps) =>
     remain(['dDay', 'since', 'completedAt', 'percentage']),
   );
 
-const getDeadline = ({ deadline }: { deadline: Date }) => pipe(deadline, diffDates(now()), convertMsToDate);
+const getDeadline = ({ deadline }: HasDeadline) => pipe(deadline, diffDates(now()), convertMsToDate, (e) => (e === 0 ? 'Day' : String(e)));
 const isActive = ({ status }: GetRallyDatesProps) => pipe(status, eq(RallyStatus.active));
 const hasDeadline = ({ deadline }: GetRallyDatesProps) => pipe(deadline, notNull);
 const ableToGetDDay = lift<GetRallyDatesProps, GetRallyDatesProps, HasDeadline>(everyTrue(isActive, hasDeadline));
