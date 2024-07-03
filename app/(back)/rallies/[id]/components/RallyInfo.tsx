@@ -13,7 +13,7 @@ export default function RallyInfo({ title, createdAt, updatedAt, deadline, statu
       <h1 className={styles.title}>{title}</h1>
       <span className={styles.percentage}>{percentage.toFixed(0)}%</span>
       <Progress value={percentage} className={styles.progress} />
-      {dDay !== null && <div className={styles.dDay}>D-day {dDay}</div>}
+      {dDay !== null && <div className={styles.dDay}>D-{dDay}</div>}
       <p className={styles.date}>
         <span className={styles.startDate}>시작일: {since}</span>
         {completedAt && <span>완료일: {completedAt}</span>}
