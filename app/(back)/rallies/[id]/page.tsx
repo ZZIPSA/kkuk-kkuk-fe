@@ -35,11 +35,11 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
     starter: { id: starterId },
     kit: { stamps },
   } = await getRallyData(id);
-  const { owned, total, percentage } = getRallyInfo({ stamps, count, updatedAt, starterId, viewerId, createdAt });
+  const { owned, total } = getRallyInfo({ stamps, updatedAt, starterId, viewerId, createdAt });
 
   return (
     <main className="px-4 py-6 w-full bg-grey-50 flex flex-col gap-6">
-      <RallyInfo title={title} percentage={percentage} createdAt={createdAt} updatedAt={updatedAt} status={status} deadline={deadline} />
+      <RallyInfo title={title} createdAt={createdAt} updatedAt={updatedAt} status={status} deadline={deadline} />
       <RallyStamps owned={owned} stamps={stamps} count={count} total={total} stampable={stampable} />
       <RallyFooter owned={owned} status={status} count={count} total={total} stampable={stampable} rallyId={id} />
     </main>
