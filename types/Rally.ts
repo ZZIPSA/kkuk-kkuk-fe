@@ -21,3 +21,20 @@ export interface JoinedRally extends MyRally {
 export interface CompletedRally extends MyRally {
   updatedAt: Date;
 }
+export type RallyData = Prisma.RallyGetPayload<{
+  where: { id: string };
+  select: typeof rallySelect;
+}>;
+export interface FetchRallyData extends RallyData {
+  stampable: boolean;
+}
+export interface FetchedRallyData
+  extends Omit<FetchRallyData, 'createdAt' | 'updatedAt' | 'dueDate' | 'lastStampDate' | 'dueDate' | 'completionDate' | 'extendedDueDate'> {
+  // JSON 데이터는 문자열이므로 날짜값은 Date로 변환해야 함
+  createdAt: string;
+  updatedAt: string;
+  lastStampDate: string;
+  dueDate: string;
+  completionDate: string;
+  extendedDueDate: string;
+}
