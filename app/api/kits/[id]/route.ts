@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
 import { kitSelect, prisma } from '@/app/api/lib/prisma';
+import { NotFoundKitError, ServerError } from '@/app/api/lib/errors';
 import { KitData } from '@/types/Kit';
 
-type getKitParams = { params: { id: string } };
+type GetKitParams = { params: { id: string } };
+type DeleteKitParams = { params: { id: string } };
 
-export async function GET(_: Request, { params }: getKitParams) {
+export async function GET(_: Request, { params }: GetKitParams) {
   const { id } = params;
 
   try {
@@ -13,12 +15,29 @@ export async function GET(_: Request, { params }: getKitParams) {
       select: kitSelect,
     })) satisfies KitData | null;
 
-    if (!kit) {
-      return NextResponse.json({ error: '해당 키트를 찾을 수 없습니다.' }, { status: 404 });
-    }
+    if (!kit) return NotFoundKitError;
 
     return NextResponse.json({ data: kit }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: '서버 에러가 발생했습니다.' }, { status: 500 });
+    return ServerError;
+  }
+}
+
+export async function DELETE(_: Request, { params }: DeleteKitParams) {
+  const { id } = params;
+
+  try {
+    const kit = await prisma.kit.findUnique({ where: { id } });
+
+    if (!kit) NotFoundKitError;
+
+    const deletedKit = await prisma.kit.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
+
+    return NextResponse.json({ data: deletedKit }, { status: 200 });
+  } catch (error) {
+    return ServerError;
   }
 }
