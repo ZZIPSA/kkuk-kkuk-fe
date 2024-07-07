@@ -12,7 +12,6 @@ type GetKitsParams = { params: { cursor?: string; pageSize?: string; order?: Sor
 
 export async function GET(request: Request, { params }: GetKitsParams) {
   try {
-    // params가 undefined일 수 있으므로 기본값을 설정합니다.
     const { cursor = null, pageSize = null, order: orderParam = 'desc' } = params || {};
     const order: SortOrder = orderParam === 'asc' ? 'asc' : 'desc';
 
