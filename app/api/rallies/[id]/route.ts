@@ -13,7 +13,7 @@ export async function GET(_: Request, { params }: GetRallyParams) {
 
   try {
     const rally = (await prisma.rally.findUniqueOrThrow({
-      where: { id },
+      where: { id, deletedAt: null },
       select: { ...rallySelect, stampable: true },
     })) as RallyData;
 
@@ -32,7 +32,7 @@ export async function DELETE(_: Request, { params }: DeleteRallyParams) {
   const { id } = params;
 
   try {
-    const rally = await prisma.rally.findUnique({ where: { id } });
+    const rally = await prisma.rally.findUnique({ where: { id, deletedAt: null } });
 
     if (!rally) NotFoundRallyError;
 

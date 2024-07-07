@@ -15,7 +15,7 @@ export async function PATCH(request: Request, { params }: PatchRallyParams) {
 
   try {
     const rally = await prisma.rally.findUnique({
-      where: { id: rallyId },
+      where: { id: rallyId, deletedAt: null },
       include: { kit: { include: { _count: { select: { stamps: true } } } } },
     });
 

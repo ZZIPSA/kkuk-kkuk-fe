@@ -11,7 +11,7 @@ export async function GET(_: Request, { params }: GetKitParams) {
 
   try {
     const kit = (await prisma.kit.findUnique({
-      where: { id },
+      where: { id, deletedAt: null },
       select: kitSelect,
     })) satisfies KitData | null;
 

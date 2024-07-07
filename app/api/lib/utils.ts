@@ -25,6 +25,7 @@ export async function getPagedKits(pageSize: number, cursor: string | null, orde
       createdAt: order,
     },
     select: kitSelect,
+    where: { deletedAt: null },
   });
 
   const totalKits = await prisma.kit.count();
@@ -48,6 +49,7 @@ export async function getAllKits(order: SortOrder) {
       createdAt: order,
     },
     select: kitSelect,
+    where: { deletedAt: null },
   });
   const totalKits = await prisma.kit.count();
 

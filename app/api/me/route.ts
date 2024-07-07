@@ -27,7 +27,7 @@ export async function GET(request: Request) {
       },
       ...userSelect,
     },
-    where: { id: userId },
+    where: { id: userId, deletedAt: null },
   });
 
   return NextResponse.json({ data: user });

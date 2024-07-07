@@ -13,7 +13,7 @@ export async function GET(request: Request) {
   if (!userId) return UnauthorizedError;
 
   const data = await prisma.kit.findMany({
-    where: { uploaderId: userId },
+    where: { uploaderId: userId, deletedAt: null },
     orderBy: {
       createdAt: order,
     },

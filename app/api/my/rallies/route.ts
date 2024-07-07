@@ -14,7 +14,7 @@ export async function GET(request: Request) {
 
   try {
     const rallies = (await prisma.rally.findMany({
-      where: { starterId: userId },
+      where: { starterId: userId, deletedAt: null },
       orderBy: {
         createdAt: order,
       },
