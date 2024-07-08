@@ -1,16 +1,25 @@
 import { NextResponse } from 'next/server';
 import { prisma, rallySelect } from '@/app/api/lib/prisma';
 import { MyRally } from '@/types/Rally';
+import { SortOrder } from '@/app/api/lib/types';
+import { UnauthorizedError } from '@/app/api/lib/errors';
 
-// TODO: MVP 이후 페이지네이션, 파람 구현
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get('userId');
+  const orderParam = searchParams.get('order') || 'desc';
+  const order: SortOrder = orderParam === 'asc' ? 'asc' : 'desc';
 
-  if (!userId) return NextResponse.json({ error: '로그인 해주세요.' }, { status: 401 });
+  if (!userId) return UnauthorizedError;
 
   try {
-    const rallies = (await prisma.rally.findMany({ where: { starterId: userId }, select: rallySelect })) satisfies MyRally[];
+    const rallies = (await prisma.rally.findMany({
+      where: { starterId: userId, deletedAt: null },
+      orderBy: {
+        createdAt: order,
+      },
+      select: rallySelect,
+    })) satisfies MyRally[];
 
     return NextResponse.json({
       data: rallies,
