@@ -24,13 +24,15 @@ export default function DeadlineField({ control, setValue }: DeadlineFieldProps)
           <FormLabel>
             완주 기한
             <span className="font-normal text-xs text-gray-400">(최소 일주일 이후 부터 설정 가능)</span>
-            <div className="relative">
+            <div className="relative font-normal">
               <Input placeholder="완주 기한 설정하기" value={presentDeadline(value)} onClick={() => setOpen(true)} />
-              <XIcon
-                className="absolute [transform:translate(-50%,-50%)] right-1 top-1/2 size-4 p-0.5 rounded-full bg-grey-100 text-background"
-                onClick={() => setValue('deadline', undefined)}
-                type="button"
-              />
+              {value && (
+                <XIcon
+                  className="absolute [transform:translate(-50%,-50%)] right-1 top-1/2 size-4 p-0.5 rounded-full bg-grey-100 text-background"
+                  onClick={() => setValue('deadline', undefined)}
+                  type="button"
+                />
+              )}
             </div>
           </FormLabel>
           <FormControl>
