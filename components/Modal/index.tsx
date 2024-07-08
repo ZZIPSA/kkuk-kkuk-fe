@@ -1,8 +1,12 @@
-export default function Modal({ children, open }: { children: React.ReactNode; open: boolean }) {
+import { cn } from '@/lib/utils';
+
+export interface ModalProps extends React.DetailedHTMLProps<React.DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement> {}
+
+export default function Modal({ children, open, className }: ModalProps) {
   if (!open) return null;
   return (
     <dialog className={styles.dialog}>
-      <section className={styles.section}>{children}</section>
+      <section className={cn(styles.section, className)}>{children}</section>
     </dialog>
   );
 }
