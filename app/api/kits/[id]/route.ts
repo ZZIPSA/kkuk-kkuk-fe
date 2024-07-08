@@ -31,12 +31,7 @@ export async function DELETE(_: Request, { params }: DeleteKitParams) {
 
     if (!kit) NotFoundKitError;
 
-    const deletedKit = await prisma.kit.update({
-      where: { id },
-      data: { deletedAt: new Date() },
-    });
-
-    return NextResponse.json({ data: deletedKit }, { status: 200 });
+    return NextResponse.json({ data: '키트가 삭제되었습니다.' }, { status: 200 });
   } catch (error) {
     return ServerError;
   }
