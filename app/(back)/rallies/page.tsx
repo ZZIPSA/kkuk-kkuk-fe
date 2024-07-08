@@ -13,7 +13,7 @@ export default async function RalliesPage() {
   const { data: rallies }: { data: JoinedRally[] } = await fetch(`${process.env.API_URL}/api/my/rallies?userId=${userId}`).then((res) => res.json());
   return (
     <main className="w-full px-4 py-6 grid grid-cols-2 gap-x-2 gap-y-4">
-      {rallies.map(({ id, updatedAt, stampCount, kit: { thumbnailImage, stamps, title } }) => (
+      {rallies.map(({ id, updatedAt, stampCount, title, kit: { thumbnailImage, stamps } }) => (
         <Link key={id} href={`/rallies/${id}`}>
           {stampCount === stamps.length ? (
             <RallyCard stampCount={stampCount} thumbnailImage={thumbnailImage} title={title} updatedAt={updatedAt} />
