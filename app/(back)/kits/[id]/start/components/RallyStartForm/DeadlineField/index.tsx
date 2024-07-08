@@ -38,7 +38,7 @@ export default function DeadlineField({ control, setValue }: DeadlineFieldProps)
           </FormControl>
           <FormDescription>
             완주 기한 설정시 난이도가 매우 올라가게 됩니다.
-            <Modal open={open}>
+            <Modal open={open} className="p-0">
               <DeadlineModalContent setOpen={setOpen} setValue={setValue} />
             </Modal>
           </FormDescription>

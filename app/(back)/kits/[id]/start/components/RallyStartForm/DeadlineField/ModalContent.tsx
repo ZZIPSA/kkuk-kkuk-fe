@@ -21,14 +21,14 @@ export default function DeadlineModalContent({ setOpen, setValue }: DeadlineModa
 
   return (
     <Card className="border-none shadow-none flex flex-col gap-6">
-      <CardHeader className="flex flex-col justify-start items-start p-0">
+      <CardHeader className="flex flex-col justify-start items-start">
         <CardTitle className="text-base">완주 기한을 선택하세요.</CardTitle>
         <CardDescription className="text-left">완주 기한까지 완주하지 못하면 랠리를 더 이상 진행할 수 없습니다.</CardDescription>
       </CardHeader>
-      <CardContent className="p-0">
+      <CardContent>
         <Picker value={pickerValue} setValue={setPickerValue} today={today} durings={durings} months={months} datesByMonth={datesByMonth} />
       </CardContent>
-      <CardFooter className="flex justify-stretch gap-2 p-0">
+      <CardFooter className="flex justify-stretch gap-2">
         <Button variant="outline" className="flex-1" onClick={() => setOpen(false)}>
           취소하기
         </Button>
