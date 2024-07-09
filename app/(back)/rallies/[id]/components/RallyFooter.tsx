@@ -19,7 +19,7 @@ export default function RallyFooter(props: RallyFooterProps) {
   const styles = getFooterStyles(is);
 
   const onClick = async () => {
-    const response = await fetch(`/api/rallies/${rallyId}`, {
+    const response = await fetch(`/api/rallies/${rallyId}/stamp`, {
       method: 'PATCH',
     });
     if (response.ok) {
