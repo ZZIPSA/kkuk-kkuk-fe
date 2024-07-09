@@ -5,7 +5,8 @@ import { BadRequestError, ServerError } from '../lib/errors';
 export async function POST(request: Request) {
   // TODO: auth, 필수 항목 검증 미들웨어 구현
   const body = await request.json();
-  const { title, description, kitId, starterId } = body;
+  const { title, description, kitId, starterId, deadline } = body;
+  const dueDate = deadline ? new Date(deadline) : null;
 
   if (!title || !kitId || !starterId) return BadRequestError;
 
@@ -18,7 +19,7 @@ export async function POST(request: Request) {
         kitId,
         starterId,
         stampCount: 0,
-        updatedAt: new Date(),
+        dueDate,
       },
       include: {
         kit: { select: kitSelect },
