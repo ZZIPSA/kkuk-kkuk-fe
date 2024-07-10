@@ -28,8 +28,8 @@ export function ModalTitle({ title }: { title: string }) {
   return <h1 className={styles.title}>{title}</h1>;
 }
 
-export function ModalDescription({ text }: { text: string }) {
-  return <p className={styles.text}>{text}</p>;
+export function ModalDescription({ description }: { description: string }) {
+  return <p className={styles.description}>{description}</p>;
 }
 
 function Buttons({ back, submit, cancel }: { back: string; submit: string; cancel: string }) {
