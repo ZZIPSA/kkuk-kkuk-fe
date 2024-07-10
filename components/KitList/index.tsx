@@ -1,15 +1,22 @@
-import Link from 'next/link';
-import KitCard from '@/components/KitCard';
-import { KitCardInfo } from '@/types/Kit';
+'use client';
 
-export default async function KitList({ kits }: { kits: KitCardInfo[] }) {
+import { FetchKits } from '@/types/Kit';
+import { useFetchKits } from './lib';
+import KitCards from './KitCards';
+import ScrollTop from './ScrollTop';
+export { getAllKits } from './lib';
+
+export type KitListProps = {
+  fetchKits: FetchKits;
+};
+
+export default function KitList({ fetchKits }: KitListProps) {
+  const { ref, kits, ended } = useFetchKits(fetchKits);
+
   return (
     <article className="grid grid-cols-2 gap-2">
-      {kits?.map(({ id, title, thumbnailImage, tags, uploader }) => (
-        <Link href={`/kits/${id}`} passHref key={id}>
-          <KitCard id={id} key={id} title={title} thumbnailImage={thumbnailImage} tags={tags} uploader={uploader} />
-        </Link>
-      ))}
+      <KitCards kits={kits} />
+      {ended ? <ScrollTop /> : <div ref={ref} />}
     </article>
   );
 }
