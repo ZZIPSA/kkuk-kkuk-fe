@@ -1,7 +1,7 @@
 'use client';
 
 import { FetchKits } from '@/types/Kit';
-import { useFetchKits } from './lib';
+import { useFetchKits } from './hooks';
 import KitCards from './KitCards';
 import ScrollTop from './ScrollTop';
 export { getAllKits } from './lib';
