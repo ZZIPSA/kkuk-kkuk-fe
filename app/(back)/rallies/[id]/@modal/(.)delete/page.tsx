@@ -3,7 +3,7 @@ import { SadCat } from '@/lib/icons';
 import { RallyPageProps } from '../../types';
 import { deleteRally } from './actions';
 
-export default function DeleteAccountModal({ params: { id } }: RallyPageProps) {
+export default function DeleteRallyModal({ params: { id } }: RallyPageProps) {
   return (
     <Modal back={`/rallies/${id}`} labels={{ submit: '포기하기', cancel: '뒤로가기' }} onSubmit={deleteRally}>
       <SadCat className="size-18 m-auto" />
