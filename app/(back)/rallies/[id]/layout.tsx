@@ -2,7 +2,12 @@ import { Metadata } from 'next';
 import { getRallyData } from './lib';
 import { RallyPageProps } from './types';
 
-export async function generateMetadata({ params: { id } }: RallyPageProps): Promise<Metadata> {
+interface RallyLayoutProps extends RallyPageProps {
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}
+
+export async function generateMetadata({ params: { id } }: RallyLayoutProps): Promise<Metadata> {
   const {
     title,
     starter: { name },
@@ -12,7 +17,7 @@ export async function generateMetadata({ params: { id } }: RallyPageProps): Prom
   };
 }
 
-export default function RallyLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
+export default function RallyLayout({ children, modal }: RallyLayoutProps) {
   return (
     <>
       {children}
