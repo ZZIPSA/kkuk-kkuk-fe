@@ -7,3 +7,4 @@ export const BASE_KEY = process.env.AWS_S3_BASE_KEY!;
 export const THUMBNAIL_IMAGE_INDEX = 0;
 export const REWARD_IMAGE_INDEX = -2;
 export const BLURRED_IMAGE_INDEX = -1;
+export const PAGE_SIZE = 10;
