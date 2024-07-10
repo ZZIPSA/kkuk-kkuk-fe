@@ -27,6 +27,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: process.env.NEXT_PUBLIC_VERCEL_URL,
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   webpack: (config, options) => {

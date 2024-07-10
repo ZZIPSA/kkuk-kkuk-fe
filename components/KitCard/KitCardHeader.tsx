@@ -12,7 +12,7 @@ export default function KitCardHeader({ thumbnail, title, variant }: KitCardHead
   const styles = getHeaderStyles(getConditions(variant));
   return (
     <CardHeader className={styles.header}>
-      <Image src={`${process.env.API_URL}/api/image/${thumbnail}`} alt={title} fill className={styles.thumbnail} sizes="720" priority />
+      <Image src={`/api/image/${thumbnail}`} alt={title} fill className={styles.thumbnail} sizes="720" priority />
     </CardHeader>
   );
 }

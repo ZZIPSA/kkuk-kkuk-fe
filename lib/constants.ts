@@ -9,6 +9,8 @@ export const AUTO_TWEET = encodeURI('제가 만든 키트로 릴레이를 시작
 export const AUTO_TWEET_HASHTAGS = '꾹꾹,kookkook';
 export const MAXIMUM_TAGS = 6;
 export const API_URL = process.env.API_URL!;
+export const MIN_RALLY_DEADLINE_DAYS = 7;
+export const MAX_RALLY_DEADLINE_DAYS = 100;
 
 export const REGION = process.env.AWS_REGION!;
 export const ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID!;

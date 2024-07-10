@@ -15,7 +15,7 @@ export function RallyStamp({ objectKey, status, kind, owned }: StampProps) {
 
   return (
     <div className={styles.container}>
-      <Image fill src={encodeURI(`${process.env.API_URL}/api/image/${objectKey}`)} alt="Stamp" sizes="360" className={styles.image} priority />
+      <Image fill src={encodeURI(`/api/image/${objectKey}`)} alt="Stamp" sizes="360" className={styles.image} priority />
       {is.icon.gift && <div className={styles.giftBackground} />}
       {is.icon.check && <Check className={styles.check} />}
       {is.icon.gift && <Gift className={styles.gift} />}

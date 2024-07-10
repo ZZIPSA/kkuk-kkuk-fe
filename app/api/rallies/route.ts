@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server';
 import { prisma, kitSelect, userSelect } from '@/app/api/lib/prisma';
+import { BadRequestError, ServerError } from '../lib/errors';
 
 export async function POST(request: Request) {
   // TODO: auth, 필수 항목 검증 미들웨어 구현
   const body = await request.json();
-  const { title, description, kitId, starterId } = body;
+  const { title, description, kitId, starterId, deadline } = body;
+  const dueDate = deadline ? new Date(deadline) : null;
 
-  if (!title || !kitId || !starterId) {
-    return NextResponse.json({ error: '요청이 유효하지 않습니다.' }, { status: 400 });
-  }
+  if (!title || !kitId || !starterId) return BadRequestError;
 
   try {
     const newRally = await prisma.rally.create({
@@ -19,6 +19,7 @@ export async function POST(request: Request) {
         kitId,
         starterId,
         stampCount: 0,
+        dueDate,
       },
       include: {
         kit: { select: kitSelect },
@@ -30,6 +31,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ data: newRally }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: '예기치 못한 에러가 발생했습니다.' }, { status: 500 });
+    console.log('error', error);
+    return ServerError;
   }
 }

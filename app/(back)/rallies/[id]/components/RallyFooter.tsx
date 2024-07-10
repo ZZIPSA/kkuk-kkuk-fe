@@ -10,7 +10,7 @@ interface RallyFooterProps extends RallyFooterInfo {
   rallyId: string;
 }
 
-export function RallyFooter(props: RallyFooterProps) {
+export default function RallyFooter(props: RallyFooterProps) {
   const router = useRouter();
   const rallyId = props.rallyId;
 
@@ -19,7 +19,7 @@ export function RallyFooter(props: RallyFooterProps) {
   const styles = getFooterStyles(is);
 
   const onClick = async () => {
-    const response = await fetch(`/api/rallies/${rallyId}`, {
+    const response = await fetch(`/api/rallies/${rallyId}/stamp`, {
       method: 'PATCH',
     });
     if (response.ok) {
