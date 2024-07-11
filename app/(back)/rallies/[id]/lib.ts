@@ -1,12 +1,12 @@
 import { notFound } from 'next/navigation';
-import { evolve, join, pipe, prop, tap } from '@fxts/core';
+import { every, evolve, isNull, join, juxt, pipe, prop, tap } from '@fxts/core';
 import { constNull } from '@/lib/always';
 import { convertMsToDate, displayDateYyMmDd, now, diffDates, parseDate, parseNullableDate } from '@/lib/date';
 import { awaited, bimap, lift, purify, match } from '@/lib/either';
 import { handleError } from '@/lib/error';
 import { resolveJson, validResponse } from '@/lib/response';
 import { eq, derive, everyEq, remain, everyTrue, notNull } from '@/lib/utils';
-import { FetchedRallyData, RallyData, RallyStatus } from '@/types/Rally';
+import { FetchedRallyData, FetchRallyData, RallyStatus } from '@/types/Rally';
 
 export const getRallyData = async (id: string) =>
   pipe(
@@ -31,7 +31,7 @@ const handleRallyData = (res: Response) =>
     parseRallyDates, // 랠리 데이터에서 string으로 된 날짜 데이터(createAt, updatedAt)를 Date로 변환
   );
 const getDataProp: (json: any) => FetchedRallyData = prop('data');
-const parseRallyDates: (fetched: FetchedRallyData) => RallyData = evolve({
+const parseRallyDates: (fetched: FetchedRallyData) => FetchRallyData = evolve({
   createdAt: parseDate,
   updatedAt: parseDate,
   dueDate: parseNullableDate,
@@ -40,9 +40,9 @@ const parseRallyDates: (fetched: FetchedRallyData) => RallyData = evolve({
   extendedDueDate: parseNullableDate,
 });
 
-interface GetRallyInfoProps extends Pick<RallyData, 'updatedAt' | 'createdAt'> {
-  stamps: RallyData['kit']['stamps'];
-  starterId: RallyData['starter']['id'];
+interface GetRallyInfoProps extends Pick<FetchRallyData, 'status' | 'completionDate'> {
+  stamps: FetchRallyData['kit']['stamps'];
+  starterId: FetchRallyData['starter']['id'];
   viewerId?: string;
 }
 export const getRallyInfo = (data: GetRallyInfoProps) =>
@@ -50,10 +50,14 @@ export const getRallyInfo = (data: GetRallyInfoProps) =>
     data,
     derive('owned')(({ starterId, viewerId }) => starterId === viewerId), // starterId와 viewerId가 같은지로 소유 여부 확인
     derive('total')(({ stamps }) => stamps.length), // 전체 스탬프 개수
-    remain(['owned', 'total'] as const), // 필요한 값만 남기기
+    derive('failed')(isFailed), // 실패 여부
+    remain(['owned', 'total', 'failed'] as const), // 필요한 값만 남기기
   );
+const isFailed = <T extends GetRallyInfoProps>(e: T) => pipe(e, juxt([isInactive, notCompleted]), every(Boolean));
+const isInactive = (e: GetRallyInfoProps) => pipe(e, prop('status'), eq(RallyStatus.inactive));
+const notCompleted = (e: GetRallyInfoProps) => pipe(e, prop('completionDate'), isNull);
 
-export interface GetRallyDatesProps extends Pick<RallyData, 'createdAt' | 'updatedAt' | 'status'> {
+export interface GetRallyDatesProps extends Pick<FetchRallyData, 'createdAt' | 'updatedAt' | 'status' | 'completionDate'> {
   count: number;
   total: number;
   deadline: Date | null;
