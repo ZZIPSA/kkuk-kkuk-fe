@@ -4,6 +4,7 @@ import RallyInfo from './components/RallyInfo';
 import RallyStamps from './components/RallyStamps';
 import RallyFooter from './components/RallyFooter';
 import { RallyPageProps } from './types';
+import ExtendModal from './components/ExtendModal';
 
 export default async function RallyPage({ params: { id } }: RallyPageProps) {
   const viewerId = (await getMember())?.id;
@@ -20,7 +21,7 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
     completionDate,
     stampCount: count,
     starter: { id: starterId },
-    kit: { stamps },
+    kit: { id: kitId, stamps },
   } = await getRallyData(id);
   const { owned, total, failed } = getRallyInfo({ status, completionDate, stamps, starterId, viewerId });
 
@@ -29,6 +30,7 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
       <RallyInfo title={title} status={status} count={count} total={total} createdAt={createdAt} updatedAt={updatedAt} deadline={deadline} />
       <RallyStamps owned={owned} stamps={stamps} count={count} total={total} stampable={stampable} />
       <RallyFooter owned={owned} status={status} count={count} total={total} stampable={stampable} rallyId={id} />
+      {owned && failed && <ExtendModal id={id} kitId={kitId} />}
     </main>
   );
 }
