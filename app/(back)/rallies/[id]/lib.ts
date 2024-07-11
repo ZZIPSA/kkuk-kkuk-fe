@@ -5,7 +5,7 @@ import { convertMsToDate, displayDateYyMmDd, now, diffDates, parseDate, parseNul
 import { awaited, bimap, lift, purify, match } from '@/lib/either';
 import { handleError } from '@/lib/error';
 import { resolveJson, validResponse } from '@/lib/response';
-import { eq, derive, everyEq, remain, everyTrue, notNull } from '@/lib/utils';
+import { eq, derive, remain, everyTrue, notNull, tapLog } from '@/lib/utils';
 import { FetchedRallyData, FetchRallyData, RallyStatus } from '@/types/Rally';
 
 export const getRallyData = async (id: string) =>
@@ -65,13 +65,16 @@ export interface GetRallyDatesProps extends Pick<FetchRallyData, 'createdAt' | '
 interface HasDeadline extends GetRallyDatesProps {
   deadline: Date;
 }
+interface HasCompletionDate extends GetRallyDatesProps {
+  completionDate: Date;
+}
 export const getRallyDates = (data: GetRallyDatesProps) =>
   pipe(
     data,
     derive('dDay')((e) => pipe(e, ableToGetDDay, match(constNull, getDeadline))),
     derive('since')((e) => pipe(e, prop('createdAt'), displayDateYyMmDd)),
     derive('percentage')(({ count, total }) => (count / total) * 100),
-    derive('completedAt')((e) => pipe(e, lift(isCompleted), match(constNull, convertCompletedAt))),
+    derive('completedAt')((e) => pipe(e, hasCompletedDate, match(constNull, convertCompletedAt))),
     remain(['dDay', 'since', 'completedAt', 'percentage']),
   );
 
@@ -79,5 +82,6 @@ const getDeadline = ({ deadline }: HasDeadline) => pipe(deadline, diffDates(now(
 const isActive = ({ status }: GetRallyDatesProps) => pipe(status, eq(RallyStatus.active));
 const hasDeadline = ({ deadline }: GetRallyDatesProps) => pipe(deadline, notNull);
 const ableToGetDDay = lift<GetRallyDatesProps, GetRallyDatesProps, HasDeadline>(everyTrue(isActive, hasDeadline));
-const convertCompletedAt = ({ updatedAt }: GetRallyDatesProps) => displayDateYyMmDd(updatedAt);
-const isCompleted = everyEq<GetRallyDatesProps, number>(prop('count'), prop('total'));
+const convertCompletedAt = (e: HasCompletionDate) => pipe(e, prop('completionDate'), displayDateYyMmDd);
+const isCompleted = (e: GetRallyDatesProps): e is HasCompletionDate => pipe(e, prop('completionDate'), notNull);
+const hasCompletedDate = lift<GetRallyDatesProps, GetRallyDatesProps, HasCompletionDate>(isCompleted);
