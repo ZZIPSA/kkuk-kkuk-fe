@@ -24,7 +24,9 @@ export interface CompletedRally extends MyRally {
 export type RallyData = Prisma.RallyGetPayload<{
   where: { id: string };
   select: typeof rallySelect;
-}>;
+}> & {
+  stampable: boolean;
+};
 export interface FetchRallyData extends RallyData {
   stampable: boolean;
 }
