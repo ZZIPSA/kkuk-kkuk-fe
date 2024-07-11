@@ -28,7 +28,7 @@ export async function getPagedKits(pageSize: number, cursor: string | null, orde
 
   const totalKits = await prisma.kit.count();
   const totalPages = Math.ceil(totalKits / pageSize);
-  const nextCursor = kits.length === take ? kits[take - 1].id : null;
+  const nextCursor = kits.at(-1)?.id;
 
   return {
     kits,
