@@ -1,23 +1,9 @@
-import type { Metadata } from 'next';
 import { getMember } from '@/auth';
 import { getRallyData, getRallyInfo } from './lib';
 import RallyInfo from './components/RallyInfo';
 import RallyStamps from './components/RallyStamps';
 import RallyFooter from './components/RallyFooter';
-
-interface RallyPageProps {
-  params: { id: string };
-}
-
-export async function generateMetadata({ params: { id } }: RallyPageProps): Promise<Metadata> {
-  const {
-    title,
-    starter: { name },
-  } = await getRallyData(id);
-  return {
-    title: `${name}님의 ${title} 랠리`,
-  };
-}
+import { RallyPageProps } from './types';
 
 export default async function RallyPage({ params: { id } }: RallyPageProps) {
   const viewerId = (await getMember())?.id;
