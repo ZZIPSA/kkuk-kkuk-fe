@@ -17,11 +17,12 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
     dueDate: deadline,
     createdAt,
     updatedAt,
+    completionDate,
     stampCount: count,
     starter: { id: starterId },
     kit: { stamps },
   } = await getRallyData(id);
-  const { owned, total } = getRallyInfo({ stamps, updatedAt, starterId, viewerId, createdAt });
+  const { owned, total, failed } = getRallyInfo({ status, completionDate, stamps, starterId, viewerId });
 
   return (
     <main className="px-4 py-6 w-full bg-grey-50 flex flex-col gap-6">
