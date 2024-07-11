@@ -3,6 +3,7 @@ import { prisma } from '@/app/api/lib/prisma';
 import { BadRequestError, NotFoundRallyError, ServerError, StampLimitError, UnauthorizedError } from '@/app/api/lib/errors';
 import { getRallyStatus } from '@/app/api/lib/utils';
 import { auth } from '@/auth';
+import { revalidateTag } from 'next/cache';
 
 type PatchRallyParams = { params: { id: string } };
 
@@ -24,16 +25,19 @@ export async function PATCH(_: Request, { params }: PatchRallyParams) {
     if (rally.stampCount >= rally.kit._count.stamps) return StampLimitError;
 
     const updatedStampCount = rally.stampCount + 1;
-    const isRallyComplete = rally.stampCount === rally.kit._count.stamps;
+    const isRallyComplete = updatedStampCount === rally.kit._count.stamps;
+    const updatedAt = new Date();
     const updatedRally = await prisma.rally.update({
       where: { id: rallyId },
       data: {
         stampCount: updatedStampCount,
         status: getRallyStatus(updatedStampCount),
-        lastStampDate: new Date(),
-        completionDate: isRallyComplete ? new Date() : null,
+        updatedAt,
+        lastStampDate: updatedAt,
+        completionDate: isRallyComplete ? updatedAt : null,
       },
     });
+    revalidateTag(rallyId);
 
     return NextResponse.json(updatedRally);
   } catch (error) {

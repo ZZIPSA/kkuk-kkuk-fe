@@ -3,7 +3,7 @@ export const getInfoFromPath = ({ path }: { path: string }) => ({
   back: getBackPath(path),
 });
 
-const getBackPath = (path: string) => path.split('/').slice(0, -1).join('/') || '/';
+const getBackPath = (path: string) => path.substring(0, path.lastIndexOf('/')) || '/';
 
 const TITLE_MAP = new Map<string, RegExp>([
   ['root', /^\/$/],
@@ -17,17 +17,17 @@ const TITLE_MAP = new Map<string, RegExp>([
 
 function getTitleFromPath(path: string) {
   // /my/settings
-  if (path.match(TITLE_MAP.get('my-settings')!)?.[0]) return '유저 설정';
+  if (TITLE_MAP.get('my-settings')!.test(path)) return '유저 설정';
   // /kits/new
-  if (path.match(TITLE_MAP.get('kit-new')!)?.[0]) return '키트 업로드';
+  if (TITLE_MAP.get('kit-new')!.test(path)) return '키트 업로드';
   // /kits/[id]/start
-  if (path.match(TITLE_MAP.get('rally-start')!)?.[0]) return '랠리 시작하기';
+  if (TITLE_MAP.get('rally-start')!.test(path)) return '랠리 시작하기';
   // /kits/[id]
-  if (path.match(TITLE_MAP.get('kit')!)?.[0]) return '스탬프 랠리';
+  if (TITLE_MAP.get('kit')!.test(path)) return '스탬프 랠리';
   // /rallies/[id]
-  if (path.match(TITLE_MAP.get('rally-ongoing')!)?.[0]) return '스탬프 랠리 진행중';
+  if (TITLE_MAP.get('rally-ongoing')!.test(path)) return '스탬프 랠리 진행중';
   // /rallies
-  if (path.match(TITLE_MAP.get('rallies')!)?.[0]) return '진행중인 랠리';
+  if (TITLE_MAP.get('rallies')!.test(path)) return '진행중인 랠리';
   // 경로의 제목이 정의되지 않은 경우
   return '타이틀이 지정되지 않았습니다.';
 }

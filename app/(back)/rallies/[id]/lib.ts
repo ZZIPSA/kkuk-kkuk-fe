@@ -12,7 +12,7 @@ export const getRallyData = async (id: string) =>
   pipe(
     id,
     getRallyApiUrl, // API URL + ID
-    fetch, // API 호출
+    taggedFetch, // API 호출
     validResponse, // 응답이 실패라면 Left, 성공이라면 Right
     bimap(
       handleError, // 실패 시 에러 핸들러로 전달
@@ -22,6 +22,7 @@ export const getRallyData = async (id: string) =>
     purify(notFound), // 404 에러 처리 -> TODO 에러 핸들링 추가
   );
 const getRallyApiUrl = (id: string) => join('/')([process.env.API_URL, 'api', 'rallies', id]);
+const taggedFetch = (url: string) => fetch(url, { next: { tags: ['rally', url.substring(url.lastIndexOf('/') + 1)] } });
 const handleRallyData = (res: Response) =>
   pipe(
     res,
