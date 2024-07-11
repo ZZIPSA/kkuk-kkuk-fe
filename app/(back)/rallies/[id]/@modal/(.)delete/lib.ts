@@ -7,9 +7,8 @@ export const getTexts = (id: string) =>
     id,
     getRallyData,
     derive('isCompleted')(({ completionDate }) => completionDate !== null),
-    derive('title')(({ isCompleted }) => (isCompleted ? '랠리를 삭제하시겠어요?' : '랠리를 포기하시겠어요?')),
-    derive('description')(({ isCompleted }) =>
-      isCompleted ? '랠리를 삭제하면 다신 이어갈 수 없어요!' : '랠리를 포기하면 삭제되어 다신 이어갈 수 없어요!',
-    ),
+    derive('action')(({ isCompleted }) => (isCompleted ? '삭제' : '포기')),
+    derive('title')(({ action }) => `랠리를 ${action}하시겠어요?`),
+    derive('description')(({ action }) => `랠리를 ${action}하면 더 이상 이 랠리를 조회할 수 없어요!`),
     remain(['title', 'description']),
   );
