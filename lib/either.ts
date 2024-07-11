@@ -39,7 +39,7 @@ export const bimap =
  * f:(e -> never) -> Either e a -> a
  */
 export const purify =
-  <L, R>(onLeft: (left?: L) => never) =>
+  <L, R>(onLeft: (left: L) => never) =>
   (e: Either<L, R>): R =>
     isLeft(e) ? onLeft(e.left) : e.right;
 /**
