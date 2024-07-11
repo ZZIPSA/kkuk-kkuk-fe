@@ -24,7 +24,16 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
 
   return (
     <main className="px-4 py-6 w-full bg-grey-50 flex flex-col gap-6">
-      <RallyInfo title={title} status={status} count={count} total={total} createdAt={createdAt} updatedAt={updatedAt} deadline={deadline} />
+      <RallyInfo
+        title={title}
+        status={status}
+        count={count}
+        total={total}
+        createdAt={createdAt}
+        updatedAt={updatedAt}
+        deadline={deadline}
+        completionDate={completionDate}
+      />
       <RallyStamps owned={owned} stamps={stamps} count={count} total={total} stampable={stampable} />
       <RallyFooter owned={owned} status={status} count={count} total={total} stampable={stampable} rallyId={id} />
       {owned && failed && <ExtendModal id={id} kitId={kitId} />}
