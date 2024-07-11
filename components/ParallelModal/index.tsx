@@ -4,7 +4,7 @@ import { defaults } from './lib';
 
 interface ParallelModalProps {
   back: string;
-  labels: { submit: string; cancel: string };
+  labels: { submit?: string; cancel?: string };
   onSubmit: (form: FormData) => Promise<void>;
   children?: React.ReactNode;
 }
@@ -32,15 +32,19 @@ export function ModalDescription({ description }: { description: string }) {
   return <p className={styles.description}>{description}</p>;
 }
 
-function Buttons({ back, submit, cancel }: { back: string; submit: string; cancel: string }) {
+function Buttons({ back, submit, cancel }: { back: string; submit?: string; cancel?: string }) {
   return (
     <section className={styles.buttons}>
-      <Link href={back} className={styles.cancel}>
-        {cancel}
-      </Link>
-      <button type="submit" className={styles.submit}>
-        {submit}
-      </button>
+      {cancel && (
+        <Link href={back} className={styles.cancel}>
+          {cancel}
+        </Link>
+      )}
+      {submit && (
+        <button type="submit" className={styles.submit}>
+          {submit}
+        </button>
+      )}
     </section>
   );
 }
