@@ -8,13 +8,10 @@ import ExtendModal from './components/ExtendModal';
 
 export default async function RallyPage({ params: { id } }: RallyPageProps) {
   const viewerId = (await getMember())?.id;
-  // TODO - get stampable from api
-  const stampable = true;
-  // TODO - get stampable from api
   const {
     title,
     status,
-    // stampable,
+    stampable,
     dueDate: deadline,
     createdAt,
     updatedAt,
