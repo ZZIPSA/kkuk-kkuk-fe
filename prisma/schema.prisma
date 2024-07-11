@@ -124,7 +124,7 @@ model Rally {
   stampCount      Int         @default(0)
   lastStampDate   DateTime?
   dueDate         DateTime?
-  completionDate  DateTime?
+  completionDate  DateTime?   @map("completedDate")
   extendedDueDate DateTime?
   isPublic        Boolean     @default(true)
   createdAt       DateTime    @default(now())

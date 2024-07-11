@@ -7,26 +7,32 @@ import { RallyPageProps } from './types';
 
 export default async function RallyPage({ params: { id } }: RallyPageProps) {
   const viewerId = (await getMember())?.id;
-  // TODO - get stampable from api
-  const stampable = true;
-  // TODO - get stampable from api
   const {
     title,
     status,
-    // stampable,
+    stampable,
     dueDate: deadline,
     createdAt,
     updatedAt,
+    completionDate,
     stampCount: count,
     starter: { id: starterId },
-    kit: { stamps },
+    kit: { stamps, rewardImage },
   } = await getRallyData(id);
   const { owned, total } = getRallyInfo({ stamps, updatedAt, starterId, viewerId, createdAt });
 
   return (
     <main className="px-4 py-6 w-full bg-grey-50 flex flex-col gap-6">
       <RallyInfo title={title} status={status} count={count} total={total} createdAt={createdAt} updatedAt={updatedAt} deadline={deadline} />
-      <RallyStamps owned={owned} stamps={stamps} count={count} total={total} stampable={stampable} />
+      <RallyStamps
+        owned={owned}
+        stamps={stamps}
+        count={count}
+        total={total}
+        stampable={stampable}
+        rewardImage={rewardImage}
+        completionDate={completionDate}
+      />
       <RallyFooter owned={owned} status={status} count={count} total={total} stampable={stampable} rallyId={id} />
     </main>
   );
