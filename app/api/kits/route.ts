@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { prisma } from '@/app/api/lib/prisma';
 import { S3Manager } from '@/lib/services/s3';
@@ -8,17 +8,15 @@ import { BadRequestError, ServerError } from '@/app/api/lib/errors';
 import { SortOrder } from '@/app/api/lib/types';
 import { CreateKitProps } from '@/types/Kit';
 
-type GetKitsParams = { params: { cursor?: string; pageSize?: string; order?: SortOrder } };
-
-export async function GET(request: Request, { params }: GetKitsParams) {
+export async function GET(request: NextRequest) {
   try {
-    const { cursor = null, pageSize = null, order: orderParam = 'desc' } = params || {};
-    const order: SortOrder = orderParam === 'asc' ? 'asc' : 'desc';
+    const params = request.nextUrl.searchParams;
+    const pageSize = params.get('pageSize');
+    const cursor = params.get('cursor');
+    const order = (params.get('order') ?? 'desc') as SortOrder;
 
     if (pageSize) {
-      if (!cursor) return BadRequestError;
-
-      const { kits, meta } = await getPagedKits(parseInt(pageSize, 10), cursor, order);
+      const { kits, meta } = await getPagedKits(parseInt(pageSize), cursor, order);
       return NextResponse.json({ data: kits, meta });
     } else {
       const { kits, totalKits } = await getAllKits(order);
