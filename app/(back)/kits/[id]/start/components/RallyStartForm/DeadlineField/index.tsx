@@ -39,7 +39,7 @@ export default function DeadlineField({ control, setValue }: DeadlineFieldProps)
             <Input className="hidden" {...field} value={inputDeadline(value)} />
           </FormControl>
           <FormDescription>
-            설정한 기한까지 완주하지 못하면 랠리를 더 이상 진행할 수 없습니다.
+            랠리 설정 시, 설정한 기한까지 완주하지 못하면 랠리를 더 이상 진행할 수 없습니다.
             <Modal open={open} className="p-0">
               <DeadlineModalContent setOpen={setOpen} setValue={setValue} />
             </Modal>

@@ -17,3 +17,5 @@ export type KitCreate = Prisma.KitCreateArgs['data'];
 export interface CreateKitProps extends Pick<KitCreate, 'title' | 'description' | 'tags'> {
   stamps: string[];
 }
+
+export type FetchKits = (props: { cursor: string }) => Promise<{ cursor: string; kits: KitCardInfo[] }>;
