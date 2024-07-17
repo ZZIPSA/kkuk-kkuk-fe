@@ -4,9 +4,11 @@ import { extendRally } from '../../actions';
 import { pipe } from '@fxts/core';
 import { bind, remain } from '@/lib/do';
 
-interface ExtendModalProps {
+interface ExtendModalProps extends Flags {
   id: string;
   kitId: string;
+}
+interface Flags {
   extendable: boolean;
   startable: boolean;
 }
@@ -23,13 +25,9 @@ export default async function ExtendModal({ id, kitId, extendable, startable }: 
   );
 }
 
-const getLabels = (e: { extendable: boolean; startable: boolean }) =>
-  pipe(
-    e,
-    bind('submit', ({ extendable, startable }) => (extendable ? '기간 연장하기' : startable ? '같은 랠리로 새로 시작하기' : undefined)),
-    bind('cancel', ({ extendable, startable }) => (extendable && startable ? '새로 시작하기' : undefined)),
-    remain(['submit', 'cancel'] as const),
-  );
+const getLabels = (e: Flags) => pipe(e, bind('submit', getSubmit), bind('cancel', getCancel), remain(['submit', 'cancel'] as const));
+const getSubmit = ({ extendable, startable }: Flags) => (extendable ? '기간 연장하기' : startable ? '같은 랠리로 새로 시작하기' : undefined);
+const getCancel = ({ extendable, startable }: Flags) => (extendable && startable ? '새로 시작하기' : undefined);
 
 function ExtendableDescription() {
   return (
