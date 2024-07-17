@@ -2,7 +2,14 @@ import Modal, { ModalDescription, ModalTitle } from '@/components/ParallelModal'
 import { SadCat } from '@/lib/icons';
 import { extendRally } from '../../actions';
 
-export default async function ExtendModal({ id, kitId }: { id: string; kitId: string }) {
+interface ExtendModalProps {
+  id: string;
+  kitId: string;
+  extendable: boolean;
+  startable: boolean;
+}
+
+export default async function ExtendModal({ id, kitId, extendable, startable }: ExtendModalProps) {
   return (
     <Modal back={`/kit/${kitId}`} labels={{ submit: '기간 연장하기', cancel: '새로 시작하기' }} onSubmit={extendRally}>
       <SadCat className="size-18 m-auto" />
