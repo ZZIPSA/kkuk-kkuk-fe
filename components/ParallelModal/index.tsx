@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 
 interface ParallelModalProps {
   back: string;
+  cancel?: string;
   labels: { submit?: string; cancel?: string };
   onSubmit: (form: FormData) => Promise<void>;
   className?: string;
@@ -13,6 +14,7 @@ interface ParallelModalProps {
 
 export default function Modal({
   back = defaults.back,
+  cancel,
   labels = defaults.labels,
   onSubmit = defaults.onSubmit,
   className,
@@ -23,7 +25,7 @@ export default function Modal({
       <Backdrop back={back} />
       <form className={cn(styles.container, className)} action={onSubmit}>
         {children}
-        <Buttons back={back} {...labels} />
+        <Buttons back={cancel ?? back} {...labels} />
       </form>
     </>
   );
