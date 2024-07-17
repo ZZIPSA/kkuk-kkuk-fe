@@ -5,6 +5,8 @@ export interface RallyStampsInfo {
   count: number;
   owned: boolean;
   stampable: boolean;
+  rewardImage: string;
+  completionDate: Date | null;
 }
 export interface RewardableConditionsProps {
   count: number;
