@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import type { GET } from '@/app/api/rallies/[id]/route';
 import { every, evolve, isNull, join, juxt, pipe, prop, tap } from '@fxts/core';
 import { constNull } from '@/lib/always';
 import { convertMsToDate, displayDateYyMmDd, now, diffDates, parseDate, parseNullableDate } from '@/lib/date';
@@ -8,6 +9,9 @@ import { resolveJson, validResponse } from '@/lib/response';
 import { eq, derive, remain, everyTrue, notNull, tapLog } from '@/lib/utils';
 import { FetchedRallyData, FetchRallyData, RallyStatus } from '@/types/Rally';
 
+/**
+ * {@link GET API}
+ */
 export const getRallyData = async (id: string) =>
   pipe(
     id,
@@ -38,11 +42,15 @@ const parseRallyDates: (fetched: FetchedRallyData) => FetchRallyData = evolve({
   lastStampDate: parseNullableDate,
   completionDate: parseNullableDate,
   extendedDueDate: parseNullableDate,
+  kit: evolve({
+    deletedAt: parseNullableDate,
+  }),
 });
 
 interface GetRallyInfoProps extends Pick<FetchRallyData, 'status' | 'completionDate'> {
   stamps: FetchRallyData['kit']['stamps'];
   starterId: FetchRallyData['starter']['id'];
+  kitDeletedAt: FetchRallyData['kit']['deletedAt'];
   viewerId?: string;
 }
 export const getRallyInfo = (data: GetRallyInfoProps) =>
