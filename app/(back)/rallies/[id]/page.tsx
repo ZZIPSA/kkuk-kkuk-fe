@@ -16,11 +16,20 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
     createdAt,
     updatedAt,
     completionDate,
+    extendedDueDate,
     stampCount: count,
     starter: { id: starterId },
-    kit: { id: kitId, stamps, rewardImage },
+    kit: { id: kitId, stamps, rewardImage, deletedAt: kitDeletedAt },
   } = await getRallyData(id);
-  const { owned, total, failed } = getRallyInfo({ status, completionDate, stamps, starterId, viewerId });
+  const { owned, total, failed, extendable, startable } = getRallyInfo({
+    status,
+    completionDate,
+    stamps,
+    starterId,
+    viewerId,
+    kitDeletedAt,
+    extendedDueDate,
+  });
 
   return (
     <main className="px-4 py-6 w-full bg-grey-50 flex flex-col gap-6">
@@ -44,7 +53,7 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
         completionDate={completionDate}
       />
       <RallyFooter owned={owned} status={status} count={count} total={total} stampable={stampable} rallyId={id} />
-      {owned && failed && <ExtendModal id={id} kitId={kitId} />}
+      {owned && failed && <ExtendModal id={id} kitId={kitId} extendable={extendable} startable={startable} />}
     </main>
   );
 }
