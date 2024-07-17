@@ -1,7 +1,7 @@
 import { always, every, identity, juxt, pipe, prop, tap } from '@fxts/core';
 import { filter, lift, match, of } from '@/lib/either';
 import { Do, bind, assign } from '@/lib/do';
-import { cn, eq, everyEq, notNull, tapLog } from '@/lib/utils';
+import { cn, eq, everyEq, notNull } from '@/lib/utils';
 import { StampStatus, StampKind } from '@/components/RallyStamp';
 import { RallyStatus } from '@/types/Rally';
 import { RallyPreviewStamp } from '@/types/Stamp';
@@ -14,7 +14,7 @@ export const addStampPropsByIndex = (info: RallyStampsInfo) => (stamp: RallyPrev
   pipe(Do, assign(stamp), assign(info), bind('index', always(index)), bindStampInfo);
 const bindStampInfo = (e: StampData) => pipe(e, bind('status', getStampStatus), bind('kind', getStampKind), bind('objectKey', replaceWithReward));
 
-const getStampStatus = (e: StampData) => pipe(e, of<StampStatus, typeof e>, filterChecked, filterUncheckable, tapLog('getStampStatus'), mapCheckable);
+const getStampStatus = (e: StampData) => pipe(e, of<StampStatus, typeof e>, filterChecked, filterUncheckable, mapCheckable);
 const filterChecked = filter(({ index, count }: StampData) => index >= count, always(StampStatus.checked));
 const isCheckable = (e: StampData) => pipe(e, juxt([prop('stampable'), isIndexCount]), every(Boolean));
 const filterUncheckable = filter(isCheckable, always(StampStatus.uncheckable));
