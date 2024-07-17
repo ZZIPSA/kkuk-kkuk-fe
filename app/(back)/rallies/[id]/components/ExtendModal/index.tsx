@@ -1,6 +1,8 @@
 import Modal, { ModalDescription, ModalTitle } from '@/components/ParallelModal';
 import { SadCat } from '@/lib/icons';
 import { extendRally } from '../../actions';
+import { pipe } from '@fxts/core';
+import { bind, remain } from '@/lib/do';
 
 interface ExtendModalProps {
   id: string;
@@ -25,6 +27,14 @@ export default async function ExtendModal({ id, kitId, extendable, startable }: 
     </Modal>
   );
 }
+
+const getLabels = (e: { extendable: boolean; startable: boolean }) =>
+  pipe(
+    e,
+    bind('submit', ({ extendable, startable }) => (extendable ? '기간 연장하기' : startable ? '같은 랠리로 새로 시작하기' : undefined)),
+    bind('cancel', ({ extendable, startable }) => (extendable && startable ? '새로 시작하기' : undefined)),
+    remain(['submit', 'cancel'] as const),
+  );
 
 function ExtendableDescription() {
   return (
