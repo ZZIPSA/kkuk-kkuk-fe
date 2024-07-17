@@ -1,27 +1,32 @@
-import { cn } from '@/lib/utils';
+import { always, every, identity, juxt, pipe, prop, tap } from '@fxts/core';
+import { filter, lift, match, of } from '@/lib/either';
+import { Do, bind, assign } from '@/lib/do';
+import { cn, eq, everyEq, notNull, tapLog } from '@/lib/utils';
 import { StampStatus, StampKind } from '@/components/RallyStamp';
 import { RallyStatus } from '@/types/Rally';
 import { RallyPreviewStamp } from '@/types/Stamp';
 import { rallyFooterStyles } from './styles';
 import { RallyFooterInfo, RallyStampsInfo, RewardableConditionsProps, StampableConditionsProps } from './types';
 
-const getStampStatus = ({ index, count, stampable }: { index: number; count: number; stampable: boolean }): StampStatus =>
-  index < count // 이미 찍은 스탬프보다 이른 차례라면 (lt)
-    ? StampStatus.checked // 이미 찍은 스탬프
-    : index > count // 이미 찍은 스탬프보다 늦은 차례라면 (gt)
-    ? StampStatus.uncheckable // 다음에 찍을 스탬프
-    : stampable // 오늘 스탬프를 찍을 수 있다면 (eq)
-    ? StampStatus.checkable // 오늘의 찍을 스탬프
-    : StampStatus.uncheckable; // 아니면 다음에 찍을 스탬프
-const getStampKind = (index: number, total: number) => (index === total - 1 ? StampKind.reward : StampKind.default);
-export const addStampPropsByIndex =
-  ({ owned, count, total, stampable }: RallyStampsInfo) =>
-  (stamp: RallyPreviewStamp, index: number) => ({
-    ...stamp,
-    status: getStampStatus({ stampable, index, count }),
-    kind: getStampKind(index, total),
-    owned,
-  });
+type StampData = RallyStampsInfo & RallyPreviewStamp & { index: number };
+
+export const addStampPropsByIndex = (info: RallyStampsInfo) => (stamp: RallyPreviewStamp, index: number) =>
+  pipe(Do, assign(stamp), assign(info), bind('index', always(index)), bindStampInfo);
+const bindStampInfo = (e: StampData) => pipe(e, bind('status', getStampStatus), bind('kind', getStampKind), bind('objectKey', replaceWithReward));
+
+const getStampStatus = (e: StampData) => pipe(e, of<StampStatus, typeof e>, filterChecked, filterUncheckable, tapLog('getStampStatus'), mapCheckable);
+const filterChecked = filter(({ index, count }: StampData) => index >= count, always(StampStatus.checked));
+const isCheckable = (e: StampData) => pipe(e, juxt([prop('stampable'), isIndexCount]), every(Boolean));
+const filterUncheckable = filter(isCheckable, always(StampStatus.uncheckable));
+const isIndexCount = everyEq<StampData, number>(prop('index'), prop('count'));
+const mapCheckable = match<StampStatus, unknown, StampStatus>(identity, always(StampStatus.checkable));
+
+const getStampKind = ({ index, total }: { index: number; total: number }) => (index === total - 1 ? StampKind.reward : StampKind.default);
+
+const replaceWithReward = (e: StampData & { kind: StampKind }) => pipe(e, lift(isCompletedReward), match(prop('objectKey'), prop('rewardImage')));
+const isCompletedReward = (e: { kind: StampKind; completionDate: Date | null }) => pipe(e, juxt([isReward, isCompleted]), every(Boolean));
+const isReward = (e: { kind: StampKind }) => pipe(e, prop('kind'), eq(StampKind.reward));
+const isCompleted = (e: { completionDate: Date | null }) => pipe(e, prop('completionDate'), notNull);
 
 // Footer
 
