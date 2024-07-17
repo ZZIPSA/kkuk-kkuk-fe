@@ -18,3 +18,26 @@ export default async function ExtendModal({ id, kitId }: { id: string; kitId: st
     </Modal>
   );
 }
+
+function ExtendableDescription() {
+  return (
+    <ModalDescription>
+      기간안에 스탬프 랠리를 마무리 하지 못했어요!
+      <br />
+      1회 한정 남은 기간을 연장하여
+      <br />
+      랠리를 이어갈 수 있어요!
+    </ModalDescription>
+  );
+}
+function NotExtendableDescription() {
+  return (
+    <ModalDescription>
+      기간안에 스탬프 랠리를 마무리 하지 못했어요!
+      <br />
+      아쉽지만 이미 연장한 랠리는 또다시 연장할 수 없어요.
+      <br />
+      다시 한 번 도전해보는 건 어떨까요?
+    </ModalDescription>
+  );
+}
