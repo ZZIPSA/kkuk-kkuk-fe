@@ -60,11 +60,14 @@ export const getRallyInfo = (data: GetRallyInfoProps) =>
     derive('total')(({ stamps }) => stamps.length), // 전체 스탬프 개수
     derive('failed')(isFailed), // 실패 여부
     derive('extendable')(isNeverExtendedBefore), // 연장 가능 여부
+    derive('startable')(isKitExist), // 시작 가능 여부
+    remain(['owned', 'total', 'failed', 'extendable', 'startable'] as const), // 필요한 값만 남기기
   );
 const isFailed = <T extends GetRallyInfoProps>(e: T) => pipe(e, juxt([isInactive, notCompleted]), every(Boolean));
 const isInactive = (e: GetRallyInfoProps) => pipe(e, prop('status'), eq(RallyStatus.inactive));
 const notCompleted = (e: GetRallyInfoProps) => pipe(e, prop('completionDate'), isNull);
 const isNeverExtendedBefore = <T extends GetRallyInfoProps>(e: T) => pipe(e, prop('extendedDueDate'), isNull);
+const isKitExist = <T extends GetRallyInfoProps>(e: T) => pipe(e, prop('kitDeletedAt'), isNull);
 
 export interface GetRallyDatesProps extends Pick<FetchRallyData, 'createdAt' | 'updatedAt' | 'status' | 'completionDate'> {
   count: number;
