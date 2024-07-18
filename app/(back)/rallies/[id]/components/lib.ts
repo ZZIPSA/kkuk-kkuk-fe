@@ -8,7 +8,12 @@ import { RallyPreviewStamp } from '@/types/Stamp';
 import { rallyFooterStyles } from './styles';
 import { RallyFooterInfo, RallyStampsInfo, RewardableConditionsProps, StampableConditionsProps } from './types';
 
-type StampData = RallyStampsInfo & RallyPreviewStamp & { index: number };
+interface StampData extends RallyStampsInfo, RallyPreviewStamp {
+  index: number;
+}
+interface HasKind extends StampData {
+  kind: StampKind;
+}
 
 export const addStampPropsByIndex = (info: RallyStampsInfo) => (stamp: RallyPreviewStamp, index: number) =>
   pipe(Do, assign(stamp), assign(info), bind('index', always(index)), bindStampInfo);
@@ -21,12 +26,12 @@ const filterUncheckable = filter(isCheckable, always(StampStatus.uncheckable));
 const isIndexCount = everyEq<StampData, number>(prop('index'), prop('count'));
 const mapCheckable = match<StampStatus, unknown, StampStatus>(identity, always(StampStatus.checkable));
 
-const getStampKind = ({ index, total }: { index: number; total: number }) => (index === total - 1 ? StampKind.reward : StampKind.default);
+const getStampKind = ({ index, total }: StampData) => (index === total - 1 ? StampKind.reward : StampKind.default);
 
-const replaceWithReward = (e: StampData & { kind: StampKind }) => pipe(e, lift(isCompletedReward), match(prop('objectKey'), prop('rewardImage')));
-const isCompletedReward = (e: { kind: StampKind; completionDate: Date | null }) => pipe(e, juxt([isReward, isCompleted]), every(Boolean));
-const isReward = (e: { kind: StampKind }) => pipe(e, prop('kind'), eq(StampKind.reward));
-const isCompleted = (e: { completionDate: Date | null }) => pipe(e, prop('completionDate'), notNull);
+const replaceWithReward = (e: HasKind) => pipe(e, lift(isCompletedReward), match(prop('objectKey'), prop('rewardImage')));
+const isCompletedReward = (e: HasKind) => pipe(e, juxt([isReward, isCompleted]), every(Boolean));
+const isReward = (e: HasKind) => pipe(e, prop('kind'), eq(StampKind.reward));
+const isCompleted = (e: HasKind) => pipe(e, prop('completionDate'), notNull);
 
 // Footer
 
