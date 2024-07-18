@@ -23,8 +23,8 @@ const getCancel = ({ extendable, startable }: Flags) => (extendable && startable
 
 const submits = {
   extendable: '기간 연장하기',
-  notExtendable: '같은 랠리로 새로 시작하기',
-  notStartable: '다른 랠리로 시작하기',
+  notExtendable: '같은 키트로 새로 시작하기',
+  notStartable: '다른 키트로 시작하기',
 } as const;
 const cancels = {
   extendable: '새로 시작하기',
