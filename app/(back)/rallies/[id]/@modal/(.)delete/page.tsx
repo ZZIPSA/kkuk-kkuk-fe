@@ -9,8 +9,8 @@ export default async function DeleteRallyModal({ params: { id } }: RallyPageProp
   return (
     <Modal back={`/rallies/${id}`} labels={{ submit: '포기하기', cancel: '뒤로가기' }} onSubmit={deleteRally}>
       <SadCat className="size-18 m-auto" />
-      <ModalTitle title={title} />
-      <ModalDescription description={description} />
+      <ModalTitle>{title}</ModalTitle>
+      <ModalDescription>{description}</ModalDescription>
     </Modal>
   );
 }
