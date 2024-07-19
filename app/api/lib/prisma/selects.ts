@@ -15,6 +15,7 @@ export const kitSelect = {
   },
   createdAt: true,
   updatedAt: true,
+  deletedAt: true,
 } satisfies Prisma.KitSelect;
 
 export const kitCardSelect = {

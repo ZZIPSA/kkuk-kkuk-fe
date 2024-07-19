@@ -3,10 +3,10 @@ import { RallyData } from '@/types/Rally';
 import { rallyInfoStyles as styles } from './styles';
 import { getRallyDates, GetRallyDatesProps } from '../lib';
 
-interface RallyInfoProps extends Pick<RallyData, 'title' | 'createdAt' | 'updatedAt' | 'status'>, GetRallyDatesProps {}
+interface RallyInfoProps extends Pick<RallyData, 'title' | 'createdAt' | 'updatedAt' | 'status' | 'completionDate'>, GetRallyDatesProps {}
 
-export default function RallyInfo({ title, createdAt, updatedAt, deadline, status, count, total }: RallyInfoProps) {
-  const { dDay, since, completedAt, percentage } = getRallyDates({ createdAt, updatedAt, deadline, status, count, total });
+export default function RallyInfo({ title, createdAt, updatedAt, deadline, status, count, total, completionDate }: RallyInfoProps) {
+  const { dDay, since, completedAt, percentage } = getRallyDates({ createdAt, updatedAt, deadline, status, count, total, completionDate });
 
   return (
     <section className={styles.container}>
