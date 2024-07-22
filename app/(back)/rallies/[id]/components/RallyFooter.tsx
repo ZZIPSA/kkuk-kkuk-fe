@@ -21,6 +21,7 @@ export default function RallyFooter(props: RallyFooterProps) {
   const onClick = async () => {
     const response = await fetch(`/api/rallies/${rallyId}/stamp`, {
       method: 'PATCH',
+      body: JSON.stringify({ stampCount: props.count }),
     });
     if (response.ok) {
       router.refresh();
@@ -33,7 +34,7 @@ export default function RallyFooter(props: RallyFooterProps) {
   return (
     <footer className={styles.footer}>
       <Button className={styles.shareButton}>친구에게 공유하기</Button>
-      <Button disabled={is.disabled} className={styles.stampButton} onClick={onClick}>
+      <Button disabled={false} className={styles.stampButton} onClick={onClick}>
         {(is.stampable || is.reward) && <Stamp className={styles.stampIcon} />}
         {content}
       </Button>
