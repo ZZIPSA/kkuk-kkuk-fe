@@ -2,6 +2,7 @@ export type Left<L> = { _tag: 'Left'; left: L };
 export type Right<R> = { _tag: 'Right'; right: R };
 export type Either<L, R> = Left<L> | Right<R>;
 
+export const of = <L, R>(e: R): Either<L, R> => right(e);
 export const left = <L>(left: L): Left<L> => ({ _tag: 'Left', left });
 export const isLeft = <L, R>(e: Either<L, R>): e is Left<L> => e._tag === 'Left';
 export const right = <R>(right: R): Right<R> => ({ _tag: 'Right', right });
@@ -39,7 +40,7 @@ export const bimap =
  * f:(e -> never) -> Either e a -> a
  */
 export const purify =
-  <L, R>(onLeft: (left?: L) => never) =>
+  <L, R>(onLeft: (left: L) => never) =>
   (e: Either<L, R>): R =>
     isLeft(e) ? onLeft(e.left) : e.right;
 /**

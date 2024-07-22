@@ -23,6 +23,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    session({ session, token }) {
+      if (token?.sub) session.user.id = token.sub;
+      return session;
+    },
+  },
 });
 
 export const getMember = async () => (await auth())?.user;

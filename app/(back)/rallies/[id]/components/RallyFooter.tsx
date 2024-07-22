@@ -21,6 +21,7 @@ export default function RallyFooter(props: RallyFooterProps) {
   const onClick = async () => {
     const response = await fetch(`/api/rallies/${rallyId}/stamp`, {
       method: 'PATCH',
+      body: JSON.stringify({ stampCount: props.count }),
     });
     if (response.ok) {
       router.refresh();

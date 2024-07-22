@@ -7,6 +7,7 @@ import { Form } from '@/components/ui/form';
 import formSchema from './schema';
 import type { FormValues } from './types';
 import TitleField from './TitleField';
+import DeadlineField from './DeadlineField';
 import DescriptionField from './DescriptionField';
 import SubmitButton from './Submit';
 
@@ -49,6 +50,7 @@ export default function RallyStartForm({ starterId, kitId }: RallyStartFormProps
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-15">
         <TitleField control={form.control} />
+        <DeadlineField control={form.control} setValue={form.setValue} />
         <DescriptionField control={form.control} />
         <SubmitButton state={form.formState} />
       </form>
