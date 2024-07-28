@@ -3,6 +3,11 @@
 - [KKUK-KKUK Frontend](#kkuk-kkuk-frontend)
   - [Pages](#pages)
 
+## About
+
+- 스탬프랠리를 즐겁게 진행할 수 있도록 돕는 웹 앱 "꾹꾹"입니다.
+- Next.js, Prisma, PostgreSQL, tailwind
+
 ## Pages
 
 - `/`: 루트 페이지
@@ -16,3 +21,9 @@
   - `/completed`: 완료한 랠리 페이지
   - `/created`: 생성한 키트 페이지
   - `/settings`: 개인 정보 수정 페이지
+
+## Commands
+
+### 실행 방법
+
+`$ yarn dev`
