@@ -26,4 +26,5 @@
 
 ### 실행 방법
 
-`$ yarn dev`
+- `$ yarn add sharp --ignore-engines`
+- `$ yarn dev`
