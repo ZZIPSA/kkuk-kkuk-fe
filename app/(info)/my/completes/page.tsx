@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ensureMember } from '@/auth';
 import RallyCard from '@/components/RallyCard';
 import EmptyContent from '../components/EmptyContent';
-import { RallyStatus, MyRally } from '@/types/Rally';
+import { fetchMyInactiveRallies } from './lib';
 
 export const metadata: Metadata = {
   title: '완료한 랠리',
@@ -11,8 +11,7 @@ export const metadata: Metadata = {
 
 export default async function CompletesPage() {
   const { id: userId } = await ensureMember();
-  const api = `${process.env.API_URL}/api/my/rallies?userId=${userId}`;
-  const { data: rallies }: { data: MyRally[] } = await fetch(api).then((res) => res.json());
+  const rallies = await fetchMyInactiveRallies(userId);
   if (rallies.length === 0) return <EmptyContent message="완료한 랠리가 없어요!" />;
 
   return (
