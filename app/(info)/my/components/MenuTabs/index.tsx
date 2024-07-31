@@ -16,4 +16,4 @@ export default function MenuTabs() {
   );
 }
 
-const styles = { container: 'flex w-full justify-stretch border-b border-gray-200 pt-2 sticky top-0' };
+const styles = { container: 'flex w-full justify-stretch pt-2 sticky top-0' };
