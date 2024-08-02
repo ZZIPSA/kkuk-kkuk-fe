@@ -3,7 +3,7 @@ import { Check } from '@/lib/icons';
 export default function ShowCompletedOnly() {
   return (
     <label className={styles.label}>
-      <input type="checkbox" className={styles.input} />
+      <input type="checkbox" className={styles.input} defaultChecked={true} />
       <Check className={styles.checkbox} />
       완주한 랠리만 보기
     </label>
