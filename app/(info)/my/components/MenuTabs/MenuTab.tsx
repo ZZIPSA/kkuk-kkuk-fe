@@ -17,7 +17,7 @@ const getStyles = (isActive: boolean) =>
     [styles.inactive]: !isActive,
   });
 const styles = {
-  default: 'pb-2 flex-1 text-center transition duration-200 border-b border-gray-200',
+  default: 'pb-2 flex-1 text-center transition duration-200',
   active: 'font-bold text-primary border-b-2 border-primary z-10',
   inactive: 'text-grey-200',
 };
