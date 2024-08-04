@@ -23,3 +23,24 @@ export function useFetchKits(fetchKits: FetchKits) {
   }, [inView, ended]);
   return { ref, kits, ended };
 }
+
+const fetchKitsFrom =
+  (api: URL): FetchKits =>
+  (params) =>
+    pipe(
+      Do,
+      bind('url', () => api),
+      bind('params', () => new URLSearchParams(params)),
+      addParams, // api에 파라미터 추가
+      fetch, // 요청
+      resolveJson<RawFetchedKits>, // JSON으로 변환
+      pickKitsAndCursor, // 키트와 커서 추출
+    );
+const addParams = ({ url, params }: { url: URL; params: URLSearchParams }) => {
+  const api = new URL(url);
+  for (const [key, value] of Array.from(params.entries())) api.searchParams.append(key, value);
+  return api;
+};
+const pickKitsAndCursor = (origin: RawFetchedKits) =>
+  pipe(origin, bind('kits', prop('data')<RawFetchedKits>), bind('cursor', pickCursor), remain(['kits', 'cursor']));
+const pickCursor = (origin: RawFetchedKits) => pipe(origin, prop('meta'), prop('nextCursor'));
