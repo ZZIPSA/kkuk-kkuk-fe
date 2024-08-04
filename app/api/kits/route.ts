@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { prisma } from '@/app/api/lib/prisma';
 import { S3Manager } from '@/lib/services/s3';
-import { extractImageIdFromUrl, getAllKits, getBlurredImageURL, getNewKitId, getPagedKits, getStampsCreate } from '@/app/api/lib/utils';
-import { BLURRED_IMAGE_INDEX, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
+import { extractImageIdFromUrl, getAllKits, getBlurredImageURL, getNewKitId, getPagedKits, getStampsCreate, parseTake } from '@/app/api/lib/utils';
+import { BLURRED_IMAGE_INDEX, PAGE_SIZE, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
 import { BadRequestError, ServerError } from '@/app/api/lib/errors';
 import { SortOrder } from '@/app/api/lib/types';
 import { CreateKitProps } from '@/types/Kit';
@@ -11,12 +11,12 @@ import { CreateKitProps } from '@/types/Kit';
 export async function GET(request: NextRequest) {
   try {
     const params = request.nextUrl.searchParams;
-    const pageSize = params.get('pageSize');
+    const pageSize = parseTake(params.get('pageSize'));
     const cursor = params.get('cursor');
     const order = (params.get('order') ?? 'desc') as SortOrder;
 
     if (pageSize) {
-      const { kits, meta } = await getPagedKits(parseInt(pageSize), cursor, order);
+      const { kits, meta } = await getPagedKits(pageSize, cursor, order);
       return NextResponse.json({ data: kits, meta });
     } else {
       const { kits, totalKits } = await getAllKits(order);
