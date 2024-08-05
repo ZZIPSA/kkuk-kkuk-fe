@@ -6,6 +6,8 @@ import { prisma } from '@/app/api/lib/prisma';
 import { getAll, getSearchParams } from '@/app/api/lib/utils';
 import { bind, bindTo, Do, remain } from '@/lib/do';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     return pipe(
