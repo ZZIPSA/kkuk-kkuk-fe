@@ -1,6 +1,6 @@
 import type { GET } from '@/app/api/kits/tags/count/route';
-import { resolveJson } from '@/lib/response';
-import { join, map, pipe, prop } from '@fxts/core';
+import { resolveData } from '@/lib/response';
+import { join, map, pipe } from '@fxts/core';
 
 export const fetchKitsByTags = async (tags: string[]) =>
   pipe(
@@ -8,8 +8,7 @@ export const fetchKitsByTags = async (tags: string[]) =>
     getTagsParams, // tag[] => `tag=${tag1}&tag=${tag2}&...`
     addParamsToApi, // /api/kits/tags/count?tag=tag1&tag=tag2&...
     fetch, // api 요청
-    resolveJson<{ data: number }>, // JSON 파싱
-    prop('data'), // data 프로퍼티 반환
+    resolveData<{ data: number }>, // JSON 파싱
   );
 const getTagsParams = (tags: string[]) =>
   pipe(
