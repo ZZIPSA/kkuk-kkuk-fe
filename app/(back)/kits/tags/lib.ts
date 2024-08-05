@@ -8,7 +8,7 @@ export const fetchKitsByTags = async (tags: string[]) =>
     getTagsParams, // tag[] => `tag=${tag1}&tag=${tag2}&...`
     addParamsToApi, // /api/kits/tags/count?tag=tag1&tag=tag2&...
     fetch, // api 요청
-    resolveData<{ data: number }>, // JSON 파싱
+    resolveData<number>, // JSON 파싱
   );
 const getTagsParams = (tags: string[]) =>
   pipe(
