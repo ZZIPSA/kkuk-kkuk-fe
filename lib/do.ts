@@ -4,8 +4,13 @@ export const Do: {} = {};
  */
 export const bind =
   <N extends PropertyKey, A, B>(name: N, f: (a: A) => B) =>
-  <C extends A>(a: C): { readonly [K in N | keyof C]: K extends N ? B : K extends keyof C ? C[K] : never } =>
+  <C extends A>(a: C) =>
     ({ ...a, [name]: f(a) } as { readonly [K in N | keyof C]: K extends N ? B : K extends keyof C ? C[K] : never });
+export const bindTo =
+  <N extends PropertyKey>(name: N) =>
+  <A>(fa: A): { readonly [K in N]: A } =>
+    ({ [name]: fa } as { readonly [K in N]: A });
+
 /**
  * a -> b -> a & b
  */

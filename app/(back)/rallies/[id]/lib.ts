@@ -5,7 +5,7 @@ import { constNull } from '@/lib/always';
 import { convertMsToDate, displayDateYyMmDd, now, diffDates, parseDate, parseNullableDate } from '@/lib/date';
 import { awaited, bimap, lift, purify, match } from '@/lib/either';
 import { handleError } from '@/lib/error';
-import { resolveJson, validResponse } from '@/lib/response';
+import { resolveData, validResponse } from '@/lib/response';
 import { eq, derive, remain, everyTrue, notNull, tapLog } from '@/lib/utils';
 import { FetchedRallyData, FetchRallyData, RallyStatus } from '@/types/Rally';
 
@@ -30,11 +30,9 @@ const taggedFetch = (url: string) => fetch(url, { next: { tags: ['rally', url.su
 const handleRallyData = (res: Response) =>
   pipe(
     res,
-    resolveJson, // JSON 파싱
-    getDataProp, // 'data' 프로퍼티 추출
+    resolveData<FetchedRallyData>, // JSON 파싱
     parseRallyDates, // 랠리 데이터에서 string으로 된 날짜 데이터(createAt, updatedAt)를 Date로 변환
   );
-const getDataProp: (json: any) => FetchedRallyData = prop('data');
 const parseRallyDates: (fetched: FetchedRallyData) => FetchRallyData = evolve({
   createdAt: parseDate,
   updatedAt: parseDate,

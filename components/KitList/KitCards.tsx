@@ -7,7 +7,7 @@ export default function KitCards({ kits }: { kits: KitCardInfo[] }) {
     <>
       {kits?.map(({ id, title, thumbnailImage, tags, uploader }) => (
         <Link href={`/kits/${id}`} passHref key={id}>
-          <KitCard id={id} key={id} title={title} thumbnailImage={thumbnailImage} tags={tags} uploader={uploader} />
+          <KitCard id={id} title={title} thumbnailImage={thumbnailImage} tags={tags} uploader={uploader} />
         </Link>
       ))}
     </>

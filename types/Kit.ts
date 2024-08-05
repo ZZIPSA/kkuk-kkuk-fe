@@ -18,4 +18,6 @@ export interface CreateKitProps extends Pick<KitCreate, 'title' | 'description' 
   stamps: string[];
 }
 
-export type FetchKits = (props: { cursor: string }) => Promise<{ cursor: string; kits: KitCardInfo[] }>;
+export type RawFetchedKits = { data: KitResult[]; meta: { nextCursor: string } };
+export type FetchedKits = { cursor: string; kits: KitCardInfo[] };
+export type FetchKits = (props: { cursor: string }) => Promise<FetchedKits>;
