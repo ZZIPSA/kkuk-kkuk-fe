@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useCount, useTags } from './hooks';
 
 export default function TagsLayout({ children }: { children: React.ReactNode }) {

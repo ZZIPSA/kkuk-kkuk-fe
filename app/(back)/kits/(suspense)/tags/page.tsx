@@ -2,7 +2,6 @@
 
 import type { GET } from '@/app/api/kits/tags/route';
 import KitList from '@/components/KitList';
-import React from 'react';
 import { useTags } from './hooks';
 
 export default function TagsPage() {
