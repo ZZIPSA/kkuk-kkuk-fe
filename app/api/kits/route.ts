@@ -3,7 +3,7 @@ import { auth } from '@/auth';
 import { prisma } from '@/app/api/lib/prisma';
 import { S3Manager } from '@/lib/services/s3';
 import { extractImageIdFromUrl, getAllKits, getBlurredImageURL, getNewKitId, getPagedKits, getStampsCreate, parseTake } from '@/app/api/lib/utils';
-import { BLURRED_IMAGE_INDEX, PAGE_SIZE, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
+import { BLURRED_IMAGE_INDEX, REWARD_IMAGE_INDEX, THUMBNAIL_IMAGE_INDEX } from '@/app/api/lib/constants';
 import { BadRequestError, ServerError } from '@/app/api/lib/errors';
 import { SortOrder } from '@/app/api/lib/types';
 import { CreateKitProps } from '@/types/Kit';
