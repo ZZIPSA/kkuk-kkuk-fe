@@ -11,6 +11,7 @@ export function useFetchKits(api: string) {
   const { ref, inView } = useInView({ threshold: 0 });
   const [{ cursor, kits, ended }, setKits] = useState<FetchKitsState>({ cursor: '', kits: [], ended: false });
   const fetchKits = fetchKitsFrom(api);
+  useEffect(() => setKits({ cursor: '', kits: [], ended: false }), [api]);
   useEffect(() => {
     if (!ended && inView)
       // 키트가 아직 끝나지 않았고, 뷰포트에 들어왔다면
