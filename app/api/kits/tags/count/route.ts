@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { pipe, prop } from '@fxts/core';
+import { pipe } from '@fxts/core';
 import { Prisma } from '@prisma/client';
 import { ServerError } from '@/app/api/lib/errors';
 import { prisma } from '@/app/api/lib/prisma';
-import { getAll } from '@/app/api/lib/utils';
+import { getAll, getSearchParams } from '@/app/api/lib/utils';
 import { bind, bindTo, Do, remain } from '@/lib/do';
 
 export async function GET(request: NextRequest) {
@@ -22,12 +22,6 @@ export async function GET(request: NextRequest) {
     return ServerError;
   }
 }
-const getSearchParams = (request: NextRequest) =>
-  pipe(
-    request,
-    prop('nextUrl'), // URL
-    prop('searchParams'), // URLSearchParams
-  );
 const getParams = (params: URLSearchParams): Tags =>
   pipe(
     Do,

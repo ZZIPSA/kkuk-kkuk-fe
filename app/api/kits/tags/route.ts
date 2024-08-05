@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { evolve, pipe, prop } from '@fxts/core';
+import { evolve, pipe } from '@fxts/core';
 import { Prisma } from '@prisma/client';
 import { ServerError } from '@/app/api/lib/errors';
 import { kitSelect, prisma } from '@/app/api/lib/prisma';
 import { SortOrder } from '@/app/api/lib/types';
-import { get, getAll, parseTake } from '@/app/api/lib/utils';
+import { get, getAll, getSearchParams, parseTake } from '@/app/api/lib/utils';
 import { bind, bindTo, Do, remain } from '@/lib/do';
 
 export async function GET(request: NextRequest) {
@@ -24,12 +24,6 @@ export async function GET(request: NextRequest) {
     return ServerError;
   }
 }
-const getSearchParams = (request: NextRequest) =>
-  pipe(
-    request,
-    prop('nextUrl'), // URL
-    prop('searchParams'), // URLSearchParams
-  );
 
 const getParams = (params: URLSearchParams): RawParams =>
   pipe(
