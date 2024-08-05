@@ -17,8 +17,8 @@ function Title({ tags }: { tags: string[] }) {
 
   return (
     <h1 className={styles.title.default}>
-      <span className="">{tags.map<React.ReactNode>((tag) => <Span key={tag}>'#{tag}'</Span>).reduce((prev, curr) => [prev, ', ', curr])}</span>{' '}
-      검색된 키트 <Span>{count}</Span>개
+      {tags.map<React.ReactNode>((tag) => <Span key={tag}>'#{tag}'</Span>).reduce((prev, curr) => [prev, ', ', curr])} 검색된 키트{' '}
+      <Span>{count}</Span>개
     </h1>
   );
 }
