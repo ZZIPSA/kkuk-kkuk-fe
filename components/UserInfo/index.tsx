@@ -1,10 +1,13 @@
 import { ensureMember } from '@/auth';
-import { UserInfoResult } from '@/types/User';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { pipe } from '@fxts/core';
+import { resolveData } from '@/lib/response';
+import { UserData } from '@/types/User';
 import { ProfileImage, ProfileEditButton } from './ProfileImage';
 import RalliesCounts from './RalliesCounts';
 import { UserInfoVariant } from './variants';
 import NicknameInput from './NicknameInput';
+import { getUserApi } from '@/lib/api';
 
 interface UserInfoProps extends VariantProps<typeof userInfoVariants> {
 }
@@ -13,10 +16,6 @@ export default async function UserInfo({ variant = UserInfoVariant.default }: Us
   const { id: userId } = await ensureMember();
   // TODO: 파람을 전송하지 않도록 수정
   const api = `${process.env.API_URL}/api/me?userId=${userId}`;
-  const {
-    data: { image, name, accounts, rallies },
-  }: { data: UserInfoResult } = await fetch(api).then((res) => res.json());
-  // const twitterAccount = accounts.find(({ provider }) => provider === 'twitter');
 const variant = {
   [UserInfoVariant.default]: 'gap-y-4',
   [UserInfoVariant.settings]: 'grid-rows-[1_auto] justify-items-center gap-4',
@@ -27,6 +26,8 @@ const userInfoVariants = cva('flex flex-col items-center py-6 px-4 gap-4 bg-back
   defaultVariants: { variant: UserInfoVariant.default },
 });
 
+  const { image, name, accounts, rallies } = await pipe(id, getUserApi, fetch, resolveData<UserData>);
+  // const twitterAccount = accounts.find(({ provider }) => provider === 'twitter');
   return (
     <section className={userInfoVariants({ variant })}>
       <span className="row-span-2 relative">
