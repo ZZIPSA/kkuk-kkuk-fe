@@ -75,3 +75,13 @@ export const derive =
   <T, R>(fn: (props: T) => R) =>
   (obj: T) =>
     set(key)(fn(obj))(obj);
+
+export const get =
+  <K>(key: K) =>
+  <T>(getable: { get: (key: K) => T }) =>
+    getable.get(key);
+
+export const getAll =
+  <K>(key: K) =>
+  <T>(getable: { getAll: (key: K) => T }) =>
+    getable.getAll(key);
