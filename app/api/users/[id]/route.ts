@@ -2,10 +2,11 @@ import { notFound } from 'next/navigation';
 import { NextResponse } from 'next/server';
 import { always, evolve, filter, pipe, prop, toArray } from '@fxts/core';
 import { prisma, userInfoSelect } from '@/app/api/lib/prisma';
-import { bind, bindTo } from '@/lib/do';
+import { assign, bind, bindTo, remain } from '@/lib/do';
 import { lift, purify } from '@/lib/either';
-import { notNull } from '@/lib/utils';
+import { notNull, tapLog } from '@/lib/utils';
 import type { AccountData, UserData } from '@/types/User';
+import { resolveJson } from '@/lib/response';
 
 export const GET = async (_: Request, { params }: { params: { id: string } }): Promise<NextResponse<{ readonly data: UserData }>> =>
   pipe(
@@ -37,3 +38,14 @@ const filterPublic = (accounts: AccountData[]) =>
     toArray, // 이터레이터를 배열로 변환
   );
 const filterPublicAccounts: (user: UserData) => UserData = evolve({ accounts: filterPublic });
+
+export const PUT = async (req: Request, { params }: { params: { id: string } }) =>
+  pipe(
+    req,
+    resolveJson<{ name: string /* description: string */ }>,
+    remain(['name' /* , 'description' */]),
+    bindTo('data'),
+    bind('where', always(params)),
+    prisma.user.update,
+    NextResponse.json,
+  );
