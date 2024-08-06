@@ -1,14 +1,14 @@
 'use server';
 
 import { bind, bindTo, remain } from '@/lib/do';
-import { always, pipe } from '@fxts/core';
+import { always, pipe, tap } from '@fxts/core';
 import { updateUserApi } from '@/lib/api';
-import { tapLog } from '@/lib/utils';
+import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 export const updateUserInfo = async (form: FormData) =>
   pipe(
     form,
-    tapLog('updateUserInfo'),
     bindTo('form'),
     bind('id', getFromForm('id')),
     bind('name', getFromForm('name')),
@@ -17,8 +17,9 @@ export const updateUserInfo = async (form: FormData) =>
     bind('body', getBody),
     bind('method', always('PUT')),
     remain(['api', 'body', 'method']),
-    tapLog('updateUserInfo'),
-    // fetchUserInfo,
+    fetchUserInfo,
+    tap(() => revalidatePath('/my/settings', 'page')),
+    () => redirect('/my'),
   );
 const getFromForm =
   (key: string) =>
