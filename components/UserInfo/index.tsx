@@ -4,7 +4,7 @@ import { getUserApi } from '@/lib/api';
 import { resolveData } from '@/lib/response';
 import { UserData } from '@/types/User';
 import DefaultInfo from './DefaultInfo';
-import NicknameInput from './NicknameInput';
+import UserInfoForm from './UserInfoForm';
 import { ProfileImage, ProfileEditButton } from './ProfileImage';
 import { UserInfoVariant } from './variants';
 
@@ -32,7 +32,7 @@ export default async function UserInfo({ id, variant = UserInfoVariant.default }
       </span>
       {variant === UserInfoVariant.default && <DefaultInfo name={name} rallies={rallies ?? []} />}
       {/* // TODO: name의 nullable을 허용하지 않도록 수정 */}
-      {variant === UserInfoVariant.settings && <NicknameInput name={name ?? ''} />}
+      {variant === UserInfoVariant.settings && <UserInfoForm id={id} name={name ?? ''} description="" />}
     </section>
   );
 }
