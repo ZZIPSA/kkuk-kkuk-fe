@@ -1,4 +1,3 @@
-import { ensureMember } from '@/auth';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { pipe } from '@fxts/core';
 import { resolveData } from '@/lib/response';
@@ -10,12 +9,9 @@ import NicknameInput from './NicknameInput';
 import { getUserApi } from '@/lib/api';
 
 interface UserInfoProps extends VariantProps<typeof userInfoVariants> {
+  id: string;
 }
 
-export default async function UserInfo({ variant = UserInfoVariant.default }: UserInfoProps) {
-  const { id: userId } = await ensureMember();
-  // TODO: 파람을 전송하지 않도록 수정
-  const api = `${process.env.API_URL}/api/me?userId=${userId}`;
 const variant = {
   [UserInfoVariant.default]: 'gap-y-4',
   [UserInfoVariant.settings]: 'grid-rows-[1_auto] justify-items-center gap-4',
@@ -26,6 +22,7 @@ const userInfoVariants = cva('flex flex-col items-center py-6 px-4 gap-4 bg-back
   defaultVariants: { variant: UserInfoVariant.default },
 });
 
+export default async function UserInfo({ id, variant = UserInfoVariant.default }: UserInfoProps) {
   const { image, name, accounts, rallies } = await pipe(id, getUserApi, fetch, resolveData<UserData>);
   // const twitterAccount = accounts.find(({ provider }) => provider === 'twitter');
   return (
