@@ -4,7 +4,7 @@ import { ensureMember } from '@/auth';
 import RallyCard from '@/components/RallyCard';
 import { fetchUserActiveRallies } from '@/lib/users';
 import { RallyStatus } from '@/types/Rally';
-import EmptyContent from '../components/EmptyContent';
+import EmptyContent from '@/components/EmptyContent';
 
 export const metadata: Metadata = {
   title: '진행중인 랠리',

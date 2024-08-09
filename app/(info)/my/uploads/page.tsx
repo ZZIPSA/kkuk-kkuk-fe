@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ensureMember } from '@/auth';
 import KitCard from '@/components/KitCard';
 import { fetchUserKits } from '@/lib/users';
-import EmptyContent from '../components/EmptyContent';
+import EmptyContent from '@/components/EmptyContent';
 
 export const metadata: Metadata = {
   title: '업로드한 키트',
