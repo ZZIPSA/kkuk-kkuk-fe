@@ -15,10 +15,10 @@ export const fetchUserInfo = async (id: string): Promise<UserData> =>
   );
 
 /** {@link GET 유저 정보} 요청 후 키트만 추출 */
-export const fetchUserKits = async (id: string): Promise<KitCardInfo[]> => pipe(id, fetchUserInfo, prop('kits'));
+export const fetchUserKits = (id: string): Promise<KitCardInfo[]> => pipe(id, fetchUserInfo, prop('kits'));
 
 /** {@link GET 유저 정보} 요청 후 랠리만 추출 */
-export const fetchUserRallies = (id: string) => pipe(id, fetchUserInfo, prop('rallies'));
+export const fetchUserRallies = (id: string): Promise<RallyByStarter[]> => pipe(id, fetchUserInfo, prop('rallies'));
 
 type RallyFilter = ReturnType<typeof filter<RallyByStarter[]>>;
 const fetchUserFilteredRallies = (filter: RallyFilter) => async (id: string) => pipe(id, fetchUserRallies, filter, toArray);
