@@ -1,8 +1,5 @@
 import { cva, type VariantProps } from 'class-variance-authority';
-import { pipe } from '@fxts/core';
-import { getUserApi } from '@/lib/api';
-import { resolveData } from '@/lib/response';
-import { UserData } from '@/types/User';
+import { fetchUserInfo } from '@/lib/users';
 import DefaultInfo from './DefaultInfo';
 import UserInfoForm from './UserInfoForm';
 import { ProfileImage, ProfileEditButton } from './ProfileImage';
@@ -23,7 +20,7 @@ const userInfoVariants = cva('flex flex-col items-center py-6 px-4 gap-4 bg-back
 });
 
 export default async function UserInfo({ id, variant = UserInfoVariant.default }: UserInfoProps) {
-  const { image, name, accounts, rallies } = await pipe(id, getUserApi, fetch, resolveData<UserData>);
+  const { image, name, rallies } = await fetchUserInfo(id);
   return (
     <section className={userInfoVariants({ variant })}>
       <span className="row-span-2 relative">
