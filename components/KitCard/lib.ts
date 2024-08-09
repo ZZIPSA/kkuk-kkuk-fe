@@ -1,13 +1,15 @@
 import { DEFAULT_KIT_THUMBNAIL, DEFAULT_PROFILE } from '@/lib/constants';
 import { cn } from '@/lib/utils';
+import { KitCardUploader } from '@/types/Kit';
 import { KitCardVariants } from './types';
 import { kitCardContainerStyles, kitCardHeaderStyles, kitCardContentStyles, kitCardFooterStyles } from './styles';
 
-export const getDefaults = ({ thumbnailImage, name, image }: { thumbnailImage?: string | null; name?: string | null; image?: string | null }) => ({
+export const getDefaults = ({ thumbnailImage, uploader }: { thumbnailImage?: string | null; uploader: KitCardUploader }) => ({
   ...getDefaultThumbnail({ thumbnailImage }),
-  ...getDefaultUser({ name, image }),
+  uploader: getDefaultUser(uploader),
 });
-const getDefaultUser = ({ name, image }: { name?: string | null; image?: string | null }) => ({
+const getDefaultUser = ({ id, name, image }: KitCardUploader) => ({
+  id: id,
   name: name ?? '',
   image: image ?? DEFAULT_PROFILE,
 });
