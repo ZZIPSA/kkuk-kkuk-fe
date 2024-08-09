@@ -1,7 +1,7 @@
 import { MyRally } from '@/types/Rally';
 import { getInfo } from './lib';
-import InactiveRallyCard from '../InactiveRallyCard';
-import ShowCompletedOnly from '../ShowCompletedOnly';
+import InactiveRallyCard from './InactiveRallyCard';
+import ShowCompletedOnly from './ShowCompletedOnly';
 
 export default function InactiveRallies({ rallies }: { rallies: MyRally[] }) {
   return (
