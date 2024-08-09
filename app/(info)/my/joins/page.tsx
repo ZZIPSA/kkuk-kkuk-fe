@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { ensureMember } from '@/auth';
 import RallyCard from '@/components/RallyCard';
-import EmptyContent from '../components/EmptyContent';
+import { fetchUserActiveRallies } from '@/lib/users';
 import { RallyStatus } from '@/types/Rally';
-import { fetchMyActiveRallies } from './lib';
+import EmptyContent from '../components/EmptyContent';
 
 export const metadata: Metadata = {
   title: '진행중인 랠리',
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default async function JoinsPage() {
   const { id: userId } = await ensureMember();
-  const rallies = await fetchMyActiveRallies(userId);
+  const rallies = await fetchUserActiveRallies(userId);
   if (rallies.length === 0) return <EmptyContent message="진행중인 랠리가 없어요!" />;
 
   return (

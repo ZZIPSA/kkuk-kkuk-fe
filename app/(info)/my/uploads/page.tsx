@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { ensureMember } from '@/auth';
 import KitCard from '@/components/KitCard';
+import { fetchUserKits } from '@/lib/users';
 import EmptyContent from '../components/EmptyContent';
-import { KitCardInfo } from '@/types/Kit';
 
 export const metadata: Metadata = {
   title: '업로드한 키트',
@@ -11,9 +11,7 @@ export const metadata: Metadata = {
 
 export default async function UploadsPage() {
   const { id: userId } = await ensureMember();
-  const api = `${process.env.API_URL}/api/my/kits?userId=${userId}`;
-  // TODO: API 정상화 후 원상복구
-  const { data: kits }: { data: KitCardInfo[] } = await fetch(api).then((res) => res.json());
+  const kits = await fetchUserKits(userId);
   if (kits.length === 0) return <EmptyContent message="업로드한 키트가 없어요!" />;
 
   return (
