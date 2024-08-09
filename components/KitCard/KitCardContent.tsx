@@ -9,19 +9,22 @@ import Link from 'next/link';
 interface KitCardContentProps {
   title: string;
   tags: string[];
-  name: string;
-  image: string;
+  uploader: {
+    id: string;
+    name: string;
+    image: string;
+  };
   variant: KitCardVariants;
 }
 
-export default function KitCardContent({ title, tags, name, image, variant }: KitCardContentProps) {
+export default function KitCardContent({ title, tags, uploader, variant }: KitCardContentProps) {
   const is = getConditions(variant);
   const styles = getContentStyles(is);
   return (
     <CardContent className={styles.content}>
       <CardTitle className={styles.title}>{title}</CardTitle>
       <Tags tags={tags} styles={styles} />
-      {!is.StartPage && <Uploader name={name} image={image} styles={styles} />}
+      {!is.StartPage && <Uploader {...uploader} styles={styles} />}
       {is.description && <Buttons styles={styles} />}
     </CardContent>
   );
