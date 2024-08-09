@@ -39,18 +39,18 @@ export default function KitCard({
   title,
   thumbnailImage,
   tags,
-  uploader,
+  uploader: rawUploader,
   variant = KitCardVariants.vertical,
   description,
   ...props
 }: KitCardProps) {
-  const { thumbnail, name, image } = getDefaults({ thumbnailImage, ...uploader });
+  const { thumbnail, uploader } = getDefaults({ thumbnailImage, uploader: rawUploader });
   const is = getConditions(variant);
   const styles = getContainerStyles(is);
   return (
     <Card className={styles.container} {...props}>
       <KitCardHeader thumbnail={thumbnail} title={title} variant={variant} />
-      <KitCardContent title={title} tags={tags} name={name} image={image} variant={variant} />
+      <KitCardContent title={title} tags={tags} uploader={uploader} variant={variant} />
       {(is.description || is.StartPage) && description && <KitCardFooter variant={variant} description={description} />}
     </Card>
   );
