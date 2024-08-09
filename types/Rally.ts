@@ -12,6 +12,7 @@ export type RallyInfo = Pick<RallyModel, 'id' | 'title' | 'description' | 'statu
   RallyKit;
 
 export type MyRally = Prisma.RallyGetPayload<{ where: { starterId: string }; select: typeof rallySelect }>;
+export type RallyByStarter = Prisma.RallyGetPayload<{ where: { starterId: string }; select: typeof rallySelect }>;
 
 export interface JoinedRally extends MyRally {
   kit: MyRally['kit'];

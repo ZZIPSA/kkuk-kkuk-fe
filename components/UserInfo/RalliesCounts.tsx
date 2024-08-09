@@ -2,7 +2,7 @@ import { RallyModel, RallyStatus } from '@/types/models';
 
 export default function RalliesCounts({ rallies }: { rallies: Pick<RallyModel, 'status'>[] }) {
   return (
-    <div className="bg-grey-50 p-4 flex divide-x justify-center rounded-lg">
+    <div className="bg-grey-50 p-4 flex divide-x justify-center rounded-lg w-full">
       <RalliesCount title="현재 진행 중인 랠리" count={rallies.filter(({ status }) => status === RallyStatus.active).length} />
       <RalliesCount title="완료한 랠리" count={rallies.filter(({ status }) => status === RallyStatus.inactive).length} />
     </div>

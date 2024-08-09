@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client';
 
+export const accountSelect = { provider: true, providerAccountId: true, isPublic: true } satisfies Prisma.AccountSelect;
 export const userSelect = { id: true, email: true, image: true, name: true } satisfies Prisma.UserSelect;
 export const kitSelect = {
   id: true,
@@ -44,3 +45,17 @@ export const rallySelect = {
   createdAt: true,
   updatedAt: true,
 } satisfies Prisma.RallySelect;
+export const userInfoSelect = {
+  ...userSelect,
+  accounts: {
+    select: accountSelect,
+  },
+  rallies: {
+    orderBy: { id: 'desc' },
+    select: rallySelect,
+  },
+  kits: {
+    orderBy: { id: 'desc' },
+    select: kitSelect,
+  },
+} satisfies Prisma.UserSelect;

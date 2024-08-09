@@ -1,15 +1,15 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { items } from './lib';
+import { getItems } from './lib';
 import MenuTab from './MenuTab';
 
-export default function MenuTabs() {
+export default function UserMenuTabs({ id }: { id: string }) {
   const path = usePathname();
 
   return (
     <section className={styles.container}>
-      {items.map(({ label, href }) => (
+      {getItems(id).map(({ label, href }) => (
         <MenuTab key={href} label={label} href={href} path={path} />
       ))}
     </section>

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import RallyCard from '@/components/RallyCard';
 import { cn } from '@/lib/utils';
 import { MyRally } from '@/types/Rally';
-import CompletedLabel from '../CompletedLabel';
+import CompletedLabel from './CompletedLabel';
 
 interface InactiveRallyCardProps extends Pick<MyRally, 'id' | 'title' | 'updatedAt'> {
   completed: boolean;
