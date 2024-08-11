@@ -26,5 +26,15 @@
 
 ### 실행 방법
 
+#### 최초 실행시
+
+아래의 커맨드를 순서대로 실행합니다.
+
+- `$ yarn install`
 - `$ yarn add sharp --ignore-engines`
+- `$ docker-compose up -d`
+- `$ npx prisma migrate reset`
+
+#### 실행 커맨드
+
 - `$ yarn dev`
