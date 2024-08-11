@@ -1,25 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { FetchKits } from '@/types/Kit';
+import { FetchedKits } from '@/types/Kit';
+import { fetchKitsFrom, getCursor, getEnd } from './lib';
 
-export function useFetchKits(fetchKits: FetchKits) {
-  const [{ cursor, kits }, setKits] = useState<Awaited<ReturnType<FetchKits>>>({
-    cursor: '',
-    kits: [],
-  });
-  const [ended, setEnded] = useState(false);
-  const { ref, inView } = useInView();
+interface FetchKitsState extends FetchedKits {
+  ended: boolean;
+}
+
+export function useFetchKits(api: string) {
+  const { ref, inView } = useInView({ threshold: 0 });
+  const [{ cursor, kits, ended }, setKits] = useState<FetchKitsState>({ cursor: '', kits: [], ended: false });
+  const fetchKits = fetchKitsFrom(api);
+  useEffect(() => setKits({ cursor: '', kits: [], ended: false }), [api]);
   useEffect(() => {
     if (!ended && inView)
       // 키트가 아직 끝나지 않았고, 뷰포트에 들어왔다면
       fetchKits({ cursor }) // 키트를 요청합니다.
-        .then(({ cursor, kits }) => {
+        .then((news) =>
           setKits(({ kits: prev }) => ({
-            cursor, // 새로운 커서를 등록합니다.
-            kits: prev.concat(kits), // 새로운 키트를 추가합니다.
-          }));
-          if (!cursor) setEnded(true); // 커서가 없으면 더 이상 키트가 없다는 뜻입니다.
-        });
-  }, [inView, ended]);
+            kits: [...prev, ...news], // 기존 키트 목록에 새로운 키트를 추가하고
+            cursor: getCursor(news), // 마지막 키트의 id를 새로운 커서로 설정하고
+            ended: getEnd(news), // 새로운 키트가 없으면 API 요청을 중단합니다.
+          })),
+        );
+  }, [inView, ended, cursor]);
   return { ref, kits, ended };
 }
