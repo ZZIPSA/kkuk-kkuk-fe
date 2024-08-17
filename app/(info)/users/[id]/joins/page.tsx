@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default async function JoinsPage({ params: { id: userId } }: { params: { id: string } }) {
-  redirectIfMine('/my/joins')(userId);
+  await redirectIfMine('/my/joins')(userId);
   const rallies = await fetchUserActiveRallies(userId);
 
   return <ActiveRallies rallies={rallies} />;

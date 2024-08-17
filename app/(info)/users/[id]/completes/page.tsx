@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default async function CompletesPage({ params: { id: userId } }: { params: { id: string } }) {
-  redirectIfMine('/my/completes')(userId);
+  await redirectIfMine('/my/completes')(userId);
   const rallies = await fetchUserInactiveRallies(userId);
 
   return <InactiveRallies rallies={rallies} />;

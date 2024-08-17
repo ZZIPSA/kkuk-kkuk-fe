@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default async function UploadsPage({ params: { id: userId } }: { params: { id: string } }) {
-  redirectIfMine('/my/uploads')(userId);
+  await redirectIfMine('/my/uploads')(userId);
   const kits = await fetchUserKits(userId);
 
   return <UploadKits kits={kits} />;
