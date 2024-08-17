@@ -4,6 +4,9 @@
 
 @layer base {
   :root {
+    --main-min-width: 320px;
+    --main-max-width: 720px;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -89,9 +92,8 @@
 }
 
 main {
-  @apply min-w-[360px] max-w-[720px];
+  @apply min-w-[var(--main-min-width)] max-w-[var(--main-max-width)] w-full px-4;
 }
 nav {
-  /* 360 - 16 * 2 = 328, 720 - 16 * 2 = 688 */
-  @apply min-w-[328px] max-w-[688px];
+  @apply min-w-[var(--main-min-width)] max-w-[calc(var(--main-max-width)-2rem)] w-full;
 }

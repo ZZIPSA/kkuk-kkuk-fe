@@ -1,10 +1,12 @@
 import cuid from 'cuid';
+import { NextRequest } from 'next/server';
 import { Prisma, RallyStatus } from '@prisma/client';
 import { blurImage } from '@/lib/sharp';
 import { S3Manager } from '@/lib/services/s3';
 import { kitSelect, prisma } from '@/app/api/lib/prisma';
 import { SortOrder } from '@/app/api/lib/types';
 import { PAGE_SIZE } from './constants';
+import { pipe, prop } from '@fxts/core';
 
 export const extractImageIdFromUrl = (url: string) => url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
 export const getStampsCreate = (keys: string[]) => ({
@@ -118,3 +120,5 @@ export const getAll =
     getable.getAll(key);
 /** 정수로 파싱, 불가능할 경우 PAGE_SIZE 상수 */
 export const parseTake = (take: string | null) => parseInt(take ?? '') || PAGE_SIZE;
+/** URL에서 쿼리를 추출합니다. */
+export const getSearchParams = (request: NextRequest) => pipe(request, prop('nextUrl'), prop('searchParams'));

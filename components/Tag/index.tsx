@@ -1,44 +1,26 @@
-import { MouseEventHandler } from 'react';
-import { ButtonBadgeProps, ButtonBadge, BadgeVariant } from '@/components/ui/badge';
+import { cva, type VariantProps } from 'class-variance-authority';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
-export enum Uses {
-  default = 'default',
-  selected = 'selected',
-}
+const variant = {
+  default: 'border-transparent bg-primary/80 text-primary-foreground bg-primary/40 text-primary hover:bg-primary hover:text-white',
+};
+export type TagVariant = keyof typeof variant;
 
-const variants: Record<Uses, BadgeVariant> = {
-  [Uses.default]: 'default',
-  [Uses.selected]: 'secondary',
-} as const;
+const tagVariants = cva('font-normal break-keep text-nowrap inline-flex items-center rounded-full border px-2 py-1 text-xs transition-colors', {
+  variants: { variant },
+  defaultVariants: { variant: 'default' },
+});
 
-const classNames = {
-  [Uses.default]: 'bg-primary/40 text-primary hover:text-white',
-  [Uses.selected]: 'bg-lime-500/50 text-lime-800 hover:text-white hover:bg-lime-500/80',
-} as const;
-
-interface TagProps extends ButtonBadgeProps {
-  /**
-   * Variants for the Tag
-   */
-  use?: Uses;
-  /**
-   * Link contents
-   * @default "default"
-   */
+export interface TagProps extends React.HTMLAttributes<HTMLAnchorElement>, VariantProps<typeof tagVariants> {
   label: string;
-  /**
-   * Click handler
-   */
-  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
-/**
- * Primary UI component for user interaction
- */
-export const Tag = ({ use = Uses.default, label, className, ...props }: TagProps) => {
+
+export const Tag = ({ label, className, variant, ...props }: TagProps) => {
+  const href = `/kits/tags?tag=${label}`;
   return (
-    <ButtonBadge className={cn('font-normal break-keep text-nowrap', classNames[use], className)} variant={variants[use]} {...props}>
+    <Link href={href} className={cn(tagVariants({ variant }), className)} {...props}>
       {`#${label}`}
-    </ButtonBadge>
+    </Link>
   );
 };
