@@ -75,3 +75,7 @@ export const filter =
   <L, R0>(pred: (r: R0) => boolean, onFalse: (r: R0) => L) =>
   <R1 extends R0>(e: Either<L, R1>): Either<L, R1> =>
     isLeft(e) ? e : pred(e.right) ? e : left(onFalse(e.right));
+/**
+ * Either e a -> Either a e
+ */
+export const swap = <L, R>(e: Either<L, R>): Either<R, L> => (isLeft(e) ? right(e.left) : left(e.right));

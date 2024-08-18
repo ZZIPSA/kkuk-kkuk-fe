@@ -1,47 +1,35 @@
-import { ensureMember } from '@/auth';
-import { cn } from '@/lib/utils';
-import { UserInfoResult } from '@/types/User';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { fetchUserInfo } from '@/lib/users';
+import DefaultInfo from './DefaultInfo';
+import UserInfoForm from './UserInfoForm';
 import { ProfileImage, ProfileEditButton } from './ProfileImage';
-import RalliesCounts from './RalliesCounts';
 import { UserInfoVariant } from './variants';
-import NicknameInput from './NicknameInput';
 
-interface UserInfoProps {
-  variant?: UserInfoVariant;
+interface UserInfoProps extends VariantProps<typeof userInfoVariants> {
+  id: string;
 }
 
-export default async function UserInfo({ variant = UserInfoVariant.default }: UserInfoProps) {
-  const { id: userId } = await ensureMember();
-  // TODO: 파람을 전송하지 않도록 수정
-  const api = `${process.env.API_URL}/api/me?userId=${userId}`;
-  const {
-    data: { image, name, accounts, rallies },
-  }: { data: UserInfoResult } = await fetch(api).then((res) => res.json());
-  // const twitterAccount = accounts.find(({ provider }) => provider === 'twitter');
+const variant = {
+  [UserInfoVariant.default]: '',
+  [UserInfoVariant.settings]: 'grid-rows-[1_auto] justify-items-center gap-4',
+};
 
+const userInfoVariants = cva('flex flex-col items-center py-6 px-4 gap-4 bg-background', {
+  variants: { variant },
+  defaultVariants: { variant: UserInfoVariant.default },
+});
+
+export default async function UserInfo({ id, variant = UserInfoVariant.default }: UserInfoProps) {
+  const { image, name, rallies } = await fetchUserInfo(id);
   return (
-    <section className="flex flex-col py-6 px-4 gap-4 bg-background">
-      <div
-        className={cn('w-full grid', {
-          'grid-cols-[64px_auto] gap-x-2': variant === UserInfoVariant.default,
-          'grid-rows-[1_auto] justify-items-center gap-4': variant === UserInfoVariant.settings,
-        })}
-      >
-        <span className="row-span-2 relative">
-          <ProfileImage image={image} name={name} variant={variant} />
-          {variant === UserInfoVariant.settings && <ProfileEditButton />}
-        </span>
-        {variant === UserInfoVariant.default && <h1 className="font-bold w-full">{name}</h1>}
-        {/* // NOTE: 페이즈 1에서 구현 */}
-        {/* {twitterAccount && (
-          <Badge variant="secondary" className="w-fit text-xs font-normal gap-2">
-            <span className="text-2xl">𝕏</span>@{twitterAccount.userId}
-          </Badge>
-        )} */}
-      </div>
-      {variant === UserInfoVariant.default && <RalliesCounts rallies={rallies ?? []} />}
+    <section className={userInfoVariants({ variant })}>
+      <span className="row-span-2 relative">
+        <ProfileImage image={image} name={name} variant={variant} />
+        {variant === UserInfoVariant.settings && <ProfileEditButton />}
+      </span>
+      {variant === UserInfoVariant.default && <DefaultInfo name={name} rallies={rallies ?? []} />}
       {/* // TODO: name의 nullable을 허용하지 않도록 수정 */}
-      {variant === UserInfoVariant.settings && <NicknameInput name={name ?? ''} />}
+      {variant === UserInfoVariant.settings && <UserInfoForm id={id} name={name ?? ''} description="" />}
     </section>
   );
 }

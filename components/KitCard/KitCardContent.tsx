@@ -4,23 +4,27 @@ import { Tag } from '@/components/Tag';
 import { Bookmark, Heart } from '@/lib/icons';
 import { KitCardVariants } from './types';
 import { getConditions, getContentStyles } from './lib';
+import Link from 'next/link';
 
 interface KitCardContentProps {
   title: string;
   tags: string[];
-  name: string;
-  image: string;
+  uploader: {
+    id: string;
+    name: string;
+    image: string;
+  };
   variant: KitCardVariants;
 }
 
-export default function KitCardContent({ title, tags, name, image, variant }: KitCardContentProps) {
+export default function KitCardContent({ title, tags, uploader, variant }: KitCardContentProps) {
   const is = getConditions(variant);
   const styles = getContentStyles(is);
   return (
     <CardContent className={styles.content}>
       <CardTitle className={styles.title}>{title}</CardTitle>
       <Tags tags={tags} styles={styles} />
-      {!is.StartPage && <Uploader name={name} image={image} styles={styles} />}
+      {!is.StartPage && <Uploader {...uploader} styles={styles} />}
       {is.description && <Buttons styles={styles} />}
     </CardContent>
   );
@@ -36,15 +40,15 @@ function Tags({ tags, styles }: { tags: string[]; styles: ReturnType<typeof getC
   );
 }
 
-function Uploader({ name, image, styles }: { name: string; image: string; styles: ReturnType<typeof getContentStyles> }) {
+function Uploader({ id, name, image, styles }: { id: string; name: string; image: string; styles: ReturnType<typeof getContentStyles> }) {
   return (
-    <div className={styles.uploader}>
+    <Link className={styles.uploader} href={`/users/${id}`}>
       <Avatar className={styles.avatar}>
         <AvatarImage src={image} alt={name} />
         <AvatarFallback>{name}</AvatarFallback>
       </Avatar>
       <span className={styles.name}>{name}</span>
-    </div>
+    </Link>
   );
 }
 
