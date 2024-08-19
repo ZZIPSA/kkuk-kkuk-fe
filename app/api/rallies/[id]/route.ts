@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { Prisma } from '@prisma/client';
 import { prisma, rallySelect } from '@/app/api/lib/prisma';
 import { NotFoundRallyError, ServerError } from '@/app/api/lib/errors';
-import {} from '@/app/api/lib/utils';
+import { isActiveAndOverDue } from '@/app/api/lib/utils';
 import { RallyData } from '@/types/Rally';
 
 type GetRallyParams = { params: { id: string } };
@@ -12,11 +12,15 @@ export async function GET(_: Request, { params }: GetRallyParams) {
   const { id } = params;
 
   try {
+    const select = { ...rallySelect, stampable: true };
     const rally = (await prisma.rally.findUniqueOrThrow({
       where: { id, deletedAt: null },
-      select: { ...rallySelect, stampable: true },
+      select,
     })) as RallyData;
-
+    if (isActiveAndOverDue(rally)) {
+      const inactivatedRally = await prisma.rally.update({ where: { id }, data: { status: 'inactive' }, select });
+      return NextResponse.json({ data: inactivatedRally });
+    }
     return NextResponse.json({ data: rally });
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/app/api/lib/prisma';
 import { BadRequestError, NotFoundRallyError, ServerError, StampLimitError, UnauthorizedError } from '@/app/api/lib/errors';
-import { getRallyStatus } from '@/app/api/lib/utils';
+import { getRallyStatus, isActiveAndOverDue } from '@/app/api/lib/utils';
 import { auth } from '@/auth';
 import { revalidateTag } from 'next/cache';
 
@@ -17,13 +17,18 @@ export async function PATCH(request: Request, { params }: PatchRallyParams) {
   if (!rallyId) return BadRequestError;
 
   try {
-    const rally = await prisma.rally.findUnique({
+    const rally = await prisma.rally.findUniqueOrThrow({
       where: { id: rallyId, deletedAt: null },
       include: { kit: { include: { _count: { select: { stamps: true } } } } },
     });
 
     if (!rally) return NotFoundRallyError;
     if (rally.stampCount >= rally.kit._count.stamps) return StampLimitError;
+    if (isActiveAndOverDue(rally)) {
+      await prisma.rally.update({ where: { id: rallyId }, data: { status: 'inactive' } });
+      revalidateTag(rallyId);
+      return BadRequestError;
+    }
 
     const updatedStampCount = stampCount !== null ? rally.stampCount + 1 : rally.stampCount;
     const isRallyComplete = updatedStampCount === rally.kit._count.stamps;
@@ -33,7 +38,6 @@ export async function PATCH(request: Request, { params }: PatchRallyParams) {
       data: {
         stampCount: updatedStampCount,
         status: getRallyStatus(updatedStampCount),
-        updatedAt,
         lastStampDate: updatedAt,
         completionDate: isRallyComplete ? updatedAt : null,
       },
