@@ -1,12 +1,11 @@
-import { notFound } from 'next/navigation';
 import type { GET } from '@/app/api/rallies/[id]/route';
-import { every, evolve, isNull, join, juxt, pipe, prop, tap } from '@fxts/core';
+import { every, evolve, isNull, juxt, pipe, prop } from '@fxts/core';
 import { constNull } from '@/lib/always';
+import { API_URL } from '@/lib/constants';
 import { convertMsToDate, displayDateYyMmDd, now, diffDates, parseDate, parseNullableDate } from '@/lib/date';
-import { awaited, bimap, lift, purify, match } from '@/lib/either';
-import { handleError } from '@/lib/error';
-import { resolveData, validResponse } from '@/lib/response';
-import { eq, derive, remain, everyTrue, notNull, tapLog } from '@/lib/utils';
+import { lift, match } from '@/lib/either';
+import { fetchDataOrNotFound } from '@/lib/response';
+import { eq, derive, remain, everyTrue, notNull } from '@/lib/utils';
 import { FetchedRallyData, FetchRallyData, RallyStatus } from '@/types/Rally';
 
 /**
@@ -16,23 +15,10 @@ export const getRallyData = async (id: string) =>
   pipe(
     id,
     getRallyApiUrl, // API URL + ID
-    taggedFetch, // API 호출
-    validResponse, // 응답이 실패라면 Left, 성공이라면 Right
-    bimap(
-      handleError, // 실패 시 에러 핸들러로 전달
-      handleRallyData, // 성공 시 랠리 데이터 핸들러로 전달
-    ),
-    awaited, // Promise.all
-    purify(notFound), // 404 에러 처리 -> TODO 에러 핸들링 추가
+    fetchDataOrNotFound<FetchedRallyData>, // API 호출로 데이터 가져오기
+    parseRallyDates, // 날짜 데이터 파싱
   );
-const getRallyApiUrl = (id: string) => join('/')([process.env.API_URL, 'api', 'rallies', id]);
-const taggedFetch = (url: string) => fetch(url, { next: { tags: ['rally', url.substring(url.lastIndexOf('/') + 1)] } });
-const handleRallyData = (res: Response) =>
-  pipe(
-    res,
-    resolveData<FetchedRallyData>, // JSON 파싱
-    parseRallyDates, // 랠리 데이터에서 string으로 된 날짜 데이터(createAt, updatedAt)를 Date로 변환
-  );
+const getRallyApiUrl = (id: string): string => `${API_URL}/api/rallies/${id}`;
 const parseRallyDates: (fetched: FetchedRallyData) => FetchRallyData = evolve({
   createdAt: parseDate,
   updatedAt: parseDate,
