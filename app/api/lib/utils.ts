@@ -7,6 +7,7 @@ import { kitSelect, prisma } from '@/app/api/lib/prisma';
 import { SortOrder } from '@/app/api/lib/types';
 import { PAGE_SIZE } from './constants';
 import { pipe, prop } from '@fxts/core';
+import { RallyData } from '@/types/Rally';
 
 export const extractImageIdFromUrl = (url: string) => url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
 export const getStampsCreate = (keys: string[]) => ({
@@ -122,3 +123,9 @@ export const getAll =
 export const parseTake = (take: string | null) => parseInt(take ?? '') || PAGE_SIZE;
 /** URL에서 쿼리를 추출합니다. */
 export const getSearchParams = (request: NextRequest) => pipe(request, prop('nextUrl'), prop('searchParams'));
+/** 랠리의 상태 업데이트가 필요한 경우인지 확인합니다. */
+export const isActiveAndOverDue = ({ status, dueDate, extendedDueDate }: Pick<RallyData, 'status' | 'dueDate' | 'extendedDueDate'>) =>
+  (status === RallyStatus.active && // 진행중인 랠리이고
+    dueDate &&
+    dueDate.getTime() < Date.now()) || // 기한이 지났거나
+  (extendedDueDate && extendedDueDate.getTime() < Date.now()); /* 연장된 기한마저 지났을 경우 */
