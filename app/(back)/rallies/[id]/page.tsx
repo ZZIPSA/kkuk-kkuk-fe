@@ -6,6 +6,8 @@ import RallyFooter from './components/RallyFooter';
 import { RallyPageProps } from './types';
 import ExtendModal from './components/ExtendModal';
 
+export const revalidate = 1;
+
 export default async function RallyPage({ params: { id } }: RallyPageProps) {
   const viewerId = (await getMember())?.id;
   const {
