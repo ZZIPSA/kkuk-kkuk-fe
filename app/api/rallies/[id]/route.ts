@@ -28,11 +28,12 @@ export async function GET(_: Request, { params }: GetRallyParams) {
   }
 }
 
-export async function DELETE(_: Request, { params }: DeleteRallyParams) {
+export async function DELETE(req: Request, { params }: DeleteRallyParams) {
   const { id } = params;
+  const { userId } = await req.json();
 
   try {
-    const rally = await prisma.rally.findUnique({ where: { id, deletedAt: null } });
+    const rally = await prisma.rally.findUnique({ where: { id, deletedAt: null, starterId: userId } });
 
     if (!rally) NotFoundRallyError;
 
@@ -43,6 +44,7 @@ export async function DELETE(_: Request, { params }: DeleteRallyParams) {
 
     return NextResponse.json({ data: deletedRally }, { status: 200 });
   } catch (error) {
+    console.error(error);
     return ServerError;
   }
 }
