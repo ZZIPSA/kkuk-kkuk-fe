@@ -45,7 +45,7 @@ const parseRallyDates: (fetched: FetchedRallyData) => FetchRallyData = evolve({
   }),
 });
 
-interface GetRallyInfoProps extends Pick<FetchRallyData, 'status' | 'completionDate' | 'extendedDueDate'> {
+interface GetRallyInfoProps extends Pick<FetchRallyData, 'status' | 'completionDate' | 'dueDate' | 'extendedDueDate'> {
   stamps: FetchRallyData['kit']['stamps'];
   starterId: FetchRallyData['starter']['id'];
   kitDeletedAt: FetchRallyData['kit']['deletedAt'];
@@ -59,7 +59,8 @@ export const getRallyInfo = (data: GetRallyInfoProps) =>
     derive('failed')(isFailed), // 실패 여부
     derive('extendable')(isNeverExtendedBefore), // 연장 가능 여부
     derive('startable')(isKitExist), // 시작 가능 여부
-    remain(['owned', 'total', 'failed', 'extendable', 'startable'] as const), // 필요한 값만 남기기
+    derive('deadline')(({ dueDate, extendedDueDate }) => extendedDueDate ?? dueDate), // 마감일
+    remain(['owned', 'total', 'failed', 'extendable', 'startable', 'deadline'] as const), // 필요한 값만 남기기
   );
 const isFailed = <T extends GetRallyInfoProps>(e: T) => pipe(e, juxt([isInactive, notCompleted]), every(Boolean));
 const isInactive = (e: GetRallyInfoProps) => pipe(e, prop('status'), eq(RallyStatus.inactive));

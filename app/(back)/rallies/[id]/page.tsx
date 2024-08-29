@@ -6,13 +6,15 @@ import RallyFooter from './components/RallyFooter';
 import { RallyPageProps } from './types';
 import ExtendModal from './components/ExtendModal';
 
+export const revalidate = 1;
+
 export default async function RallyPage({ params: { id } }: RallyPageProps) {
   const viewerId = (await getMember())?.id;
   const {
     title,
     status,
     stampable,
-    dueDate: deadline,
+    dueDate,
     createdAt,
     updatedAt,
     completionDate,
@@ -21,13 +23,14 @@ export default async function RallyPage({ params: { id } }: RallyPageProps) {
     starter: { id: starterId },
     kit: { id: kitId, stamps, rewardImage, deletedAt: kitDeletedAt },
   } = await getRallyData(id);
-  const { owned, total, failed, extendable, startable } = getRallyInfo({
+  const { deadline, owned, total, failed, extendable, startable } = getRallyInfo({
     status,
     completionDate,
     stamps,
     starterId,
     viewerId,
     kitDeletedAt,
+    dueDate,
     extendedDueDate,
   });
 
