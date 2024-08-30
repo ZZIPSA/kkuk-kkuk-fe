@@ -8,13 +8,17 @@ interface RallyLayoutProps extends RallyPageProps {
 }
 
 export async function generateMetadata({ params: { id } }: RallyLayoutProps): Promise<Metadata> {
-  const {
-    title,
-    starter: { name },
-  } = await getRallyData(id);
-  return {
-    title: `${name}님의 ${title} 랠리`,
-  };
+  try {
+    const {
+      title,
+      starter: { name },
+    } = await getRallyData(id);
+    return {
+      title: `${name}님의 ${title} 랠리`,
+    };
+  } catch (e) {
+    return { title: '랠리' };
+  }
 }
 
 export default function RallyLayout({ children, modal }: RallyLayoutProps) {
