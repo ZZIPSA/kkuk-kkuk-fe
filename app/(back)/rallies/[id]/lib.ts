@@ -1,5 +1,5 @@
 import type { GET } from '@/app/api/rallies/[id]/route';
-import { every, evolve, isNull, juxt, pipe, prop } from '@fxts/core';
+import { evolve, pipe, prop } from '@fxts/core';
 import { constNull } from '@/lib/always';
 import { API_URL } from '@/lib/constants';
 import { convertMsToDate, displayDateYyMmDd, now, diffDates, parseDate, parseNullableDate } from '@/lib/date';
@@ -7,6 +7,7 @@ import { lift, match } from '@/lib/either';
 import { fetchDataOrNotFound } from '@/lib/response';
 import { eq, derive, remain, everyTrue, notNull } from '@/lib/utils';
 import { FetchedRallyData, FetchRallyData, RallyStatus } from '@/types/Rally';
+import { bind } from '@/lib/do';
 
 /**
  * {@link GET API}
@@ -30,28 +31,52 @@ const parseRallyDates: (fetched: FetchedRallyData) => FetchRallyData = evolve({
     deletedAt: parseNullableDate,
   }),
 });
-
-interface GetRallyInfoProps extends Pick<FetchRallyData, 'status' | 'completionDate' | 'extendedDueDate'> {
-  stamps: FetchRallyData['kit']['stamps'];
-  starterId: FetchRallyData['starter']['id'];
-  kitDeletedAt: FetchRallyData['kit']['deletedAt'];
-  viewerId?: string;
-}
-export const getRallyInfo = (data: GetRallyInfoProps) =>
+export const flattenRallyData = (data: FetchRallyData) =>
   pipe(
     data,
-    derive('owned')(({ starterId, viewerId }) => starterId === viewerId), // starterId와 viewerId가 같은지로 소유 여부 확인
-    derive('total')(({ stamps }) => stamps.length), // 전체 스탬프 개수
-    derive('failed')(isFailed), // 실패 여부
-    derive('extendable')(isNeverExtendedBefore), // 연장 가능 여부
-    derive('startable')(isKitExist), // 시작 가능 여부
-    remain(['owned', 'total', 'failed', 'extendable', 'startable'] as const), // 필요한 값만 남기기
+    bind('deadline', flats['deadline']),
+    bind('count', flats['count']),
+    bind('starterId', flats['starterId']),
+    bind('kitId', flats['kitId']),
+    bind('stamps', flats['stamps']),
+    bind('rewardImage', flats['rewardImage']),
+    bind('kitDeletedAt', flats['kitDeletedAt']),
   );
-const isFailed = <T extends GetRallyInfoProps>(e: T) => pipe(e, juxt([isInactive, notCompleted]), every(Boolean));
-const isInactive = (e: GetRallyInfoProps) => pipe(e, prop('status'), eq(RallyStatus.inactive));
-const notCompleted = (e: GetRallyInfoProps) => pipe(e, prop('completionDate'), isNull);
-const isNeverExtendedBefore = <T extends GetRallyInfoProps>(e: T) => pipe(e, prop('extendedDueDate'), isNull);
-const isKitExist = <T extends GetRallyInfoProps>(e: T) => pipe(e, prop('kitDeletedAt'), isNull);
+
+const flats = {
+  deadline: ({ dueDate }: { dueDate: FetchRallyData['dueDate'] }) => dueDate,
+  count: ({ stampCount }: { stampCount: FetchRallyData['stampCount'] }) => stampCount,
+  starterId: ({ starter: { id } }: FetchRallyData) => id,
+  kitId: ({ kit: { id } }: FetchRallyData) => id,
+  stamps: ({ kit: { stamps } }: FetchRallyData) => stamps,
+  rewardImage: ({ kit: { rewardImage } }: FetchRallyData) => rewardImage,
+  kitDeletedAt: ({ kit: { deletedAt } }: FetchRallyData) => deletedAt,
+} as const;
+
+interface AppendRallyInfoProps extends ReturnType<typeof flattenRallyData> {
+  viewerId?: string;
+}
+export const appendRallyInfo = (data: AppendRallyInfoProps) =>
+  pipe(
+    data,
+    bind('owned', appends['owned']),
+    bind('total', appends['total']),
+    bind('failed', appends['failed']),
+    bind('extendable', appends['extendable']),
+    bind('startable', appends['startable']),
+  );
+const appends = {
+  // 소유 여부: starterId와 viewerId가 같은지
+  owned: ({ starterId, viewerId }: AppendRallyInfoProps) => starterId === viewerId,
+  // 전체 스탬프 개수
+  total: ({ stamps: { length } }: AppendRallyInfoProps) => length,
+  // 실패 여부: 랠리가 비활성화 됐고, 완주일이 없는 경우
+  failed: ({ status, completionDate }: AppendRallyInfoProps) => status === RallyStatus.inactive && completionDate === null,
+  // 연장 가능 여부: 연장 기한이 없는 경우
+  extendable: ({ extendedDueDate }: AppendRallyInfoProps) => extendedDueDate === null,
+  // 시작 가능 여부: 키트가 삭제된 경우(키트 삭제일이 있는 경우)
+  startable: ({ kitDeletedAt }: AppendRallyInfoProps) => kitDeletedAt !== null,
+} as const;
 
 export interface GetRallyDatesProps extends Pick<FetchRallyData, 'createdAt' | 'updatedAt' | 'status' | 'completionDate'> {
   count: number;
