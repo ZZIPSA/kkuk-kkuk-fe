@@ -7,6 +7,8 @@ import { RallyPageProps } from './types';
 import ExtendModal from './components/ExtendModal';
 import { notFound } from 'next/navigation';
 
+export const revalidate = 1;
+
 export default async function RallyPage({ params: { id } }: RallyPageProps) {
   const viewerId = (await getMember())?.id;
   const raw = await getRallyData(id);
