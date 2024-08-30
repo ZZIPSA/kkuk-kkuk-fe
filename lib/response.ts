@@ -7,7 +7,5 @@ export const validOrNotFound = (res: Response) => purify<Response, Response>(not
 export const resolveText = (res: Response | Request) => res.text();
 export const resolveJson = <T>(res: Response | Request): Promise<T> => res.json();
 export const resolveData = <T>(res: Response | Request) => res.json().then(({ data }) => data as T);
-export const fetchDataOrNotFound = <T>(...props: Parameters<typeof fetch>): Promise<T> =>
-  fetch(...props)
-    .then(resolveData<T>)
-    .catch(notFound);
+export const fetchData = <T>(...props: Parameters<typeof fetch>): Promise<T> => fetch(...props).then(resolveData<T>);
+export const fetchDataOrNotFound = <T>(...props: Parameters<typeof fetch>): Promise<T> => fetchData<T>(...props).catch(notFound);
