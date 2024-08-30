@@ -26,9 +26,9 @@ function getTitleFromPath(path: string) {
   // /kits/[id]/start
   if (TITLE_MAP.get('rally-start')!.test(path)) return '랠리 시작하기';
   // /kits/[id]
-  if (TITLE_MAP.get('kit')!.test(path)) return '스탬프 랠리';
+  if (TITLE_MAP.get('kit')!.test(path)) return '스탬프 키트';
   // /rallies/[id]
-  if (TITLE_MAP.get('rally-ongoing')!.test(path)) return '스탬프 랠리 진행중';
+  if (TITLE_MAP.get('rally-ongoing')!.test(path)) return '스탬프 랠리';
   // /rallies
   if (TITLE_MAP.get('rallies')!.test(path)) return '진행중인 랠리';
   // 경로의 제목이 정의되지 않은 경우
