@@ -32,14 +32,9 @@ const parseRallyDates: (fetched: FetchedRallyData) => FetchRallyData = evolve({
   }),
 });
 
-interface GetRallyInfoProps extends Pick<FetchRallyData, 'status' | 'completionDate' | 'dueDate' | 'extendedDueDate'> {
-  stamps: FetchRallyData['kit']['stamps'];
-  starterId: FetchRallyData['starter']['id'];
-  kitDeletedAt: FetchRallyData['kit']['deletedAt'];
 export const flattenRallyData = (data: FetchRallyData) =>
   pipe(
     data,
-    bind('deadline', flats['deadline']),
     bind('count', flats['count']),
     bind('starterId', flats['starterId']),
     bind('kitId', flats['kitId']),
@@ -49,7 +44,6 @@ export const flattenRallyData = (data: FetchRallyData) =>
   );
 
 const flats = {
-  deadline: ({ dueDate }: { dueDate: FetchRallyData['dueDate'] }) => dueDate,
   count: ({ stampCount }: { stampCount: FetchRallyData['stampCount'] }) => stampCount,
   starterId: ({ starter: { id } }: FetchRallyData) => id,
   kitId: ({ kit: { id } }: FetchRallyData) => id,
@@ -69,6 +63,7 @@ export const appendRallyInfo = (data: AppendRallyInfoProps) =>
     bind('failed', appends['failed']),
     bind('extendable', appends['extendable']),
     bind('startable', appends['startable']),
+    bind('deadline', appends['deadline']),
   );
 const appends = {
   // 소유 여부: starterId와 viewerId가 같은지
@@ -81,6 +76,8 @@ const appends = {
   extendable: ({ extendedDueDate }: AppendRallyInfoProps) => extendedDueDate === null,
   // 시작 가능 여부: 키트가 삭제된 경우(키트 삭제일이 있는 경우)
   startable: ({ kitDeletedAt }: AppendRallyInfoProps) => kitDeletedAt !== null,
+  // 마감일: 연장 기한이 있는 경우 연장 기한, 없는 경우 마감일
+  deadline: ({ dueDate, extendedDueDate }: AppendRallyInfoProps) => extendedDueDate ?? dueDate,
 } as const;
 
 export interface GetRallyDatesProps extends Pick<FetchRallyData, 'createdAt' | 'updatedAt' | 'status' | 'completionDate'> {
