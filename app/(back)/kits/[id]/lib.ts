@@ -1,14 +1,12 @@
-import { notFound } from 'next/navigation';
 import { KitData } from '@/types/Kit';
+import { API_URL } from '@/lib/constants';
 import { S3Manager } from '@/lib/services/s3';
-import { StampData } from '@/types/Stamp';
-import { addBase64Prefix, convertResponseToArrayBuffer, convertBufferToBase64 } from '@/lib/utils';
 import { cropImage320by320 } from '@/lib/sharp';
+import { fetchData } from '@/lib/response';
+import { addBase64Prefix, convertResponseToArrayBuffer, convertBufferToBase64 } from '@/lib/utils';
+import { StampData } from '@/types/Stamp';
 
-export const getKitData = (id: string): Promise<{ data: KitData }> =>
-  fetch(`${process.env.API_URL}/api/kits/${id}`)
-    .then((res) => res.json())
-    .catch(() => notFound());
+export const getKitData = (id: string) => fetchData<KitData>(`${API_URL}/api/kits/${id}`).catch(() => null);
 
 export const openGraphSizes = {
   image: 320,
