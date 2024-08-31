@@ -125,7 +125,6 @@ export const parseTake = (take: string | null) => parseInt(take ?? '') || PAGE_S
 export const getSearchParams = (request: NextRequest) => pipe(request, prop('nextUrl'), prop('searchParams'));
 /** 랠리의 상태 업데이트가 필요한 경우인지 확인합니다. */
 export const isActiveAndOverDue = ({ status, dueDate, extendedDueDate }: Pick<RallyData, 'status' | 'dueDate' | 'extendedDueDate'>) =>
-  (status === RallyStatus.active && // 진행중인 랠리이고
-    dueDate &&
-    dueDate.getTime() < Date.now()) || // 기한이 지났거나
-  (extendedDueDate && extendedDueDate.getTime() < Date.now()); /* 연장된 기한마저 지났을 경우 */
+  status === RallyStatus.active && // 진행중인 랠리이고
+  dueDate?.getTime()! < Date.now() && // 기한이 지났거나
+  extendedDueDate?.getTime()! < Date.now(); /* 연장된 기한마저 지났을 경우 */
