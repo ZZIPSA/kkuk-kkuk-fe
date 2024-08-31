@@ -23,11 +23,15 @@ export async function GET(_: Request, { params }: GetKitParams) {
   }
 }
 
-export async function DELETE(_: Request, { params }: DeleteKitParams) {
+export async function DELETE(req: Request, { params }: DeleteKitParams) {
   const { id } = params;
+  const { uploaderId } = (await req.json()) as { uploaderId: string };
 
   try {
-    const kit = await prisma.kit.findUnique({ where: { id } });
+    const kit = await prisma.kit.update({
+      where: { id, uploaderId },
+      data: { deletedAt: new Date() },
+    });
 
     if (!kit) NotFoundKitError;
 
