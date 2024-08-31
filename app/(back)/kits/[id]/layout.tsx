@@ -16,6 +16,11 @@ export async function generateMetadata({ params: { id } }: KitPageInfo): Promise
     },
   };
 }
-export default async function KitLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+export default async function KitLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
+  return (
+    <>
+      {children}
+      {modal}
+    </>
+  );
 }
