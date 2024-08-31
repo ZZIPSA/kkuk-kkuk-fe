@@ -52,10 +52,12 @@ export const userInfoSelect = {
   },
   rallies: {
     orderBy: { id: 'desc' },
+    where: { deletedAt: null },
     select: rallySelect,
   },
   kits: {
     orderBy: { id: 'desc' },
+    where: { deletedAt: null },
     select: kitSelect,
   },
 } satisfies Prisma.UserSelect;
