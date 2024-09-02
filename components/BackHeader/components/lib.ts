@@ -12,3 +12,13 @@ export function useRallyStarterId(rallyId: string) {
   }, [rallyId]);
   return starterId;
 }
+
+export function useKitUploaderId(rallyId: string) {
+  const [starterId, setUploaderId] = useState<string | null>(null);
+  useEffect(() => {
+    fetchData<{ uploader: { id: string } }>(`/api/kits/${rallyId}`) //
+      .then(({ uploader: { id } }) => setUploaderId(id))
+      .catch(() => setUploaderId(null));
+  }, [rallyId]);
+  return starterId;
+}

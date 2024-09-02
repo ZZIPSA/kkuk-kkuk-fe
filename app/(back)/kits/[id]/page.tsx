@@ -4,24 +4,16 @@ import RallyPreview from './components/RallyPreview';
 import StampsPreview from './components/StampsPreview';
 import { getKitData } from './lib';
 import { KitPageInfo } from './types';
+import { notFound } from 'next/navigation';
 
 interface KitPageProps extends KitPageInfo {}
 
 export default async function KitPage({ params: { id } }: KitPageProps) {
-  const { data: kit } = await getKitData(id);
-  const { title, description, tags, thumbnailImage, uploader, stamps } = kit;
+  const { description, stamps, ...kit } = (await getKitData(id)) ?? notFound();
 
   return (
     <main className="w-full grid grid-cols-1">
-      <KitCard
-        id={id}
-        title={title}
-        description={description || ''}
-        tags={tags}
-        thumbnailImage={thumbnailImage}
-        uploader={uploader}
-        variant={KitCardVariants.description}
-      />
+      <KitCard {...kit} description={description ?? ''} variant={KitCardVariants.description} />
       <RallyPreview stamps={stamps} />
       <StampsPreview stamps={stamps} />
       <section className="flex justify-center px-4 pb-6 bg-grey-50">
