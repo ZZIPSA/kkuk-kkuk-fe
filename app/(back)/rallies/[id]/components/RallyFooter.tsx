@@ -7,19 +7,19 @@ import { getFooterConditions, getFooterVariant, getFooterContent, getFooterStyle
 import { RallyFooterInfo } from './types';
 
 interface RallyFooterProps extends RallyFooterInfo {
-  rallyId: string;
+  id: string;
 }
 
 export default function RallyFooter(props: RallyFooterProps) {
   const router = useRouter();
-  const rallyId = props.rallyId;
+  const id = props.id;
 
   const content = getFooterContent(props);
   const is = getFooterVariant(getFooterConditions(props));
   const styles = getFooterStyles(is);
 
   const onClick = async () => {
-    const response = await fetch(`/api/rallies/${rallyId}/stamp`, {
+    const response = await fetch(`/api/rallies/${id}/stamp`, {
       method: 'PATCH',
       body: JSON.stringify({ stampCount: props.count }),
     });
